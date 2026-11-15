@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+      M3 组件（Button / CardView）的圆角由 shapeAppearanceOverlay 控制，
+      不能直接写 cornerRadius，所以要先把圆角定义成 shape appearance。
+    -->
+
+    <style name="ShapeAppearance.Momo.Card" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_card</item>
+    </style>
+
+    <style name="ShapeAppearance.Momo.CardLarge" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_card_lg</item>
+    </style>
+
+    <style name="ShapeAppearance.Momo.IconChip" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/icon_box_radius</item>
+    </style>
+
+    <!-- 50% 表示「始终取高度的一半」，这样按钮多高都是完美的胶囊形 -->
+    <style name="ShapeAppearance.Momo.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>

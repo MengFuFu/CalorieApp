@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ==================== 卡片 ==================== -->
+    <style name="Widget.Momo.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">@dimen/radius_card</item>
+        <!-- 设计里卡片是「平铺 + 描边」而不是浮起来的，所以取消阴影 -->
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/surface_card</item>
+    </style>
+
+    <!-- 首页总卡：更大圆角 + 绿色描边，M6 会用 -->
+    <style name="Widget.Momo.Card.Outlined" parent="Widget.Momo.Card">
+        <item name="cardCornerRadius">@dimen/radius_card_lg</item>
+        <item name="strokeWidth">3dp</item>
+        <item name="strokeColor">@color/brand_green</item>
+        <item name="cardBackgroundColor">@color/bg_page</item>
+    </style>
+
+    <!-- ==================== 胶囊按钮 ==================== -->
+    <!--
+      三个关键点，缺一个就会长得不像设计稿：
+        1. insetTop/insetBottom 设为 0：M3 按钮默认有 6dp 内缩，不清掉高度压不到 30dp
+        2. minHeight + paddingTop=0：高度由 minHeight 决定，不再被文字撑开
+        3. shapeAppearanceOverlay 指向 50% 圆角，才是胶囊形
+    -->
+    <style name="Widget.Momo.Button.Pill" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/pill_height</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingLeft">@dimen/pill_padding_h</item>
+        <item name="android:paddingRight">@dimen/pill_padding_h</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAppearance">@style/TextAppearance.Momo.PillLabel</item>
+        <item name="android:textColor">@color/brand_green</item>
+        <item name="strokeColor">@color/brand_green</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Momo.Pill</item>
+        <item name="backgroundTint">@null</item>
+        <item name="rippleColor">@color/brand_green_surface</item>
+    </style>
+
+    <!-- 橙色变体：记体重 -->
+    <style name="Widget.Momo.Button.Pill.Orange" parent="Widget.Momo.Button.Pill">
+        <item name="android:textColor">@color/accent_orange</item>
+        <item name="strokeColor">@color/accent_orange</item>
+        <item name="rippleColor">#1FF0A04B</item>
+    </style>
+
+    <!-- 蓝色变体：记喝水 -->
+    <style name="Widget.Momo.Button.Pill.Blue" parent="Widget.Momo.Button.Pill">
+        <item name="android:textColor">@color/accent_blue</item>
+        <item name="strokeColor">@color/accent_blue</item>
+        <item name="rippleColor">#1F5B9BFF</item>
+    </style>
+
+    <!-- 实心绿色变体：AI 拍照识别等主行动按钮 -->
+    <style name="Widget.Momo.Button.Pill.Filled" parent="Widget.Momo.Button.Pill">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/brand_green</item>
+    </style>
+
+</resources>

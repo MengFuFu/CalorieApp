@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- ========== 品牌绿 ========== -->
+    <!-- 主色：卡片描边、按钮描边、选中态。整页最抢眼的颜色 -->
+    <color name="brand_green">#6ED34A</color>
+    <!-- 深一档：用于浅绿底上的文字、按下态，保证对比度 -->
+    <color name="brand_green_dark">#4FA82F</color>
+    <!-- 浅一档：用于浅色装饰、进度条已完成段 -->
+    <color name="brand_green_light">#A8E68C</color>
+    <!-- 极浅：卡片内浅绿底、按钮 ripple -->
+    <color name="brand_green_surface">#EAF9E2</color>
+
+    <!-- ========== 页面背景 ========== -->
+    <!-- 首页顶部那段绿到白的渐变，两个端点 -->
+    <color name="bg_gradient_top">#E2F7DA</color>
+    <color name="bg_gradient_bottom">#FFFFFF</color>
+    <color name="bg_page">#F7FBF5</color>
+
+    <!-- ========== 表面 / 文字 ========== -->
+    <color name="surface_card">#FFFFFF</color>
+    <color name="text_primary">#1A1A1A</color>
+    <color name="text_secondary">#8C8C8C</color>
+    <color name="text_tertiary">#BFBFBF</color>
+    <!-- 分割线 / 进度条轨道：比正文灰更淡，避免页面碎裂 -->
+    <color name="divider">#EDEDED</color>
+    <color name="track">#EFEFEF</color>
+
+    <!-- ========== 功能图标底色 ========== -->
+    <!-- 每张功能卡一个色，用于区分模块；饱和度统一压到中间，避免喧宾夺主 -->
+    <color name="accent_yellow">#FFCE5C</color>
+    <color name="accent_yellow_text">#F5A83C</color>
+    <color name="accent_teal">#3FCFC0</color>
+    <color name="accent_purple">#A78BFA</color>
+    <color name="accent_blue">#5B9BFF</color>
+    <color name="accent_orange">#F0A04B</color>
+
+    <!-- ========== 语义色 ========== -->
+    <color name="state_success">#4FA82F</color>
+    <color name="state_warning">#F5A83C</color>
+    <!-- 超标用色：热量超目标时数字变红 -->
+    <color name="state_error">#FF5A5A</color>
+
+    <!-- ========== 基础色（保留，模板图标可能引用） ========== -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
 </resources>

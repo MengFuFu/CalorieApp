@@ -1,8 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
     <!--
-      M0 只挂一个 Material3 空主题，保证能启动。
-      M1「设计系统」会把颜色、字体、形状、按钮样式全套替换掉。
+      用 Light 变体而不是 DayNight：这套设计的浅绿渐变底在深色模式下会很难看，
+      与其做一套深色版，不如明确只支持浅色，省一半维护成本。
+      以后要做深色模式，在 values-night 里重写这个 style 即可。
     -->
-    <style name="Theme.MomoCalorie" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Theme.MomoCalorie" parent="Theme.Material3.Light.NoActionBar">
+
+        <!-- ===== 把 M3 的颜色槽位映射到我们的绿系 ===== -->
+        <item name="colorPrimary">@color/brand_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/brand_green_surface</item>
+        <item name="colorOnPrimaryContainer">@color/brand_green_dark</item>
+
+        <item name="colorSecondary">@color/accent_yellow_text</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="colorSurface">@color/surface_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/divider</item>
+
+        <item name="colorError">@color/state_error</item>
+        <item name="android:colorBackground">@color/bg_page</item>
+
+        <!-- 控件按下时的高亮色，统一成浅绿，避免出现紫色 ripple -->
+        <item name="colorControlHighlight">@color/brand_green_surface</item>
+
+        <!-- ===== 默认组件样式：继承后不用每个控件单独写 style ===== -->
+        <item name="materialCardViewStyle">@style/Widget.Momo.Card</item>
+        <item name="materialButtonStyle">@style/Widget.Momo.Button.Pill</item>
+
+        <!-- ===== 让 Material 组件（对话框、菜单、Snackbar）也用我们的字号 ===== -->
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Momo.TitlePage</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Momo.CardTitle</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Momo.Body</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Momo.Caption</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Momo.PillLabel</item>
+
+        <!-- ===== 系统栏 ===== -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <!-- 浅色背景上必须是深色图标，否则状态栏文字看不见 -->
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- 窗口底色：页面还没渲染时先铺上绿白渐变，避免启动闪一下灰白 -->
+        <item name="android:windowBackground">@drawable/bg_page</item>
+
+        <!-- 禁用系统强制暗色化，否则 Android 10+ 可能把浅绿刷成灰黑 -->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
 </resources>

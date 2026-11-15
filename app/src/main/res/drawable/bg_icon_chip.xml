@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  功能卡的图标底托：[圆角方块 + 纯白]，
+  使用时通过 android:backgroundTint 染成黄/青/紫/蓝，不用为每个颜色各建一个 drawable。
+  用法：android:background="@drawable/bg_icon_chip"
+        android:backgroundTint="@color/accent_yellow"
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/icon_box_radius" />
+    <solid android:color="@color/white" />
+</shape>
