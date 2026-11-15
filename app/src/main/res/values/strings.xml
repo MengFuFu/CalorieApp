@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">热量记录</string>
+
+    <!-- ===== 底部导航 ===== -->
+    <string name="tab_record">记录</string>
+    <string name="tab_plan">计划</string>
+    <string name="tab_stats">统计</string>
+    <string name="tab_profile">我的</string>
+
+    <!-- ===== 页面标题 ===== -->
+    <string name="page_title_home">今日记录</string>
+    <string name="page_title_plan">计划</string>
+    <string name="page_title_stats">统计</string>
+    <string name="page_title_profile">我的</string>
+
+    <!-- ===== 占位 ===== -->
+    <string name="placeholder_hint">页面骨架已就绪，具体内容在后续模块填充。</string>
+
+    <!-- ===== 快速添加弹窗 ===== -->
+    <string name="quick_add_food">添加食物</string>
+    <string name="toast_coming_soon">%1$s 将在 %2$s 接入</string>
 </resources>

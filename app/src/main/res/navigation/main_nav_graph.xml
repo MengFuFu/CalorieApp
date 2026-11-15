@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  4 个顶层目的地。这里没有 action，因为 Tab 之间是平级切换，
+  直接在代码里 navigate(destinationId, args, options) 即可，不需要预声明连线。
+-->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.mh.calorie.ui.home.HomeFragment"
+        android:label="@string/page_title_home" />
+
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.mh.calorie.ui.plan.PlanFragment"
+        android:label="@string/page_title_plan" />
+
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.mh.calorie.ui.stats.StatsFragment"
+        android:label="@string/page_title_stats" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.mh.calorie.ui.profile.ProfileFragment"
+        android:label="@string/page_title_profile" />
+
+</navigation>

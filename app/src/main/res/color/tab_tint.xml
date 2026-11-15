@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  底栏图标 / 文字的共用状态色：
+    选中 → 品牌绿
+    未选 → 三级灰
+  图标和文字都用同一个 selector，保证颜色永远同步，不会出现「图标绿了字没绿」。
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/brand_green" android:state_selected="true" />
+    <item android:color="@color/text_tertiary" />
+</selector>

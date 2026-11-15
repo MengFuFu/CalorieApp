@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  自定义底部栏。根节点用 merge：这个布局是由 MomoBottomBar 直接 inflate 到自己的，
+  多套一层 FrameLayout 纯属浪费层级。
+
+  布局思路：
+    [左半区: 记录 计划]  [中间留 56dp 给 FAB]  [右半区: 统计 我的]
+  左右两半各占剩余宽度的一半（weight=1），所以 4 个 Tab 视觉上是对称的，
+  中间的空位正好让 FAB 压在上沿、不遮住任何图标。
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:orientation="horizontal">
+
+        <!-- ========== 左半区 ========== -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/tabRecord"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconRecord"
+                    android:layout_width="@dimen/bottom_bar_icon"
+                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:contentDescription="@string/tab_record"
+                    android:src="@drawable/ic_tab_record"
+                    app:tint="@color/tab_tint" />
+
+                <TextView
+                    android:id="@+id/labelRecord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:text="@string/tab_record"
+                    android:textColor="@color/tab_tint"
+                    android:textSize="@dimen/bottom_bar_label" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tabPlan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconPlan"
+                    android:layout_width="@dimen/bottom_bar_icon"
+                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:contentDescription="@string/tab_plan"
+                    android:src="@drawable/ic_tab_plan"
+                    app:tint="@color/tab_tint" />
+
+                <TextView
+                    android:id="@+id/labelPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:text="@string/tab_plan"
+                    android:textColor="@color/tab_tint"
+                    android:textSize="@dimen/bottom_bar_label" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ========== 中间：给 FAB 让位 ========== -->
+        <FrameLayout
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="match_parent" />
+
+        <!-- ========== 右半区 ========== -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/tabStats"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconStats"
+                    android:layout_width="@dimen/bottom_bar_icon"
+                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:contentDescription="@string/tab_stats"
+                    android:src="@drawable/ic_tab_stats"
+                    app:tint="@color/tab_tint" />
+
+                <TextView
+                    android:id="@+id/labelStats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:text="@string/tab_stats"
+                    android:textColor="@color/tab_tint"
+                    android:textSize="@dimen/bottom_bar_label" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tabProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iconProfile"
+                    android:layout_width="@dimen/bottom_bar_icon"
+                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:contentDescription="@string/tab_profile"
+                    android:src="@drawable/ic_tab_profile"
+                    app:tint="@color/tab_tint" />
+
+                <TextView
+                    android:id="@+id/labelProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:text="@string/tab_profile"
+                    android:textColor="@color/tab_tint"
+                    android:textSize="@dimen/bottom_bar_label" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--
+      FAB 不参与 LinearLayout 排版，直接叠在最上层居中。
+      layout_gravity=top 让它顶边对齐底栏顶边，再靠 translationY 上浮（代码里设负值），
+      这样它有一半露在底栏之外 —— 靠 clipChildren=false 才不被裁掉。
+    -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_gravity="top|center_horizontal"
+        android:contentDescription="@string/quick_add_title"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/brand_green"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:rippleColor="@color/brand_green_light"
+        app:tint="@color/white" />
+</merge>

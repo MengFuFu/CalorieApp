@@ -76,4 +76,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // 导航：单 Activity + 多 Fragment 的核心
+    implementation(libs.androidx.navigation.fragment)
 }

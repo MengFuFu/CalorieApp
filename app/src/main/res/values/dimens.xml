@@ -37,6 +37,11 @@
     <!-- ========== 底部导航 ========== -->
     <dimen name="bottom_bar_height">56dp</dimen>
     <dimen name="fab_size">56dp</dimen>
+    <!-- 底栏图标与文字：图标 22dp / 文字 10sp，是设计稿的实际比例 -->
+    <dimen name="bottom_bar_icon">22dp</dimen>
+    <dimen name="bottom_bar_label">10sp</dimen>
+    <!-- FAB 相对底栏上浮的距离，代码里取负值用 -->
+    <dimen name="fab_lift">20dp</dimen>
 
     <!-- 最小可点击区域：低于 48dp 手指点不准，小胶囊按钮要加负 margin 或 padding 补足 -->
     <dimen name="touch_target_min">48dp</dimen>
