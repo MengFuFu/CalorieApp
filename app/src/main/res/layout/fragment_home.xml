@@ -92,7 +92,8 @@
                                 android:textColor="@color/text_secondary" />
                         </LinearLayout>
 
-                        <!--  弧形仪表 + 两侧消耗 + 聊天提示 -->
+                        <!--  弧形仪表 - -->
+                        <!-- 只放弧和吉祥物占位；文字拆到下面单独一行，弧的两端就悬在文字上方 -->
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/home_gauge_height"
@@ -103,91 +104,86 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
-                            <!-- 吉祥物占位：暂不做角色，先把这个位置留出来 -->
+                            <!-- 吉祥物占位：暂不做角色，位置先留着 -->
                             <View
                                 android:id="@+id/mascotPlaceholder"
                                 android:layout_width="@dimen/home_mascot_size"
                                 android:layout_height="@dimen/home_mascot_size"
                                 android:layout_gravity="center_horizontal|top"
-                                android:layout_marginTop="44dp" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:baselineAligned="false"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="@string/home_intake"
-                                            android:textAppearance="@style/TextAppearance.Momo.BodySmall"
-                                            android:textColor="@color/text_secondary" />
-
-                                        <TextView
-                                            android:id="@+id/tvIntakeKcal"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="0kcal"
-                                            android:textAppearance="@style/TextAppearance.Momo.Body"
-                                            android:textColor="@color/text_primary" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:gravity="end"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="@string/home_burned"
-                                            android:textAppearance="@style/TextAppearance.Momo.BodySmall"
-                                            android:textColor="@color/text_secondary" />
-
-                                        <TextView
-                                            android:id="@+id/tvBurnedKcal"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="0kcal"
-                                            android:textAppearance="@style/TextAppearance.Momo.Body"
-                                            android:textColor="@color/text_primary" />
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <TextView
-                                    android:id="@+id/tvAiChatHint"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/space_2"
-                                    android:gravity="center_horizontal"
-                                    android:text="@string/home_ai_chat_hint"
-                                    android:textAppearance="@style/TextAppearance.Momo.Caption"
-                                    android:textColor="@color/text_tertiary" />
-                            </LinearLayout>
+                                android:layout_marginTop="@dimen/space_8" />
                         </FrameLayout>
 
+                        <!--  食物摄入 / 运动燃烧  -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_4"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_intake"
+                                    android:textAppearance="@style/TextAppearance.Momo.BodySmall"
+                                    android:textColor="@color/text_secondary" />
+
+                                <TextView
+                                    android:id="@+id/tvIntakeKcal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0kcal"
+                                    android:textAppearance="@style/TextAppearance.Momo.Body"
+                                    android:textColor="@color/text_primary" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/home_burned"
+                                    android:textAppearance="@style/TextAppearance.Momo.BodySmall"
+                                    android:textColor="@color/text_secondary" />
+
+                                <TextView
+                                    android:id="@+id/tvBurnedKcal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0kcal"
+                                    android:textAppearance="@style/TextAppearance.Momo.Body"
+                                    android:textColor="@color/text_primary" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- 点击 AI 角色与我聊天  -->
+                        <TextView
+                            android:id="@+id/tvAiChatHint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_2"
+                            android:gravity="center_horizontal"
+                            android:text="@string/home_ai_chat_hint"
+                            android:textAppearance="@style/TextAppearance.Momo.Caption"
+                            android:textColor="@color/text_tertiary" />
+
                         <!--  虚线  -->
-                        <View
+                        <com.mh.calorie.ui.widget.DashedDividerView
+                            android:id="@+id/dividerMacro"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="@dimen/space_8"
-                            android:background="@drawable/divider_dashed"
-                            android:layerType="software" />
+                            android:layout_marginTop="@dimen/space_12" />
 
                         <!--- 宏量三列  -->
                         <LinearLayout
