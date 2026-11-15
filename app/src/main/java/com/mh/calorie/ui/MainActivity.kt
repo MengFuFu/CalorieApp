@@ -72,12 +72,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomBar.onTabSelected = {tab -> navigateTo(tab)}
 
         binding.bottomBar.onAddClick = {
-            // 加号的唯一职责：快速记一笔饮食（M7 完成后改成 navigate 到添加食物页）。
-            // 注意：记体重 / 记运动 / 记断食 / 记喝水 是首页卡片里常驻的内联按钮（M6 实现），
-            // 它们和加号是两条并行的入口，不要在这里再弹一层四选一，否则等于把已有入口藏起来。
+            // 中间的加号 = 和 App 内置 AI 聊天（不是快速记饮食）。
+            // 聊天页在 M12 做，先给提示占位。
             Toast.makeText(
                 this,
-                getString(R.string.toast_coming_soon, getString(R.string.quick_add_food), "M7"),
+                getString(R.string.toast_coming_soon, getString(R.string.ai_chat), "M12"),
                 Toast.LENGTH_SHORT
             ).show()
         }

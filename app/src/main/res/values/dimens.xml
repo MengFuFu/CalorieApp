@@ -46,4 +46,16 @@
     <!-- 最小可点击区域：低于 48dp 手指点不准，小胶囊按钮要加负 margin 或 padding 补足 -->
     <dimen name="touch_target_min">48dp</dimen>
 
+    <!-- ========== 首页 ========== -->
+    <!-- 固定标题区高度：内容滚动时从这里下面穿过并被它挡住 -->
+    <dimen name="home_header_height">50dp</dimen>
+    <!-- 弧形仪表的绘制区，含左右两侧的「食物摄入 / 运动燃烧」 -->
+    <dimen name="home_gauge_height">216dp</dimen>
+    <!-- 吉祥物占位（暂不做角色，先留出位置，之后换图片直接填进来） -->
+    <dimen name="home_mascot_size">150dp</dimen>
+    <!-- 三行功能卡的行高，实测反推：92 / 128 / 128 -->
+    <dimen name="home_row1_height">92dp</dimen>
+    <dimen name="home_row2_height">128dp</dimen>
+    <dimen name="home_row3_height">128dp</dimen>
+
 </resources>

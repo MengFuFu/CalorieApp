@@ -58,4 +58,14 @@
         <item name="android:letterSpacing">0</item>
     </style>
 
+    <!-- 总卡里的大数字：实测 34sp，比 Display(38sp) 小一档 -->
+    <style name="TextAppearance.Momo.CardNumber" parent="TextAppearance.Momo.Display">
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <!-- 13sp 正文：食物摄入 / 0kcal / 0/284.76g 这一档 -->
+    <style name="TextAppearance.Momo.BodySmall" parent="TextAppearance.Momo.Body">
+        <item name="android:textSize">13sp</item>
+    </style>
+
 </resources>

@@ -45,4 +45,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- ========== 首页功能卡图标底托（浅色） ========== -->
+    <!-- 卡片图标底托用的是一层很淡的色块，饱和度压得比 accent_* 更低，
+         这样 6 张卡并排时不会互相抢，也能让白色图标浮起来 -->
+    <color name="chip_yellow">#FFE6AE</color>
+    <color name="chip_green">#DDF6C4</color>
+    <color name="chip_teal">#C6F1EC</color>
+    <color name="chip_purple">#E6DEFE</color>
+    <color name="chip_orange">#FFDFC0</color>
+    <color name="chip_blue">#CFE4FF</color>
+
 </resources>

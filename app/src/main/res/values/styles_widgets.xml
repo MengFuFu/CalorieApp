@@ -64,4 +64,21 @@
         <item name="backgroundTint">@color/brand_green</item>
     </style>
 
+    <!-- 紧凑胶囊：首页功能卡里的小按钮（记体重 / 记运动 / 记断食 / 记喝水）
+     实测设计稿只有 24dp 高、横向内边距 6dp；取 26dp/10dp 是为了手指还点得到 -->
+    <style name="Widget.Momo.Button.Pill.Compact" parent="Widget.Momo.Button.Pill">
+        <item name="android:minHeight">26dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- 大号胶囊：首页「AI 拍照识别」主行动按钮 -->
+    <style name="Widget.Momo.Button.Pill.Large" parent="Widget.Momo.Button.Pill">
+        <item name="android:minHeight">36dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

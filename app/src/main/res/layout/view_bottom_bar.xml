@@ -164,7 +164,6 @@
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
         android:layout_gravity="top|center_horizontal"
-        android:contentDescription="@string/quick_add_title"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/brand_green"
         app:borderWidth="0dp"

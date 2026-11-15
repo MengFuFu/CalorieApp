@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  总卡右上角的日期缎带。
+  只圆「右上」和「左下」两个角，另外两个角是直角 —— 它压在卡片内角上，
+  直角的那一边正好贴合描边，不会露出白缝。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/brand_green" />
+    <corners
+        android:topRightRadius="21dp"
+        android:bottomLeftRadius="21dp" />
+</shape>
