@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      M0 只挂一个 Material3 空主题，保证能启动。
+      M1「设计系统」会把颜色、字体、形状、按钮样式全套替换掉。
+    -->
+    <style name="Theme.MomoCalorie" parent="Theme.Material3.DayNight.NoActionBar" />
+</resources>

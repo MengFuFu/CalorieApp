@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 库模块的 Manifest 可以为空，AGP 会自动合并 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mh.calorie.core.common" >
+
+    <uses-sdk android:minSdkVersion="26" />
+
+</manifest>

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 库模块的 Manifest 可以为空，AGP 会自动合并 -->
+<manifest />

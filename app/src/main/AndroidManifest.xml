@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      权限先一个都不加。等到对应模块再逐个申请：
+        M3 本地存储 → 无需权限（应用私有目录）
+        M11 拍照   → CAMERA
+        M10 提醒   → POST_NOTIFICATIONS / SCHEDULE_EXACT_ALARM
+      提前申请没用还影响上架审核。
+    -->
+
+    <application
+        android:name=".CalorieApp"
+        android:allowBackup="false"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MomoCalorie">
+
+        <!-- 临时占位页，M2 会换成 MainActivity + 5 个 Fragment 的真实框架 -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
