@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  今日总卡：顶部浅绿 → 白色的竖直渐变 + 3dp 品牌绿描边 + 24dp 圆角。
+  用 shape 而不是 MaterialCardView，是因为卡片背景需要渐变，而 cardBackgroundColor 只吃纯色。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <gradient
+        android:angle="270"
+        android:centerColor="@color/surface_card"
+        android:centerY="0.35"
+        android:endColor="@color/surface_card"
+        android:startColor="@color/bg_gradient_top"
+        android:type="linear" />
+
+    <corners android:radius="@dimen/radius_card_lg" />
+
+    <stroke
+        android:width="3dp"
+        android:color="@color/brand_green" />
+</shape>

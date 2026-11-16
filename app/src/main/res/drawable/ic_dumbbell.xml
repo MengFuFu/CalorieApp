@@ -1,16 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
-    <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M5,12h14"
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="2"
-        android:strokeLineCap="round" />
-    <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M7.6,8v8M4.4,9.6v4.8M16.4,8v8M19.6,9.6v4.8"
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="2"
-        android:strokeLineCap="round" />
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 旋转角度从 45 度变成了 225 度 (45 + 180) -->
+    <group
+        android:pivotX="12"
+        android:pivotY="12"
+        android:rotation="-45">
+
+        <!-- 1. 中间连接杆（浅紫色） -->
+        <path
+            android:fillColor="#A98FFE"
+            android:pathData="M11,9.5 h2 v5 h-2 z" />
+
+        <!-- 2. 左侧内侧大配重（深紫色，圆角） -->
+        <path
+            android:fillColor="#7C5CFA"
+            android:pathData="M7.5,6 h2 a1.5,1.5 0 0 1 1.5,1.5 v9 a1.5,1.5 0 0 1 -1.5,1.5 h-2 a1.5,1.5 0 0 1 -1.5,-1.5 v-9 a1.5,1.5 0 0 1 1.5,-1.5 z" />
+
+        <!-- 3. 右侧内侧大配重（深紫色，圆角） -->
+        <path
+            android:fillColor="#7C5CFA"
+            android:pathData="M14.5,6 h2 a1.5,1.5 0 0 1 1.5,1.5 v9 a1.5,1.5 0 0 1 -1.5,1.5 h-2 a1.5,1.5 0 0 1 -1.5,-1.5 v-9 a1.5,1.5 0 0 1 1.5,-1.5 z" />
+
+        <!-- 4. 左侧外侧小配重（浅紫色，圆角） -->
+        <path
+            android:fillColor="#A98FFE"
+            android:pathData="M4.5,8 h1 a1,1 0 0 1 1,1 v6 a1,1 0 0 1 -1,1 h-1 a1,1 0 0 1 -1,-1 v-6 a1,1 0 0 1 1,-1 z" />
+
+        <!-- 5. 右侧外侧小配重（浅紫色，圆角） -->
+        <path
+            android:fillColor="#A98FFE"
+            android:pathData="M18.5,8 h1 a1,1 0 0 1 1,1 v6 a1,1 0 0 1 -1,1 h-1 a1,1 0 0 1 -1,-1 v-6 a1,1 0 0 1 1,-1 z" />
+
+    </group>
 </vector>

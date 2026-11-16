@@ -1,16 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <!-- 1. 杯身：浅蓝紫色，带圆角，完全实心填充 -->
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M7,4.5h10l-1.1,13.5a1.6,1.6 0 0 1 -1.6,1.4h-6.6a1.6,1.6 0 0 1 -1.6,-1.4z"
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.8"
-        android:strokeLineJoin="round" />
+        android:fillColor="#769CE4"
+        android:pathData="M 178.48 128 Q 148.48 128 148.48 158 L 148.48 800 C 148.48 835.3 177.2 864 211.75 864 L 653.7 864 C 688.2 864 717.44 835.3 717.44 800 L 717.44 158 Q 717.44 128 687.44 128 Z" />
+
+    <!-- 2. 右侧把手：深一号蓝紫色（#5C7EC5），与杯身形成层次区分 -->
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M7.7,10.4c1.6,1.2 3.2,-1 4.8,0.2c1.1,0.9 2.3,0.3 3.4,-0.5"
-        android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="1.6"
-        android:strokeLineCap="round" />
+        android:fillColor="#5C7EC5"
+        android:pathData="M 717.44 256 L 843.86 256 C 895 256 938 300 938 352 L 938 576 C 938 628 895 672 843.86 672 L 717.44 672 L 717.44 608 L 843.86 608 C 862 608 874 590 874 576 L 874 352 C 874 338 862 320 843.86 320 L 717.44 320 Z" />
+
+    <!-- 3. 左侧白色高光条 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 260 320 L 310 320 A 20 20 0 0 1 330 340 L 330 620 A 20 20 0 0 1 310 640 L 260 640 A 20 20 0 0 1 240 620 L 240 340 A 20 20 0 0 1 260 320 Z" />
+
 </vector>

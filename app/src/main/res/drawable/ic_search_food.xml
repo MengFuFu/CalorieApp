@@ -1,15 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+
+    <!-- 放大镜内部的镜片（黄色 #FBC31A） -->
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M10.6,3.6A6.4,6.4 0 1 0 10.6,16.4A6.4,6.4 0 1 0 10.6,3.6Z"
-        android:strokeColor="#FF7A5310"
-        android:strokeWidth="1.8" />
+        android:fillColor="#FBC31A"
+        android:pathData="M292.8 527.2C292.8 660 403.2 768 540 768s247.2-108 247.2-241.6-110.4-240.8-247.2-240.8-247.2 108-247.2 241.6z" />
+
+    <!-- 放大镜的外框和手柄（深灰色 #515151） -->
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M15.4,15.4L20,20"
-        android:strokeColor="#FF7A5310"
-        android:strokeWidth="2"
-        android:strokeLineCap="round" />
+        android:fillColor="#515151"
+        android:pathData="M461.6 869.6c-57.6 0-114.4-11.2-167.2-32.8-51.2-20.8-96.8-51.2-136.8-89.6-39.2-39.2-69.6-84-91.2-133.6C44 562.4 32 507.2 32 450.4S44 339.2 66.4 288c21.6-49.6 52.8-94.4 92-132.8 39.2-38.4 85.6-68.8 136.8-89.6C347.2 43.2 404 32 461.6 32S576 43.2 628.8 64.8c51.2 20.8 96.8 51.2 136.8 89.6 39.2 38.4 70.4 83.2 92 132.8 22.4 52 33.6 106.4 33.6 163.2s-11.2 111.2-33.6 163.2c-21.6 49.6-52.8 94.4-92 132.8-39.2 38.4-85.6 68.8-136.8 89.6-52.8 22.4-108.8 33.6-167.2 33.6z m0-730.4c-84.8 0-165.6 32-225.6 91.2S142.4 367.2 142.4 450.4 176 612 236 670.4c60 58.4 140.8 91.2 225.6 91.2s165.6-32 225.6-91.2 93.6-136.8 93.6-220-33.6-161.6-93.6-220c-60-58.4-140-91.2-225.6-91.2zM936.8 992c-14.4 0-28-5.6-39.2-16l-125.6-122.4c-21.6-20.8-21.6-55.2 0-76 21.6-20.8 56.8-20.8 77.6 0l125.6 122.4c21.6 20.8 21.6 55.2 0 76-10.4 10.4-24.8 16-38.4 16z" />
+
 </vector>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 宏量进度条：圆角轨道 + 圆角进度段 -->
+<!-- 宏量进度条：圆角轨道 + 圆角进度段；圆角 = progress_height/2，保证两端是半圆 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="2dp" />
+            <corners android:radius="3.5dp" />
             <solid android:color="@color/track" />
         </shape>
     </item>
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <corners android:radius="2dp" />
+                <corners android:radius="3.5dp" />
                 <solid android:color="@color/brand_green" />
             </shape>
         </clip>

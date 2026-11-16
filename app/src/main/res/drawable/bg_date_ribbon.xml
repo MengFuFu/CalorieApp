@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  总卡右上角的日期缎带。
-  只圆「右上」和「左下」两个角，另外两个角是直角 —— 它压在卡片内角上，
-  直角的那一边正好贴合描边，不会露出白缝。
+  日期缎带：只有左上是小圆角、左下是大圆角，右上是跟着卡片外圆角走 21dp，
+  右下直角 —— 正好接上卡片右侧那条 3dp 描边，看起来是“流”下去的。
+  颜色与描边同为 brand_green，所以两处交点看不出接缝。
 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
+
     <solid android:color="@color/brand_green" />
+
     <corners
-        android:topRightRadius="21dp"
-        android:bottomLeftRadius="21dp" />
+        android:bottomLeftRadius="17dp"
+        android:bottomRightRadius="0dp"
+        android:topLeftRadius="17dp"
+        android:topRightRadius="21dp" />
 </shape>

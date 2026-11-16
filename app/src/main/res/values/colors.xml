@@ -55,4 +55,12 @@
     <color name="chip_orange">#FFDFC0</color>
     <color name="chip_blue">#CFE4FF</color>
 
+    <!-- 胶囊按钮内部填充：设计稿实测为纯白 -->
+    <color name="pill_fill">#FFFFFF</color>
+
+    <!-- 底栏中间加号的底色：设计稿实测 #BFEA7E，比品牌绿浅一档 -->
+    <color name="fab_green">#BFEA7E</color>
+
+    <!-- 弧形仪表轨道：比 brand_green_surface 再淡一点点，设计稿采样 #DDF2D6 -->
+    <color name="arc_track">#DDF2D6</color>
 </resources>

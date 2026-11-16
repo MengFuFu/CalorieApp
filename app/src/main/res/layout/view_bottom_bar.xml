@@ -36,8 +36,8 @@
 
                 <ImageView
                     android:id="@+id/iconRecord"
-                    android:layout_width="@dimen/bottom_bar_icon"
-                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
                     android:contentDescription="@string/tab_record"
                     android:src="@drawable/ic_tab_record"
                     app:tint="@color/tab_tint" />
@@ -46,7 +46,6 @@
                     android:id="@+id/labelRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_2"
                     android:text="@string/tab_record"
                     android:textColor="@color/tab_tint"
                     android:textSize="@dimen/bottom_bar_label" />
@@ -65,8 +64,8 @@
 
                 <ImageView
                     android:id="@+id/iconPlan"
-                    android:layout_width="@dimen/bottom_bar_icon"
-                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:contentDescription="@string/tab_plan"
                     android:src="@drawable/ic_tab_plan"
                     app:tint="@color/tab_tint" />
@@ -84,7 +83,7 @@
 
         <!-- ========== 中间：给 FAB 让位 ========== -->
         <FrameLayout
-            android:layout_width="@dimen/fab_size"
+            android:layout_width="@dimen/fab_width"
             android:layout_height="match_parent" />
 
         <!-- ========== 右半区 ========== -->
@@ -107,8 +106,8 @@
 
                 <ImageView
                     android:id="@+id/iconStats"
-                    android:layout_width="@dimen/bottom_bar_icon"
-                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:contentDescription="@string/tab_stats"
                     android:src="@drawable/ic_tab_stats"
                     app:tint="@color/tab_tint" />
@@ -136,8 +135,8 @@
 
                 <ImageView
                     android:id="@+id/iconProfile"
-                    android:layout_width="@dimen/bottom_bar_icon"
-                    android:layout_height="@dimen/bottom_bar_icon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:contentDescription="@string/tab_profile"
                     android:src="@drawable/ic_tab_profile"
                     app:tint="@color/tab_tint" />
@@ -155,19 +154,27 @@
     </LinearLayout>
 
     <!--
-      FAB 不参与 LinearLayout 排版，直接叠在最上层居中。
-      layout_gravity=top 让它顶边对齐底栏顶边，再靠 translationY 上浮（代码里设负值），
-      这样它有一半露在底栏之外 —— 靠 clipChildren=false 才不被裁掉。
-    -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+  加号：这不是 Material FAB，而是设计稿里那颗「浅绿 + 深色描边 + 深色加号」的胶囊。
+  用 top + marginTop=4dp 而不是 gravity=center：底栏底部有系统导航条的 padding，
+  gravity=center 会在「减去 padding 后的区域」里居中，和 Tab 的中线差半个 inset。
+-->
+    <FrameLayout
         android:id="@+id/fabAdd"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
+        android:layout_width="@dimen/fab_width"
+        android:layout_height="@dimen/fab_height"
         android:layout_gravity="top|center_horizontal"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/brand_green"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:rippleColor="@color/brand_green_light"
-        app:tint="@color/white" />
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_fab_add"
+        android:clickable="true"
+        android:contentDescription="@string/ai_chat"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_add"
+            app:tint="@color/text_primary" />
+    </FrameLayout>
 </merge>

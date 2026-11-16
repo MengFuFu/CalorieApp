@@ -27,7 +27,7 @@
     <dimen name="pill_padding_h">14dp</dimen>
 
     <!-- ========== 进度条 ========== -->
-    <dimen name="progress_height">4dp</dimen>
+    <dimen name="progress_height">7dp</dimen>
 
     <!-- ========== 图标底托 ========== -->
     <dimen name="icon_box_size">28dp</dimen>
@@ -40,8 +40,9 @@
     <!-- 底栏图标与文字：图标 22dp / 文字 10sp，是设计稿的实际比例 -->
     <dimen name="bottom_bar_icon">22dp</dimen>
     <dimen name="bottom_bar_label">10sp</dimen>
-    <!-- FAB 相对底栏上浮的距离，代码里取负值用 -->
-    <dimen name="fab_lift">20dp</dimen>
+    <!-- 底栏中间的加号：设计稿实测是 66×50 的扁胶囊，取整为 64×48 -->
+    <dimen name="fab_width">64dp</dimen>
+    <dimen name="fab_height">48dp</dimen>
 
     <!-- 最小可点击区域：低于 48dp 手指点不准，小胶囊按钮要加负 margin 或 padding 补足 -->
     <dimen name="touch_target_min">48dp</dimen>
@@ -50,7 +51,7 @@
     <!-- 固定标题区高度：内容滚动时从这里下面穿过并被它挡住 -->
     <dimen name="home_header_height">50dp</dimen>
     <!-- 弧形仪表的绘制区，含左右两侧的「食物摄入 / 运动燃烧」 -->
-    <dimen name="home_gauge_height">168dp</dimen>
+    <dimen name="home_gauge_height">176dp</dimen>
     <!-- 吉祥物占位（暂不做角色，先留出位置，之后换图片直接填进来） -->
     <dimen name="home_mascot_size">150dp</dimen>
     <!-- 三行功能卡的行高，实测反推：92 / 128 / 128 -->

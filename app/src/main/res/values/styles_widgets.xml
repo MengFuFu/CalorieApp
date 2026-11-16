@@ -37,10 +37,12 @@
         <item name="android:letterSpacing">0</item>
         <item name="android:textAppearance">@style/TextAppearance.Momo.PillLabel</item>
         <item name="android:textColor">@color/brand_green</item>
+        <!-- 关键改动：内部填充显式给纯白，不再用 @null 指望透明 -->
+        <item name="android:background">@null</item>
+        <item name="backgroundTint">@color/pill_fill</item>
         <item name="strokeColor">@color/brand_green</item>
         <item name="strokeWidth">1dp</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Momo.Pill</item>
-        <item name="backgroundTint">@null</item>
         <item name="rippleColor">@color/brand_green_surface</item>
     </style>
 
@@ -64,21 +66,24 @@
         <item name="backgroundTint">@color/brand_green</item>
     </style>
 
-    <!-- 紧凑胶囊：首页功能卡里的小按钮（记体重 / 记运动 / 记断食 / 记喝水）
-     实测设计稿只有 24dp 高、横向内边距 6dp；取 26dp/10dp 是为了手指还点得到 -->
+    <!-- 小胶囊：首页功能卡内联按钮（记体重 / 记运动 / 记断食 / 记喝水）
+     设计稿实测：外框 61.6×31.1dp、描边 1dp、文字 13sp、左右内边距 12dp -->
     <style name="Widget.Momo.Button.Pill.Compact" parent="Widget.Momo.Button.Pill">
-        <item name="android:minHeight">26dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
-    <!-- 大号胶囊：首页「AI 拍照识别」主行动按钮 -->
+    <!-- 大胶囊：AI 拍照识别
+     设计稿实测：外框 168.9×38.2dp、文字 16sp、左右内边距 44dp -->
     <style name="Widget.Momo.Button.Pill.Large" parent="Widget.Momo.Button.Pill">
-        <item name="android:minHeight">36dp</item>
-        <item name="android:paddingLeft">24dp</item>
-        <item name="android:paddingRight">24dp</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">38dp</item>
+        <item name="android:paddingLeft">44dp</item>
+        <item name="android:paddingRight">44dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
 </resources>

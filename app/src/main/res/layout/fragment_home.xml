@@ -28,12 +28,11 @@
             android:paddingBottom="32dp">
 
             <!-- ==================== 今日总卡 ==================== -->
-            <com.google.android.material.card.MaterialCardView
+            <FrameLayout
                 android:id="@+id/cardSummary"
-                style="@style/Widget.Momo.Card.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/surface_card">
+                android:background="@drawable/bg_card_summary">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -122,12 +121,14 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
+                                android:id="@+id/llIntake"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/tvIntakeLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/home_intake"
@@ -140,10 +141,11 @@
                                     android:layout_height="wrap_content"
                                     android:text="0kcal"
                                     android:textAppearance="@style/TextAppearance.Momo.Body"
-                                    android:textColor="@color/text_primary" />
+                                    android:textColor="@color/text_secondary" />
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/llBurned"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -151,6 +153,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/tvBurnedLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/home_burned"
@@ -163,7 +166,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="0kcal"
                                     android:textAppearance="@style/TextAppearance.Momo.Body"
-                                    android:textColor="@color/text_primary" />
+                                    android:textColor="@color/text_secondary" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -299,25 +302,24 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- 日期缎带：压在内侧 3dp，正好贴住卡片的绿色描边 -->
-                    <TextView
+                    <!-- 日期缎带：左下长斜尾、右上圆角压住描边、右下凹弧落进边框 -->
+                    <com.mh.calorie.ui.widget.DateRibbonView
                         android:id="@+id/tvDateRibbon"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:layout_gravity="top|end"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginEnd="3dp"
-                        android:background="@drawable/bg_date_ribbon"
-                        android:paddingStart="14dp"
-                        android:paddingTop="9dp"
-                        android:paddingEnd="14dp"
-                        android:paddingBottom="9dp"
+                        android:layout_marginTop="1.5dp"
+                        android:layout_marginEnd="1.5dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="66dp"
+                        android:paddingEnd="18dp"
+                        android:paddingBottom="16dp"
                         android:text="2026年11月15日"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                 </FrameLayout>
-            </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
             <!-- ==================== 饮食卡 ==================== -->
             <com.google.android.material.card.MaterialCardView
@@ -464,21 +466,11 @@
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="V"
-                                    android:textColor="@color/brand_green_dark"
-                                    android:textSize="11sp"
-                                    android:textStyle="bold" />
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_vs"/>
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="S"
-                                    android:textColor="@color/state_warning"
-                                    android:textSize="11sp"
-                                    android:textStyle="bold" />
                             </LinearLayout>
 
                             <TextView
@@ -534,12 +526,9 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="@dimen/icon_box_size"
-                                android:layout_height="@dimen/icon_box_size"
-                                android:background="@drawable/bg_icon_chip"
-                                android:backgroundTint="@color/chip_teal"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:contentDescription="@string/home_weight"
-                                android:padding="5dp"
                                 android:src="@drawable/ic_scale" />
 
                             <TextView
@@ -613,12 +602,8 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="@dimen/icon_box_size"
-                                android:layout_height="@dimen/icon_box_size"
-                                android:background="@drawable/bg_icon_chip"
-                                android:backgroundTint="@color/chip_purple"
-                                android:contentDescription="@string/home_sport"
-                                android:padding="5dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:src="@drawable/ic_dumbbell" />
 
                             <TextView
@@ -714,12 +699,8 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="@dimen/icon_box_size"
-                                android:layout_height="@dimen/icon_box_size"
-                                android:background="@drawable/bg_icon_chip"
-                                android:backgroundTint="@color/chip_orange"
-                                android:contentDescription="@string/home_fasting"
-                                android:padding="5dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:src="@drawable/ic_fasting" />
 
                             <TextView
@@ -783,12 +764,8 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="@dimen/icon_box_size"
-                                android:layout_height="@dimen/icon_box_size"
-                                android:background="@drawable/bg_icon_chip"
-                                android:backgroundTint="@color/chip_blue"
-                                android:contentDescription="@string/home_water"
-                                android:padding="5dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:src="@drawable/ic_water_cup" />
 
                             <TextView

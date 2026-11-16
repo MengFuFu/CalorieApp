@@ -52,10 +52,7 @@ class MomoBottomBar @JvmOverloads constructor(
     var onAddClick: (() -> Unit)? = null
 
     init {
-        // FAB 要靠 translationY 浮到底栏外面，父容器不放开裁剪就会被切掉一半
-        clipChildren = false
-        clipToPadding = false
-        // 白底：底栏的 padding 区域也会被背景覆盖，所以系统导航条背后同样是白色
+        // 白底：底栏的 padding 区域也会被背景覆盖，系统导航条背后同样是白色
         setBackgroundColor(ContextCompat.getColor(context, R.color.surface_card))
 
         // 系统导航条高度由底栏自己消化（加在 padding 上），
@@ -74,8 +71,7 @@ class MomoBottomBar @JvmOverloads constructor(
             }
         }
 
-        // 上浮：layout_gravity=top 让 FAB 顶边贴住底栏顶边，再往上挪 fab_lift
-        binding.fabAdd.translationY = -resources.getDimension(R.dimen.fab_lift)
+        // 加号就在底栏内部（layout_gravity=center），不再需要上浮位移
         binding.fabAdd.setOnClickListener { onAddClick?.invoke() }
 
         // 初始选中「记录」，保证第一帧就有正确的视觉状态
