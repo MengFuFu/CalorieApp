@@ -175,7 +175,10 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     private fun showInputDialog() {
         val state = viewModel.uiState.value
         // 默认今天；历史日期由面板里的日期滚轮改
-        WeightInputSheet.newInstance(state.currentWeightKg, LocalDateTime.now())
+        WeightInputSheet.newInstance(
+            state.currentWeightKg,
+            LocalDateTime.now(),
+            weightByDate = state.weightByDate)
             .show(parentFragmentManager, WeightInputSheet.TAG)
     }
 

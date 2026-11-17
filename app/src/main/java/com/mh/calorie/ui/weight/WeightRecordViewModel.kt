@@ -59,6 +59,7 @@ class WeightRecordViewModel @Inject constructor(
             isGainGoal = repo.targetWeightKg > repo.startWeightKg,
             chartPoints = points,
             lastRecordDate = all.lastOrNull()?.date,
+            weightByDate = all.associate { it.date.toString() to it.weightKg },
             rangeDays = rangeDays
         )
     }

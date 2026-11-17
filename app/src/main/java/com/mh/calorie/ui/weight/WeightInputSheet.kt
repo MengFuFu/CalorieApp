@@ -35,6 +35,8 @@ class WeightInputSheet : BottomSheetDialogFragment(){
 
     /** 用户已按下的字符（不含千分位等展示格式），渲染时再决定怎么显示 */
     private val input = StringBuilder()
+    /** 日期(yyyy-MM-dd) → 当天体重，由调用方递进来；切日期时用它回填 */
+    private var weightByDate: Map<String, Float> = emptyMap()
 
     /** 校验失败后数字标红，下一次按键自动恢复 */
     private var hasError = false
@@ -52,10 +54,21 @@ class WeightInputSheet : BottomSheetDialogFragment(){
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // 先恢复时间，再渲染，否则第一次 render 会把胶囊重置成 now
+        // 先恢复时间：render() 会用 selectedAt，晚恢复会把胶囊刷回 now
         arguments?.getString(ARG_DATETIME)?.let {
             runCatching { LocalDateTime.parse(it, TIME_FORMATTER) }.getOrNull()
         }?.let { selectedAt = it }
+
+        // Bundle 里存的是 HashMap（Serializable），读回来还是同一张表
+        @Suppress("DEPRECATION")
+        weightByDate = (arguments?.getSerializable(ARG_WEIGHTS) as? Map<String, Float>)
+            ?: emptyMap()
+
+        // 预填优先级：所选的这一天已有的记录 > 当前体重
+        val initial = weightByDate[selectedAt.toLocalDate().toString()]
+            ?: arguments?.getFloat(ARG_CURRENT)
+            ?: 0f
+        if (initial > 0f) input.append(formatKg(initial))
 
 
         // 预填上一次的体重，用户改数字比从零开始快
@@ -76,6 +89,12 @@ class WeightInputSheet : BottomSheetDialogFragment(){
             val text = bundle.getString(DateWheelSheet.RESULT_DATETIME)
             if(text != null) {
                 selectedAt = LocalDateTime.parse(text, DateWheelSheet.FORMATTER)
+
+                // 那天记过 → 把旧值填回来，用户是在「改」；没记过就保留当前输入
+                weightByDate[selectedAt.toLocalDate().toString()]?.let { kg ->
+                    input.clear()
+                    input.append(formatKg(kg))
+                }
                 render()
             }
         }
@@ -224,6 +243,8 @@ class WeightInputSheet : BottomSheetDialogFragment(){
         const val RESULT_DATETIME = "weight_input_time"
 
         private const val ARG_CURRENT = "arg_current"
+        private const val ARG_DATETIME = "arg_datetime"
+        private const val ARG_WEIGHTS = "arg_weights"
         private const val MIN_KG = 20f
         private const val MAX_KG = 300f
         private const val DEFAULT_TEXT = "0.0"
@@ -231,13 +252,15 @@ class WeightInputSheet : BottomSheetDialogFragment(){
         val TIME_FORMATTER: DateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.US)
 
-        private const val ARG_DATETIME = "arg_datetime"
-
-        fun newInstance(currentKg: Float, at: LocalDateTime = LocalDateTime.now()): WeightInputSheet =
+        fun newInstance(
+            currentKg: Float,
+            at: LocalDateTime = LocalDateTime.now(),
+            weightByDate: Map<String, Float> = emptyMap()): WeightInputSheet =
             WeightInputSheet().apply {
             arguments = bundleOf(
                 ARG_CURRENT to currentKg,
-                ARG_DATETIME to at.format(TIME_FORMATTER))
+                ARG_DATETIME to at.format(TIME_FORMATTER),
+                ARG_WEIGHTS to HashMap(weightByDate))
         }
     }
 }

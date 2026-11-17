@@ -28,6 +28,8 @@ data class WeightUiState(
     /** 目标体重 > 初始体重 = 增重任务，进度文案跟着变 */
     val isGainGoal: Boolean = false,
     val chartPoints: List<WeightChartPoint> = emptyList(),
+    /** 日期(yyyy-MM-dd) → 当天体重。输入面板切日期时回填用，避免用户在历史日期上误改 */
+    val weightByDate: Map<String, Float> = emptyMap(),
     val lastRecordDate: LocalDate? = null,
     val rangeDays: Int = 30
 )
