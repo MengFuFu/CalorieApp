@@ -70,11 +70,6 @@ class WeightInputSheet : BottomSheetDialogFragment(){
             ?: 0f
         if (initial > 0f) input.append(formatKg(initial))
 
-
-        // 预填上一次的体重，用户改数字比从零开始快
-        val current = arguments?.getFloat(ARG_CURRENT) ?: 0f
-        if(current > 0f) input.append(formatKg(current))
-
         binding.btnClose.setOnClickListener { dismiss() }
         binding.btnSave.setOnClickListener { save() }
 
