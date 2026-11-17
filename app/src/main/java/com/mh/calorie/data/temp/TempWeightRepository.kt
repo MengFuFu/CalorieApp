@@ -39,4 +39,8 @@ class TempWeightRepository @Inject constructor() {
         records += WeightRecord(date, weightKg)
         records.sortBy { it.date }
     }
+
+    /** 查某一天已经记过的体重，没有返回 null（输入面板预填要用） */
+    fun weightOn(date: LocalDate): Float? =
+        records.firstOrNull { it.date == date }?.weightKg
 }

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
@@ -28,8 +29,10 @@ class WeightRecordViewModel @Inject constructor(
     /** 近一月 / 近一周切换 */
     fun selectRange(days: Int) = refresh(days)
 
-    fun addWeight(weightKg: Float) {
-        repo.add(LocalDate.now(), weightKg)
+    /** 记录体重。at 由输入面板的日期滚轮决定，不传就是今天 */
+    fun addWeight(weightKg: Float, at: LocalDateTime = LocalDateTime.now()) {
+        // 只取到「日」：同一天多次记录以最后一次为准，图上不会一天两个点
+        repo.add(at.toLocalDate(), weightKg)
         refresh(_uiState.value.rangeDays)
     }
 

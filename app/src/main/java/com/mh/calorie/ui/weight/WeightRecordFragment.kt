@@ -19,6 +19,7 @@ import com.mh.calorie.databinding.FragmentWeightRecordBinding
 import com.mh.calorie.ui.widget.WeightChartView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -69,8 +70,13 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
         parentFragmentManager.setFragmentResultListener(
             WeightInputSheet.REQUEST_KEY, viewLifecycleOwner
-        ) { _, bundle ->                                    // ← 多出来的 _ 是 requestKey
-            viewModel.addWeight(bundle.getFloat(WeightInputSheet.RESULT_WEIGHT))
+        ) { _, bundle ->
+            val kg = bundle.getFloat(WeightInputSheet.RESULT_WEIGHT)
+            // 日期缺失（老版本面板/异常情况）就退回今天，保证不会崩
+            val at = bundle.getString(WeightInputSheet.RESULT_DATETIME)
+                ?.let { runCatching { LocalDateTime.parse(it, WeightInputSheet.TIME_FORMATTER) }.getOrNull() }
+                ?: LocalDateTime.now()
+            viewModel.addWeight(kg, at)
         }
     }
 
@@ -167,7 +173,9 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     }
 
     private fun showInputDialog() {
-        WeightInputSheet.newInstance(binding.tvWeight.text?.toString()?.toFloatOrNull() ?: 0f)
+        val state = viewModel.uiState.value
+        // 默认今天；历史日期由面板里的日期滚轮改
+        WeightInputSheet.newInstance(state.currentWeightKg, LocalDateTime.now())
             .show(parentFragmentManager, WeightInputSheet.TAG)
     }
 

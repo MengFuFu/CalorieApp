@@ -52,6 +52,12 @@ class WeightInputSheet : BottomSheetDialogFragment(){
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // 先恢复时间，再渲染，否则第一次 render 会把胶囊重置成 now
+        arguments?.getString(ARG_DATETIME)?.let {
+            runCatching { LocalDateTime.parse(it, TIME_FORMATTER) }.getOrNull()
+        }?.let { selectedAt = it }
+
+
         // 预填上一次的体重，用户改数字比从零开始快
         val current = arguments?.getFloat(ARG_CURRENT) ?: 0f
         if(current > 0f) input.append(formatKg(current))
@@ -189,7 +195,13 @@ class WeightInputSheet : BottomSheetDialogFragment(){
             render()
             return
         }
-        parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf(RESULT_WEIGHT to value))
+        parentFragmentManager.setFragmentResult(
+            REQUEST_KEY,
+            bundleOf(
+                RESULT_WEIGHT to value,
+                RESULT_DATETIME to selectedAt.format(TIME_FORMATTER)
+            )
+        )
         dismiss()
     }
 
@@ -209,17 +221,23 @@ class WeightInputSheet : BottomSheetDialogFragment(){
         /** 与旧弹窗保持一致的 key，调用方代码不用跟着改 */
         const val REQUEST_KEY = "weight_input_request"
         const val RESULT_WEIGHT = "weight_input_value"
+        const val RESULT_DATETIME = "weight_input_time"
 
         private const val ARG_CURRENT = "arg_current"
         private const val MIN_KG = 20f
         private const val MAX_KG = 300f
         private const val DEFAULT_TEXT = "0.0"
 
-        private val TIME_FORMATTER: DateTimeFormatter =
+        val TIME_FORMATTER: DateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.US)
 
-        fun newInstance(currentKg: Float): WeightInputSheet = WeightInputSheet().apply {
-            arguments = bundleOf(ARG_CURRENT to currentKg)
+        private const val ARG_DATETIME = "arg_datetime"
+
+        fun newInstance(currentKg: Float, at: LocalDateTime = LocalDateTime.now()): WeightInputSheet =
+            WeightInputSheet().apply {
+            arguments = bundleOf(
+                ARG_CURRENT to currentKg,
+                ARG_DATETIME to at.format(TIME_FORMATTER))
         }
     }
 }
