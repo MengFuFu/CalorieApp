@@ -16,6 +16,7 @@ import com.mh.calorie.databinding.ActivityMainBinding
 import com.mh.calorie.ui.widget.MomoBottomBar
 import dagger.hilt.android.AndroidEntryPoint
 import android.widget.Toast
+import androidx.core.view.isVisible
 
 /**
  * 全局唯一的 Activity：只做三件事
@@ -83,7 +84,11 @@ class MainActivity : AppCompatActivity() {
         // 导航 → 底栏。以「当前目的地」为唯一真值来源，
         // 这样系统返回键、进程恢复、深链接改动页面时，底栏永远是对的。
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.bottomBar.select(destination.id.toTab())
+            // 体重详情这类二级页不显示底栏；Tab 页才显示。
+            // 必须在这里同步隐藏，否则进二级页后底栏还亮着「记录」，用户会以为能点
+            val isTab = destination.id.isTopLevelTab()
+            binding.bottomBar.isVisible = isTab
+            if (isTab) binding.bottomBar.select(destination.id.toTab())
         }
     }
 
@@ -125,4 +130,10 @@ class MainActivity : AppCompatActivity() {
         R.id.profileFragment -> MomoBottomBar.Tab.PROFILE
         else -> MomoBottomBar.Tab.RECORD
     }
+
+    private fun Int.isTopLevelTab(): Boolean =
+        this == R.id.homeFragment ||
+                this == R.id.planFragment ||
+                this == R.id.statsFragment ||
+                this == R.id.profileFragment
 }

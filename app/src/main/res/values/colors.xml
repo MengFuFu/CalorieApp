@@ -63,4 +63,13 @@
 
     <!-- 弧形仪表轨道：比 brand_green_surface 再淡一点点，设计稿采样 #DDF2D6 -->
     <color name="arc_track">#DDF2D6</color>
+
+    <!-- 体重页 -->
+    <color name="segment_track">#EDF2EA</color>
+    <color name="bmi_low">#5B9BFF</color>
+    <color name="bmi_normal">#2FD3A8</color>
+    <color name="bmi_over">#FFC94D</color>
+    <color name="bmi_obese">#FF5B5B</color>
+    <color name="chart_guide">#F0E4CC</color>
+    <color name="chip_red">#FFD9D9</color>
 </resources>

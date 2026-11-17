@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.mh.calorie.R
 import com.mh.calorie.databinding.FragmentHomeBinding
 import androidx.core.view.updatePadding
+import androidx.navigation.fragment.findNavController
 
 /**
  * 记录页（首页）占位。M6 会用真实首页布局整体替换掉这个类的内容。
@@ -34,8 +35,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.btnAiPhoto.setOnClickListener { comingSoon("AI 拍照识别", "M12") }
         binding.cardCanIEat.setOnClickListener { comingSoon("我可以吃吗", "M13") }
         binding.cardFoodPk.setOnClickListener { comingSoon("食物 PK", "M13") }
-        binding.cardWeight.setOnClickListener { comingSoon("体重详情", "M8") }
-        binding.btnRecordWeight.setOnClickListener { comingSoon("记体重", "M8") }
+        val toWeight: () -> Unit = {
+            findNavController().navigate(R.id.action_homeFragment_to_weightRecordFragment)
+        }
+        binding.cardWeight.setOnClickListener { toWeight() }
+        binding.btnRecordWeight.setOnClickListener { toWeight() }
         binding.cardSport.setOnClickListener { comingSoon("运动详情", "M8") }
         binding.btnRecordSport.setOnClickListener { comingSoon("记运动", "M8") }
         binding.cardFasting.setOnClickListener { comingSoon("断食计划", "M9") }

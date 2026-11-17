@@ -51,4 +51,35 @@
 
     <!-- ===== AI 聊天（加号入口） ===== -->
     <string name="ai_chat">AI 聊天</string>
+
+    <string name="weight_record_title">体重数值记录</string>
+    <string name="weight_tab_weight">体重</string>
+    <string name="weight_tab_measure">围度</string>
+    <string name="weight_current">当前体重</string>
+    <string name="weight_record_action">+ 记录体重</string>
+    <string name="weight_progress_lose">减重进度</string>
+    <string name="weight_progress_gain">增重进度</string>
+    <string name="weight_changed">累计变化 %1$s 公斤</string>
+    <string name="weight_percent">%1$d%%</string>
+    <string name="weight_start">初始体重 %1$s</string>
+    <string name="weight_target">目标体重 %1$s</string>
+    <string name="weight_bmi">BMI 指数</string>
+    <string name="weight_body_fat">体脂率</string>
+    <string name="weight_body_fat_empty">——</string>
+    <string name="weight_history">历史体重</string>
+    <string name="weight_more">查看更多</string>
+    <string name="weight_range_month">近一月</string>
+    <string name="weight_range_week">近一周</string>
+    <string name="weight_dialog_title">记录体重</string>
+    <string name="weight_dialog_hint">体重</string>
+    <string name="weight_dialog_invalid">请输入 20~300 之间的体重</string>
+    <string name="weight_unit_kg">kg</string>
+    <string name="weight_edit_start">修改初始体重</string>
+    <string name="weight_edit_target">修改目标体重</string>
+    <string name="weight_measure_coming">围度记录将在后续模块接入</string>
+    <string name="weight_edit_coming">初始 / 目标体重将在档案模块接入</string>
+    <string name="weight_more_coming">完整历史记录将在统计模块接入</string>
+    <string name="action_back">返回</string>
+    <string name="action_save">保存</string>
+    <string name="action_cancel">取消</string>
 </resources>

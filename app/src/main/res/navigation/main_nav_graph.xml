@@ -11,7 +11,18 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.mh.calorie.ui.home.HomeFragment"
-        android:label="@string/page_title_home" />
+        android:label="@string/page_title_home" >
+
+        <!-- 首页「体重」卡 / 「记体重」按钮都走这一条 -->
+        <action
+            android:id="@+id/action_homeFragment_to_weightRecordFragment"
+            app:destination="@id/weightRecordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/weightRecordFragment"
+        android:name="com.mh.calorie.ui.weight.WeightRecordFragment"
+        android:label="@string/weight_record_title" />
 
     <fragment
         android:id="@+id/planFragment"
