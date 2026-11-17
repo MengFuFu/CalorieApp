@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 根节点就是 TextView，代码里 inflate 后直接 findViewById(R.id.tvToast) -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvToast"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_toast_dark"
+    android:paddingHorizontal="@dimen/space_16"
+    android:paddingVertical="@dimen/space_8"
+    android:textColor="@color/white"
+    android:textSize="13sp" />

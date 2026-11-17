@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_sheet_white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/space_16">
+
+    <!-- 顶部工具行：时间胶囊（下一步接日期滚轮）+ 关闭 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/space_16"
+        android:paddingTop="@dimen/space_12">
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_chip_time"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawablePadding="@dimen/space_4"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/space_16"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            app:drawableTint="@color/text_primary"
+            tools:text="2026-11-17 18:39" />
+
+        <ImageView
+            android:id="@+id/btnClose"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_close"
+            android:padding="@dimen/space_6"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_tertiary" />
+    </FrameLayout>
+
+    <!-- 大数字 + 绿线 + 字段名 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_20"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textAppearance="@style/TextAppearance.Momo.NumberHuge"
+            tools:text="52.0" />
+
+        <!-- 固定 200dp：数值再长也不会把版面撑开 -->
+        <View
+            android:layout_width="200dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/space_6"
+            android:background="@drawable/bg_underline" />
+
+        <TextView
+            android:id="@+id/tvField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_6"
+            android:text="@string/sheet_field_weight"
+            android:textColor="@color/brand_green_dark"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- 自绘键盘：3 列 × 4 行，GridLayout 自动换行 -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
+        android:columnCount="3"
+        android:paddingHorizontal="@dimen/space_12">
+
+        <TextView
+            android:id="@+id/key1"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="1" />
+
+        <TextView
+            android:id="@+id/key2"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="2" />
+
+        <TextView
+            android:id="@+id/key3"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="3" />
+
+        <TextView
+            android:id="@+id/key4"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="4" />
+
+        <TextView
+            android:id="@+id/key5"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="5" />
+
+        <TextView
+            android:id="@+id/key6"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="6" />
+
+        <TextView
+            android:id="@+id/key7"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="7" />
+
+        <TextView
+            android:id="@+id/key8"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="8" />
+
+        <TextView
+            android:id="@+id/key9"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="9" />
+
+        <TextView
+            android:id="@+id/keyDot"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="." />
+
+        <TextView
+            android:id="@+id/key0"
+            style="@style/Widget.Momo.KeypadKey"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:text="0" />
+
+        <ImageView
+            android:id="@+id/keyDel"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_columnWeight="1"
+            android:background="@drawable/bg_keypad_key"
+            android:clickable="true"
+            android:contentDescription="@string/keypad_delete"
+            android:focusable="true"
+            android:padding="@dimen/space_16"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_backspace"
+            app:tint="@color/text_primary" />
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btnSave"
+        style="@style/Widget.Momo.Button.Pill.Filled"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="@dimen/space_24"
+        android:layout_marginTop="@dimen/space_16"
+        android:text="@string/action_save"
+        android:textSize="16sp" />
+</LinearLayout>

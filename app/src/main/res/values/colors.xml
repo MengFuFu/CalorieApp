@@ -72,4 +72,10 @@
     <color name="bmi_obese">#FF5B5B</color>
     <color name="chart_guide">#F0E4CC</color>
     <color name="chip_red">#FFD9D9</color>
+
+    <color name="surface_muted">#F3F6F0</color>
+
+    <color name="keypad_ripple">#1A000000</color>
+
+    <color name="toast_bg">#CC000000</color>
 </resources>

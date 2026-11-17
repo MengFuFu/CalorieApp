@@ -86,4 +86,13 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="Widget.Momo.KeypadKey" parent="">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/bg_keypad_key</item>   <!-- 改这里 -->
+    </style>
+
 </resources>

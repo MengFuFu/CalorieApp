@@ -68,9 +68,9 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            WeightInputDialog.REQUEST_KEY, viewLifecycleOwner
-        ) { _, bundle ->
-            viewModel.addWeight(bundle.getFloat(WeightInputDialog.RESULT_WEIGHT))
+            WeightInputSheet.REQUEST_KEY, viewLifecycleOwner
+        ) { _, bundle ->                                    // ← 多出来的 _ 是 requestKey
+            viewModel.addWeight(bundle.getFloat(WeightInputSheet.RESULT_WEIGHT))
         }
     }
 
@@ -167,8 +167,8 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     }
 
     private fun showInputDialog() {
-        WeightInputDialog.newInstance(_binding!!.tvWeight.text?.toString()?.toFloatOrNull() ?: 0f)
-            .show(parentFragmentManager, WeightInputDialog.TAG)
+        WeightInputSheet.newInstance(binding.tvWeight.text?.toString()?.toFloatOrNull() ?: 0f)
+            .show(parentFragmentManager, WeightInputSheet.TAG)
     }
 
     private fun tagChipColor(category: BmiCategory): Int = when (category) {
