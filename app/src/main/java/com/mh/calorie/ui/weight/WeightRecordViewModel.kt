@@ -36,6 +36,18 @@ class WeightRecordViewModel @Inject constructor(
         refresh(_uiState.value.rangeDays)
     }
 
+    /** 改初始体重：进度基准变了，整页重算 */
+    fun setStartWeight(startKg: Float) {
+        repo.startWeightKg = startKg
+        refresh(_uiState.value.rangeDays)
+    }
+
+    /** 改目标体重：进度终点和「增重/减重」文案一起变 */
+    fun setTargetWeight(targetKg: Float) {
+        repo.targetWeightKg = targetKg
+        refresh(_uiState.value.rangeDays)
+    }
+
     private fun refresh(rangeDays: Int) {
         val all = repo.all()
         val current = all.lastOrNull()?.weightKg ?: repo.startWeightKg

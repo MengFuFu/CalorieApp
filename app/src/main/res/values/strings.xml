@@ -94,4 +94,8 @@
     <string name="date_today">今天</string>
     <string name="hour_format">%1$d时</string>
     <string name="minute_format">%1$d分</string>
+
+    <string name="profile_weight_start">初始体重</string>
+    <string name="profile_weight_target">目标体重</string>
+    <string name="unit_kg">kg</string>
 </resources>

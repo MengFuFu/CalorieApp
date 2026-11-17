@@ -16,8 +16,8 @@ import javax.inject.Singleton
 class TempWeightRepository @Inject constructor() {
 
     /** 档案字段，M5 会挪到 ProfileRepository */
-    val startWeightKg = 55.0f
-    val targetWeightKg = 59.9f
+    var startWeightKg = 55.0f
+    var targetWeightKg = 59.9f
     val heightCm = 168.0f
     val bodyFatPercent: Float? = null
 

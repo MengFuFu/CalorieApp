@@ -38,6 +38,15 @@ class WeightInputSheet : BottomSheetDialogFragment(){
     /** 日期(yyyy-MM-dd) → 当天体重，由调用方递进来；切日期时用它回填 */
     private var weightByDate: Map<String, Float> = emptyMap()
 
+    /** 面板用途：记录体重（带日期）／修改某一个档案体重 */
+    private var mode = Mode.RECORD
+    private var field = Field.START
+    /** 档案模式下要预填的那个字段的值 */
+    private var currentKg = 0f
+
+    enum class Mode {RECORD, PROFILE}
+    enum class Field {START, TARGET}
+
     /** 校验失败后数字标红，下一次按键自动恢复 */
     private var hasError = false
 
@@ -54,6 +63,13 @@ class WeightInputSheet : BottomSheetDialogFragment(){
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // 面板用途：点「记录体重」是 RECORD，点两个铅笔是 PROFILE
+        mode = arguments?.getString(ARG_MODE)
+            ?.let { runCatching { Mode.valueOf(it) }.getOrNull() } ?: Mode.RECORD
+        field = arguments?.getString(ARG_FIELD)
+            ?.let { runCatching { Field.valueOf(it) }.getOrNull() } ?: Field.START
+        currentKg = arguments?.getFloat(ARG_CURRENT, 0f) ?: 0f
+
         // 先恢复时间：render() 会用 selectedAt，晚恢复会把胶囊刷回 now
         arguments?.getString(ARG_DATETIME)?.let {
             runCatching { LocalDateTime.parse(it, TIME_FORMATTER) }.getOrNull()
@@ -64,33 +80,45 @@ class WeightInputSheet : BottomSheetDialogFragment(){
         weightByDate = (arguments?.getSerializable(ARG_WEIGHTS) as? Map<String, Float>)
             ?: emptyMap()
 
-        // 预填优先级：所选的这一天已有的记录 > 当前体重
-        val initial = weightByDate[selectedAt.toLocalDate().toString()]
-            ?: arguments?.getFloat(ARG_CURRENT)
-            ?: 0f
-        if (initial > 0f) input.append(formatKg(initial))
+        // 档案模式：顶部胶囊当静态字段名用，去掉时钟、箭头和点击
+        if(mode == Mode.PROFILE) {
+            binding.tvTime.isClickable = false
+            binding.tvTime.foreground = null
+            binding.tvTime.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+        }
+
+        // 预填：档案模式填该字段现值；记录模式填所选日期那天的历史值
+        val initial = if(mode == Mode.PROFILE) {
+            currentKg
+        } else {
+            weightByDate[selectedAt.toLocalDate().toString()] ?: currentKg
+        }
+        if (initial > 0f && input.isEmpty()) input.append(formatKg(initial))
 
         binding.btnClose.setOnClickListener { dismiss() }
         binding.btnSave.setOnClickListener { save() }
 
-        binding.tvTime.setOnClickListener {
-            DateWheelSheet.newInstance(selectedAt).show(childFragmentManager, DateWheelSheet.TAG)
-        }
+        // 日期面板只有「记录体重」才需要
+        if(mode == Mode.RECORD) {
+            binding.tvTime.setOnClickListener {
+                DateWheelSheet.newInstance(selectedAt).show(childFragmentManager, DateWheelSheet.TAG)
+            }
 
-        // 日期面板确认后回到这里，更新时间并重绘
-        childFragmentManager.setFragmentResultListener(
-            DateWheelSheet.REQUEST_KEY, viewLifecycleOwner
-        ) { _, bundle ->
-            val text = bundle.getString(DateWheelSheet.RESULT_DATETIME)
-            if(text != null) {
-                selectedAt = LocalDateTime.parse(text, DateWheelSheet.FORMATTER)
+            // 日期面板确认后回到这里，更新时间并重绘
+            childFragmentManager.setFragmentResultListener(
+                DateWheelSheet.REQUEST_KEY, viewLifecycleOwner
+            ) { _, bundle ->
+                val text = bundle.getString(DateWheelSheet.RESULT_DATETIME)
+                if(text != null) {
+                    selectedAt = LocalDateTime.parse(text, DateWheelSheet.FORMATTER)
 
-                // 那天记过 → 把旧值填回来，用户是在「改」；没记过就保留当前输入
-                weightByDate[selectedAt.toLocalDate().toString()]?.let { kg ->
-                    input.clear()
-                    input.append(formatKg(kg))
+                    // 那天记过 → 把旧值填回来，用户是在「改」；没记过就保留当前输入
+                    weightByDate[selectedAt.toLocalDate().toString()]?.let { kg ->
+                        input.clear()
+                        input.append(formatKg(kg))
+                    }
+                    render()
                 }
-                render()
             }
         }
 
@@ -160,7 +188,13 @@ class WeightInputSheet : BottomSheetDialogFragment(){
             if (hasError) R.color.state_error else R.color.text_primary
             )
         )
-        binding.tvTime.text = selectedAt.format(TIME_FORMATTER)
+
+        // 顶部胶囊：记录模式显示时间，档案模式显示字段名
+        binding.tvTime.text = if(mode == Mode.PROFILE) {
+            getString(if (field == Field.START) R.string.profile_weight_start else R.string.profile_weight_target)
+        } else {
+            selectedAt.format(TIME_FORMATTER)
+        }
     }
 
     /** 上一次弹提示的时间，防止连按数字时排队弹一串 */
@@ -209,6 +243,24 @@ class WeightInputSheet : BottomSheetDialogFragment(){
             render()
             return
         }
+
+        if(mode == Mode.PROFILE) {
+            // 档案体重：只回传「哪个字段 + 值」
+            parentFragmentManager.setFragmentResult(
+                REQUEST_KEY_PROFILE,
+                bundleOf(RESULT_FIELD to field.name, RESULT_VALUE to value)
+            )
+        } else {
+            // 记录体重：回传「值 + 时间」
+            parentFragmentManager.setFragmentResult(
+                REQUEST_KEY,
+                bundleOf(
+                    RESULT_WEIGHT to value,
+                    RESULT_DATETIME to selectedAt.format(TIME_FORMATTER)
+                )
+            )
+        }
+
         parentFragmentManager.setFragmentResult(
             REQUEST_KEY,
             bundleOf(
@@ -240,9 +292,16 @@ class WeightInputSheet : BottomSheetDialogFragment(){
         private const val ARG_CURRENT = "arg_current"
         private const val ARG_DATETIME = "arg_datetime"
         private const val ARG_WEIGHTS = "arg_weights"
+        private const val ARG_MODE = "arg_mode"
+        private const val ARG_FIELD = "arg_field"
         private const val MIN_KG = 20f
         private const val MAX_KG = 300f
         private const val DEFAULT_TEXT = "0.0"
+
+        /** 档案体重面板的结果 key，和记录体重完全分开 */
+        const val REQUEST_KEY_PROFILE = "profile_weight_request"
+        const val RESULT_FIELD = "profile_weight_field"
+        const val RESULT_VALUE = "profile_weight_value"
 
         val TIME_FORMATTER: DateTimeFormatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.US)
@@ -257,5 +316,15 @@ class WeightInputSheet : BottomSheetDialogFragment(){
                 ARG_DATETIME to at.format(TIME_FORMATTER),
                 ARG_WEIGHTS to HashMap(weightByDate))
         }
+
+        /** 改某一个档案体重：点哪个铅笔就开哪个，顶部只显示字段名 */
+        fun newProfileInstance(field: Field, currentKg: Float): WeightInputSheet =
+            WeightInputSheet().apply {
+                arguments = bundleOf(
+                    ARG_MODE to Mode.PROFILE.name,
+                    ARG_FIELD to field.name,
+                    ARG_CURRENT to currentKg
+                )
+            }
     }
 }

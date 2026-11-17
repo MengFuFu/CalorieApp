@@ -45,8 +45,15 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.btnRecordWeight.setOnClickListener { showInputDialog() }
         binding.tvMore.setOnClickListener { toast(R.string.weight_more_coming) }
-        binding.ivEditStart.setOnClickListener { toast(R.string.weight_edit_coming) }
-        binding.ivEditTarget.setOnClickListener { toast(R.string.weight_edit_coming) }
+        binding.ivEditStart.setOnClickListener {
+            WeightInputSheet.newProfileInstance(
+                WeightInputSheet.Field.START, viewModel.uiState.value.startWeightKg
+            ).show(parentFragmentManager, WeightInputSheet.TAG)
+        }
+        binding.ivEditTarget.setOnClickListener {
+            WeightInputSheet.newProfileInstance(
+            WeightInputSheet.Field.TARGET, viewModel.uiState.value.targetWeightKg
+        ).show(parentFragmentManager, WeightInputSheet.TAG) }
     }
 
     private fun setupSegments() {
@@ -69,14 +76,14 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            WeightInputSheet.REQUEST_KEY, viewLifecycleOwner
+            WeightInputSheet.REQUEST_KEY_PROFILE, viewLifecycleOwner
         ) { _, bundle ->
-            val kg = bundle.getFloat(WeightInputSheet.RESULT_WEIGHT)
+            val value = bundle.getFloat(WeightInputSheet.RESULT_VALUE)
             // 日期缺失（老版本面板/异常情况）就退回今天，保证不会崩
-            val at = bundle.getString(WeightInputSheet.RESULT_DATETIME)
-                ?.let { runCatching { LocalDateTime.parse(it, WeightInputSheet.TIME_FORMATTER) }.getOrNull() }
-                ?: LocalDateTime.now()
-            viewModel.addWeight(kg, at)
+            when (bundle.getString(WeightInputSheet.RESULT_FIELD)) {
+                WeightInputSheet.Field.START.name -> viewModel.setStartWeight(value)
+                WeightInputSheet.Field.TARGET.name -> viewModel.setTargetWeight(value)
+            }
         }
     }
 
@@ -101,8 +108,8 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         binding.tvPercent.text = getString(R.string.weight_percent, state.progressPercent)
         movePercentChip(state.progressPercent)
 
-        binding.tvStartWeight.text = getString(R.string.weight_start, formatKg(state.startWeightKg))
-        binding.tvTargetWeight.text = getString(R.string.weight_target, formatKg(state.targetWeightKg))
+        binding.tvStartValue.text = formatKg(state.startWeightKg)
+        binding.tvTargetValue.text = formatKg(state.targetWeightKg)
 
         binding.tvBmi.text = String.format(Locale.US, "%.2f", state.bmi)
         binding.tvBmiTag.text = state.bmiCategory.label
