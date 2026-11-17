@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.mh.calorie.R
 import com.mh.calorie.core.domain.bmi.BmiCategory
 import com.mh.calorie.databinding.FragmentWeightRecordBinding
+import com.mh.calorie.ui.widget.InfoDialogFragment
 import com.mh.calorie.ui.widget.WeightChartView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -84,6 +85,21 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
                 WeightInputSheet.Field.START.name -> viewModel.setStartWeight(value)
                 WeightInputSheet.Field.TARGET.name -> viewModel.setTargetWeight(value)
             }
+        }
+
+        binding.ivHelpBmi.setOnClickListener {
+            InfoDialogFragment.newInstance(
+                getString(R.string.bmi_help_title),
+                getString(R.string.bmi_help_body),
+                getString(R.string.bmi_help_formula)
+            ).show(parentFragmentManager, InfoDialogFragment.TAG)
+        }
+
+        binding.ivHelpBfp.setOnClickListener {
+            InfoDialogFragment.newInstance(
+                getString(R.string.bfp_help_title),
+                getString(R.string.bfp_help_body)
+            ).show(parentFragmentManager, InfoDialogFragment.TAG)
         }
     }
 

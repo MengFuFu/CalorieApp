@@ -334,9 +334,12 @@
                             android:textSize="15sp" />
 
                         <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:contentDescription="@null"
+                            android:id="@+id/ivHelpBmi"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/bmi_help_title"
+                            android:padding="8dp"
                             android:src="@drawable/ic_help"
                             app:tint="@color/text_tertiary" />
                     </LinearLayout>
@@ -407,9 +410,12 @@
                             android:textSize="15sp" />
 
                         <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:contentDescription="@null"
+                            android:id="@+id/ivHelpBfp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/bfp_help_title"
+                            android:padding="8dp"
                             android:src="@drawable/ic_help"
                             app:tint="@color/text_tertiary" />
                     </LinearLayout>

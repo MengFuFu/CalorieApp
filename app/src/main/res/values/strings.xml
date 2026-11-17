@@ -98,4 +98,14 @@
     <string name="profile_weight_start">初始体重</string>
     <string name="profile_weight_target">目标体重</string>
     <string name="unit_kg">kg</string>
+
+    <string name="action_got_it">我知道了</string>
+    <string name="bmi_help_title">BMI 指数</string>
+    <string name="bmi_help_body">身体质量指数（BMI）是目前国际上常用的肥胖衡量标准。使用的是更适合亚洲人体质的衡量标准。</string>
+    <string name="bmi_help_formula">BMI=体重（kg)/身高（m)^2</string>
+    <string name="bfp_help_title">体脂率</string>
+    <!-- 这条里出现 4 个 % ，必须 formatted="false"，否则 aapt2 会报 non-positional format -->
+    <string name="bfp_help_body" formatted="false">体脂率（BFP）是人体脂肪含量占体重的百分比，直接反映人体脂肪水平，是评价肥胖的精准指标。体脂率测量的最佳时间是早晨，最好是刚从充足的睡眠（7~8小时）中醒来，此时体重和腰围等的测量数据是最准确的，即测量体脂率准确性最高。\n\n依据《中国居民膳食指南(2022)》，成人正常体脂范围：女性25%~30%、男性15%~20%。</string>
+
+
 </resources>

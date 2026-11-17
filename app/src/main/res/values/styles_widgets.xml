@@ -95,4 +95,13 @@
         <item name="android:background">@drawable/bg_keypad_key</item>   <!-- 改这里 -->
     </style>
 
+    <!-- 说明弹窗：宽度固定 84% 屏宽，背景透明由卡片自己画 -->
+    <style name="Theme.Momo.Dialog" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">84%</item>
+        <item name="android:windowMinWidthMinor">84%</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+
 </resources>
