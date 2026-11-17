@@ -59,6 +59,21 @@ class WeightInputSheet : BottomSheetDialogFragment(){
         binding.btnClose.setOnClickListener { dismiss() }
         binding.btnSave.setOnClickListener { save() }
 
+        binding.tvTime.setOnClickListener {
+            DateWheelSheet.newInstance(selectedAt).show(childFragmentManager, DateWheelSheet.TAG)
+        }
+
+        // 日期面板确认后回到这里，更新时间并重绘
+        childFragmentManager.setFragmentResultListener(
+            DateWheelSheet.REQUEST_KEY, viewLifecycleOwner
+        ) { _, bundle ->
+            val text = bundle.getString(DateWheelSheet.RESULT_DATETIME)
+            if(text != null) {
+                selectedAt = LocalDateTime.parse(text, DateWheelSheet.FORMATTER)
+                render()
+            }
+        }
+
         // 11 个字符键统一走一个入口，避免写 11 个几乎一样的 setOnClickListener
         listOf(
             binding.key0 to '0', binding.key1 to '1', binding.key2 to '2',

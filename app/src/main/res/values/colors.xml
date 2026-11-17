@@ -78,4 +78,7 @@
     <color name="keypad_ripple">#1A000000</color>
 
     <color name="toast_bg">#CC000000</color>
+
+    <color name="wheel_highlight">#F2F5F2</color>
+    <color name="wheel_text_normal">#C2C2C2</color>
 </resources>
