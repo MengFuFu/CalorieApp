@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_page">
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/body_history_title"
+        android:padding="8dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/text_primary" />
+
+    <!-- 月份胶囊：结构同历史体重页，宽度靠 tvMonth 的 minWidth 固定 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_month_pill"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnPrevMonth"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_month_arrow"
+            android:contentDescription="@string/weight_month_prev"
+            android:padding="7dp"
+            android:rotation="180"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:minWidth="88dp"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            tools:text="2026年11月" />
+
+        <ImageView
+            android:id="@+id/btnNextMonth"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_month_arrow"
+            android:contentDescription="@string/weight_month_next"
+            android:padding="7dp"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHistory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="12dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
+        tools:listitem="@layout/item_weight_day" />
+
+    <!-- 空态：插图有素材后替换 FrameLayout 里的内容即可 -->
+    <LinearLayout
+        android:id="@+id/groupEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_empty_circle">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_body_waist" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/body_history_empty"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btnGoRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_go_record"
+            android:gravity="center"
+            android:minWidth="104dp"
+            android:paddingHorizontal="24dp"
+            android:text="@string/body_history_go_record"
+            android:textColor="@color/brand_green_dark"
+            android:textSize="14sp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

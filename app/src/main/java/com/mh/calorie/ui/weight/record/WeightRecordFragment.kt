@@ -100,6 +100,10 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
             bodyViewModel.setRange(if(index == 0) 30 else 7)
         }
         bodyPage.tvBodyPartFilter.setOnClickListener { showPartPicker() }
+        // 历史围度 › 查看更多
+        bodyPage.tvBodyMore.setOnClickListener {
+            findNavController().navigate(R.id.action_weightRecordFragment_to_bodyHistoryFragment)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

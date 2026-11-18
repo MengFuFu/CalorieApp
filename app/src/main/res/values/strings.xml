@@ -139,4 +139,8 @@
     <string name="body_input_empty">至少填写一项围度</string>
 
     <string name="body_part_picker_title">选择部位</string>
+
+    <string name="body_history_empty">还没有记录过围度哦</string>
+    <string name="body_history_go_record">去记录</string>
+    <string name="body_cm_value">%1$s cm</string>
 </resources>

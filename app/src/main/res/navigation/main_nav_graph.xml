@@ -28,12 +28,20 @@
         <action
             android:id="@+id/action_weightRecordFragment_to_weightHistoryFragment"
             app:destination="@id/weightHistoryFragment" />
+
+        <action
+            android:id="@+id/action_weightRecordFragment_to_bodyHistoryFragment"
+            app:destination="@id/bodyHistoryFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/weightHistoryFragment"
         android:name="com.mh.calorie.ui.weight.history.WeightHistoryFragment"
         android:label="@string/weight_history_title" />
+    <fragment
+        android:id="@+id/bodyHistoryFragment"
+        android:name="com.mh.calorie.ui.weight.history.BodyHistoryFragment"
+        android:label="@string/body_history_title" />
 
     <fragment
         android:id="@+id/planFragment"
