@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mh.calorie.R
 import com.mh.calorie.databinding.SheetWeightInputBinding
@@ -29,6 +30,12 @@ import java.util.Locale
  * 返回值仍走 Fragment Result API，key 与旧弹窗完全一致，调用方不用改。
  */
 class WeightInputSheet : BottomSheetDialogFragment(){
+
+    /**
+     * 和体重页共用同一个实例（activity 作用域）。
+     * 面板不再通过 FragmentResult 回传，直接写数据 → 页面观察的 StateFlow 立刻收到新值。
+     */
+    private val recordViewModel: WeightRecordViewModel by activityViewModels()
 
     private var _binding: SheetWeightInputBinding? = null
     private val binding get() = _binding!!
@@ -227,7 +234,7 @@ class WeightInputSheet : BottomSheetDialogFragment(){
             duration = Toast.LENGTH_SHORT
             view = toastView
             setGravity(
-                Gravity.TOP,                                             // 只剩 TOP 时横向自动居中
+                Gravity.TOP, // 只剩 TOP 时横向自动居中
                 0,
                 location[1] - toastView.measuredHeight - gap
             )
@@ -241,6 +248,7 @@ class WeightInputSheet : BottomSheetDialogFragment(){
         if(value == null || value < MIN_KG || value > MAX_KG) {
             hasError = true
             render()
+            showRangeHint()
             return
         }
 
@@ -251,23 +259,9 @@ class WeightInputSheet : BottomSheetDialogFragment(){
                 bundleOf(RESULT_FIELD to field.name, RESULT_VALUE to value)
             )
         } else {
-            // 记录体重：回传「值 + 时间」
-            parentFragmentManager.setFragmentResult(
-                REQUEST_KEY,
-                bundleOf(
-                    RESULT_WEIGHT to value,
-                    RESULT_DATETIME to selectedAt.format(TIME_FORMATTER)
-                )
-            )
+            // 记录体重：直接落到页面共用的 ViewModel
+            recordViewModel.addWeight(value, selectedAt)
         }
-
-        parentFragmentManager.setFragmentResult(
-            REQUEST_KEY,
-            bundleOf(
-                RESULT_WEIGHT to value,
-                RESULT_DATETIME to selectedAt.format(TIME_FORMATTER)
-            )
-        )
         dismiss()
     }
 

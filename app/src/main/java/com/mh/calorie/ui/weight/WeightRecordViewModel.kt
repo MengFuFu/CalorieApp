@@ -31,8 +31,8 @@ class WeightRecordViewModel @Inject constructor(
 
     /** 记录体重。at 由输入面板的日期滚轮决定，不传就是今天 */
     fun addWeight(weightKg: Float, at: LocalDateTime = LocalDateTime.now()) {
-        // 只取到「日」：同一天多次记录以最后一次为准，图上不会一天两个点
-        repo.add(at.toLocalDate(), weightKg)
+        // 保留每一次打卡，历史列表要显示同一天多条；图表在 refresh 里按天去重
+        repo.add(at, weightKg)
         refresh(_uiState.value.rangeDays)
     }
 
@@ -50,11 +50,16 @@ class WeightRecordViewModel @Inject constructor(
 
     private fun refresh(rangeDays: Int) {
         val all = repo.all()
-        val current = all.lastOrNull()?.weightKg ?: repo.startWeightKg
+        // 同一天记了多次时，图表只取当天最后一次
+        val daily = all.groupBy { it.date }
+            .mapValues { (_, list) -> list.maxByOrNull { it.recordedAt }!! }
+            .toSortedMap()
+
+        val current = daily.values.lastOrNull()?.weightKg ?: repo.startWeightKg
         val bmi = BmiCalculator.bmi(current, repo.heightCm)
         val from = LocalDate.now().minusDays(rangeDays.toLong() - 1)
 
-        val points = all.filter { it.date >= from }.map {
+        val points = daily.values.filter { it.date >= from }.map {
             WeightChartPoint(label = it.date.format(MD_FORMAT), date = it.date, weightKg = it.weightKg)
         }
 
@@ -70,9 +75,11 @@ class WeightRecordViewModel @Inject constructor(
             progressPercent = WeightProgressCalculator.progressPercent(repo.startWeightKg, current, repo.targetWeightKg),
             isGainGoal = repo.targetWeightKg > repo.startWeightKg,
             chartPoints = points,
-            lastRecordDate = all.lastOrNull()?.date,
-            weightByDate = all.associate { it.date.toString() to it.weightKg },
-            rangeDays = rangeDays
+            lastRecordDate = daily.keys.lastOrNull(),
+            // 输入面板按 "yyyy-MM-dd" 查历史值，所以 key 要转成字符串
+            weightByDate = daily.entries.associate { it.key.toString() to it.value.weightKg },
+            rangeDays = rangeDays,
+            updateTick = _uiState.value.updateTick + 1
         )
     }
 

@@ -31,5 +31,11 @@ data class WeightUiState(
     /** 日期(yyyy-MM-dd) → 当天体重。输入面板切日期时回填用，避免用户在历史日期上误改 */
     val weightByDate: Map<String, Float> = emptyMap(),
     val lastRecordDate: LocalDate? = null,
-    val rangeDays: Int = 30
+    val rangeDays: Int = 30,
+    /**
+     * 每次 refresh 自增。StateFlow 只在「新值 != 旧值」时发射，
+     * 而本类是全 data class；数据没变化时加一条同一分钟的记录，
+     * 状态会和上一次完全相等而被丢弃。带上这个自增位，重算一次就一定重绘一次。
+     */
+    val updateTick: Long = 0
 )

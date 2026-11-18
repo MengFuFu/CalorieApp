@@ -22,7 +22,18 @@
     <fragment
         android:id="@+id/weightRecordFragment"
         android:name="com.mh.calorie.ui.weight.WeightRecordFragment"
-        android:label="@string/weight_record_title" />
+        android:label="@string/weight_record_title">
+
+        <!-- 历史体重「查看更多」 -->
+        <action
+            android:id="@+id/action_weightRecordFragment_to_weightHistoryFragment"
+            app:destination="@id/weightHistoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/weightHistoryFragment"
+        android:name="com.mh.calorie.ui.weight.WeightHistoryFragment"
+        android:label="@string/weight_history_title" />
 
     <fragment
         android:id="@+id/planFragment"

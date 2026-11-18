@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,7 +30,8 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
     private var _binding: FragmentWeightRecordBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: WeightRecordViewModel by viewModels()
+    // 必须和 WeightInputSheet 是同一个作用域，否则面板写的是另一个实例
+    private val viewModel: WeightRecordViewModel by activityViewModels()
 
     private val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.CHINA)
 
@@ -45,7 +47,9 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     private fun setupTopBar() {
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.btnRecordWeight.setOnClickListener { showInputDialog() }
-        binding.tvMore.setOnClickListener { toast(R.string.weight_more_coming) }
+        binding.tvMore.setOnClickListener {
+            findNavController().navigate(R.id.action_weightRecordFragment_to_weightHistoryFragment)
+        }
         binding.ivEditStart.setOnClickListener {
             WeightInputSheet.newProfileInstance(
                 WeightInputSheet.Field.START, viewModel.uiState.value.startWeightKg
@@ -240,6 +244,12 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
     private fun toast(resId: Int) {
         Toast.makeText(requireContext(), resId, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 从历史页返回、从别的页面切回来时，按最新数据重绘一次
+        _binding?.let { render(viewModel.uiState.value) }
     }
 
     override fun onDestroyView() {
