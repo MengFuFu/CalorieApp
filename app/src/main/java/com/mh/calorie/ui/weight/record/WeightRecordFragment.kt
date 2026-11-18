@@ -7,17 +7,22 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.mh.calorie.R
 import com.mh.calorie.core.domain.bmi.BmiCategory
 import com.mh.calorie.databinding.FragmentWeightRecordBinding
 import com.mh.calorie.ui.weight.input.WeightInputSheet
 import com.mh.calorie.common.InfoDialogFragment
+import com.mh.calorie.ui.weight.body.BodyPartAdapter
+import com.mh.calorie.ui.weight.body.BodyViewModel
 import com.mh.calorie.ui.widget.WeightChartView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -33,11 +38,27 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     // 必须和 WeightInputSheet 是同一个作用域，否则面板写的是另一个实例
     private val viewModel: WeightRecordViewModel by activityViewModels()
 
+    private val bodyViewModel: BodyViewModel by viewModels()
+    private lateinit var bodyAdapter: BodyPartAdapter
+
     private val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.CHINA)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentWeightRecordBinding.bind(view)
+
+        // 围度网格
+        bodyAdapter = BodyPartAdapter { part ->
+            toast(R.string.body_panel_coming)
+        }
+        binding.groupBody.rvBodyParts.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.groupBody.rvBodyParts.adapter = bodyAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                bodyViewModel.uiState.collect { bodyAdapter.submit(it.rows) }
+            }
+        }
 
         setupTopBar()
         setupSegments()
@@ -66,12 +87,11 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
             listOf(getString(R.string.weight_tab_weight), getString(R.string.weight_tab_measure))
         )
         binding.segType.onSelected = { index ->
-            // 围度还没做：提示后把选中态拨回「体重」，否则用户会以为界面坏了
-            if (index == 1) {
-                toast(R.string.weight_measure_coming)
-                binding.segType.select(0)
-            }
+            // 体重 / 围度两块内容互斥显示，切换不再弹提示
+            binding.groupWeight.isVisible = index == 0
+            binding.groupBody.root.isVisible = index == 1
         }
+        binding.segType.select(0)
 
         binding.segRange.setItems(
             listOf(getString(R.string.weight_range_month), getString(R.string.weight_range_week))

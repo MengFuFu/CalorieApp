@@ -114,4 +114,22 @@
     <string name="weight_body_fat_value">体脂率 %1$s</string>
     <string name="weight_month_prev">上一个月</string>
     <string name="weight_month_next">下一个月</string>
+
+    <string name="body_my_title">我的围度</string>
+    <string name="body_history_title">历史围度</string>
+    <string name="body_more">查看更多</string>
+    <string name="body_record_action">记录围度</string>
+    <string name="body_add_action">记录该项围度</string>
+    <string name="body_waist">腰围</string>
+    <string name="body_chest">胸围</string>
+    <string name="body_hip">臀围</string>
+    <string name="body_thigh">大腿围</string>
+    <string name="body_calf">小腿围</string>
+    <string name="body_arm">手臂围</string>
+    <string name="body_value_cm">%1$scm</string>
+    <string name="body_value_empty">--</string>
+    <string name="body_chart_empty">还没有记录过围度哦</string>
+
+    <string name="body_tab_measure">围度</string>
+    <string name="body_panel_coming">围度记录面板将在下一步接入</string>
 </resources>

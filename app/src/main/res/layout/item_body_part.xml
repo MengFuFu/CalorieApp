@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_body_cell"
+        android:orientation="vertical"
+        android:padding="@dimen/space_10">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+
+            <ImageView
+                android:id="@+id/ivPartIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="start|top"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_body_waist"
+                app:tint="@color/text_primary" />
+
+            <ImageView
+                android:id="@+id/btnAddPart"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|top"
+                android:background="@drawable/bg_add_circle"
+                android:contentDescription="@string/body_add_action"
+                android:padding="4dp"
+                android:src="@drawable/ic_add"
+                app:tint="@color/brand_green" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvPartName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_6"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            tools:text="腰围" />
+
+        <TextView
+            android:id="@+id/tvPartValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="20cm" />
+    </LinearLayout>
+</FrameLayout>
