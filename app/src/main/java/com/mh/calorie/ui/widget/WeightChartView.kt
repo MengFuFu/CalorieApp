@@ -34,7 +34,8 @@ class WeightChartView @JvmOverloads constructor(
 
     /** y 轴最小跨度：体重用 1（kg），围度用 2（cm），避免一条直线贴底 */
     var minSpan: Float = 1f
-
+    /** 是否画顶部淡色虚线参考线：体重页要，围度页不要 */
+    var showGuide: Boolean = true
     private val density = resources.displayMetrics.density
     private fun dp(v: Float) = v * density
     private fun sp(v: Float) = v * resources.displayMetrics.scaledDensity
@@ -124,8 +125,7 @@ class WeightChartView @JvmOverloads constructor(
         curMax = max + extra
 
         // 顶部淡色参考线
-        canvas.drawLine(plot.left, plot.top - dp(14f), plot.right, plot.top - dp(14f), guidePaint)
-
+        if (showGuide) canvas.drawLine(plot.left, plot.top - dp(14f), plot.right, plot.top - dp(14f), guidePaint)
         // 折线
         linePath.reset()
         points.forEachIndexed { i, p ->
@@ -146,8 +146,10 @@ class WeightChartView @JvmOverloads constructor(
             val labelW = axisPaint.measureText(p.label)
             val fits = x - labelW / 2f > lastLabelRight + dp(8f)
             if (fits || i == points.lastIndex) {
-                canvas.drawText(p.label, x, height - dp(3f), axisPaint)
-                lastLabelRight = x + labelW / 2f
+                // 首尾标签居中会超出控件，钳进绘图区
+                val tx = x.coerceIn(plot.left + labelW / 2f, plot.right - labelW / 2f)
+                canvas.drawText(p.label, tx, height - dp(3f), axisPaint)
+                lastLabelRight = tx + labelW / 2f
             }
         }
 

@@ -92,6 +92,7 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
         // 历史围度：区间切换 + 部位筛选
         bodyPage.bodyChart.minSpan = 2f
+        bodyPage.bodyChart.showGuide = false
         bodyPage.segBodyRange.setItems(
             listOf(getString(R.string.weight_range_month), getString(R.string.weight_range_week)), 0
         )
@@ -278,16 +279,7 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
     /** 把状态铺到「历史围度」卡：部位胶囊 + 折线 + 空态 */
     private fun renderBodyChart(state: BodyUiState) {
-        // 部位胶囊：文字 + 图标跟着当前选择走
-        bodyPage.tvBodyPartFilter.setText(state.selectedPart.labelRes())
-        bodyPage.tvBodyPartFilter.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            state.selectedPart.iconRes(), 0, R.drawable.ic_caret_down, 0
-        )
-        // 换过 drawable 后要把着色重新挂上，否则图标会变成原色
-        TextViewCompat.setCompoundDrawableTintList(
-            bodyPage.tvBodyPartFilter,
-            ContextCompat.getColorStateList(requireContext(), R.color.text_secondary)
-        )
+        applyPartChip(state.selectedPart)
 
         val points = state.chartPoints.map { WeightChartView.Point(it.date, it.label, it.valueCm) }
         bodyPage.bodyChart.valuePrefix = getString(state.selectedPart.labelRes())
@@ -296,6 +288,18 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         val empty = points.isEmpty()
         bodyPage.bodyChart.isVisible = !empty
         bodyPage.tvBodyChartEmpty.isVisible = empty
+    }
+
+    /** 部位胶囊：图标 16dp、三角 12dp。必须手动 setBounds ——
+     *  compound drawable 默认按矢量 intrinsic 尺寸布局，那五张图是 130~190dp，会把胶囊撑爆 */
+    private fun applyPartChip(part: BodyPart) {
+        val density = resources.displayMetrics.density
+        val icon = ContextCompat.getDrawable(requireContext(), part.iconRes())?.mutate()
+        val caret = ContextCompat.getDrawable(requireContext(), R.drawable.ic_caret_down)?.mutate()
+        icon?.setBounds(0, 0, (16 * density).toInt(), (16 * density).toInt())
+        caret?.setBounds(0, 0, (12 * density).toInt(), (12 * density).toInt())
+        bodyPage.tvBodyPartFilter.text = getString(part.labelRes())
+        bodyPage.tvBodyPartFilter.setCompoundDrawables(icon, null, caret, null)
     }
 
     /** 部位筛选：六个部位单选，选完立刻重算折线 */

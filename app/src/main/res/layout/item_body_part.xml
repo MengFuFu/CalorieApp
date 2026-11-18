@@ -23,8 +23,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="start|top"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_body_waist"
-                app:tint="@color/text_primary" />
+                android:src="@drawable/ic_body_waist" />
 
             <ImageView
                 android:id="@+id/btnAddPart"

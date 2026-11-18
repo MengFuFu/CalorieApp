@@ -91,21 +91,17 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <!-- 部位下拉：下一步接选择器 -->
                     <TextView
                         android:id="@+id/tvBodyPartFilter"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
                         android:background="@drawable/bg_chip_time"
-                        android:drawableStart="@drawable/ic_body_waist"
-                        android:drawableEnd="@drawable/ic_caret_down"
                         android:drawablePadding="@dimen/space_4"
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/space_12"
                         android:text="@string/body_waist"
                         android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        app:drawableTint="@color/text_secondary" />
+                        android:textSize="13sp" />
 
                     <View
                         android:layout_width="0dp"
