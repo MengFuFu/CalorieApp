@@ -16,11 +16,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.mh.calorie.R
 import com.mh.calorie.core.domain.bmi.BmiCategory
 import com.mh.calorie.databinding.FragmentWeightRecordBinding
 import com.mh.calorie.ui.weight.input.WeightInputSheet
 import com.mh.calorie.common.InfoDialogFragment
+import com.mh.calorie.databinding.ViewWeightBodyBinding
+import com.mh.calorie.databinding.ViewWeightRecordWeightBinding
 import com.mh.calorie.ui.weight.body.BodyInputSheet
 import com.mh.calorie.ui.weight.body.BodyPartAdapter
 import com.mh.calorie.ui.weight.body.BodyViewModel
@@ -35,7 +38,15 @@ import java.util.Locale
 class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
     private var _binding: FragmentWeightRecordBinding? = null
-    private val binding get() = _binding!!
+
+    /** 外壳（btnBack / segType / pager） */
+    private val rootBinding get() = _binding!!
+
+    /** 体重页（pager 第 0 页）。仍叫 binding —— 下面几百行 binding.xxx 一行都不用改 */
+    private lateinit var binding: ViewWeightRecordWeightBinding
+
+    /** 围度页（pager 第 1 页） */
+    private lateinit var bodyPage: ViewWeightBodyBinding
     // 必须和 WeightInputSheet 是同一个作用域，否则面板写的是另一个实例
     private val viewModel: WeightRecordViewModel by activityViewModels()
 
@@ -48,15 +59,29 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentWeightRecordBinding.bind(view)
 
+        // 两页先 inflate 好再交给 pager，避免翻页时反复 inflate 与状态丢失
+        binding = ViewWeightRecordWeightBinding.inflate(layoutInflater, rootBinding.pager, false)
+        bodyPage = ViewWeightBodyBinding.inflate(layoutInflater, rootBinding.pager, false)
+        rootBinding.pager.adapter = RecordPagerAdapter(listOf(binding.root, bodyPage.root))
+        // 只有两页，limit=1 就等于两页都常驻，不会回收
+        rootBinding.pager.offscreenPageLimit = 1
+
+        // 滑到哪页，分段控件就跟到哪
+        rootBinding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                rootBinding.segType.select(position)
+            }
+        })
+
         // 围度网格
         bodyAdapter = BodyPartAdapter { part ->
             BodyInputSheet.newInstance(part).show(childFragmentManager, BodyInputSheet.TAG)
         }
-        binding.groupBody.btnRecordBody.setOnClickListener {
+        bodyPage.btnRecordBody.setOnClickListener {
             BodyInputSheet.newInstance().show(childFragmentManager, BodyInputSheet.TAG)
         }
-        binding.groupBody.rvBodyParts.layoutManager = GridLayoutManager(requireContext(), 3)
-        binding.groupBody.rvBodyParts.adapter = bodyAdapter
+        bodyPage.rvBodyParts.layoutManager = GridLayoutManager(requireContext(), 3)
+        bodyPage.rvBodyParts.adapter = bodyAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -70,7 +95,7 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     }
 
     private fun setupTopBar() {
-        binding.btnBack.setOnClickListener { findNavController().navigateUp() }
+        rootBinding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.btnRecordWeight.setOnClickListener { showInputDialog() }
         binding.tvMore.setOnClickListener {
             findNavController().navigate(R.id.action_weightRecordFragment_to_weightHistoryFragment)
@@ -87,15 +112,13 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     }
 
     private fun setupSegments() {
-        binding.segType.setItems(
+        rootBinding.segType.setItems(
             listOf(getString(R.string.weight_tab_weight), getString(R.string.weight_tab_measure))
         )
-        binding.segType.onSelected = { index ->
-            // 体重 / 围度两块内容互斥显示，切换不再弹提示
-            binding.groupWeight.isVisible = index == 0
-            binding.groupBody.root.isVisible = index == 1
+        rootBinding.segType.onSelected = { index ->
+            rootBinding.pager.setCurrentItem(index, true)   // 点 tab 也走滑动动画
         }
-        binding.segType.select(0)
+        rootBinding.segType.select(0)
 
         binding.segRange.setItems(
             listOf(getString(R.string.weight_range_month), getString(R.string.weight_range_week))
@@ -278,6 +301,7 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        rootBinding.pager.adapter = null
         _binding = null
     }
 }
