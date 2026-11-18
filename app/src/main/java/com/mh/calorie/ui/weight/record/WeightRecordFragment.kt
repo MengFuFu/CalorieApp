@@ -21,6 +21,7 @@ import com.mh.calorie.core.domain.bmi.BmiCategory
 import com.mh.calorie.databinding.FragmentWeightRecordBinding
 import com.mh.calorie.ui.weight.input.WeightInputSheet
 import com.mh.calorie.common.InfoDialogFragment
+import com.mh.calorie.ui.weight.body.BodyInputSheet
 import com.mh.calorie.ui.weight.body.BodyPartAdapter
 import com.mh.calorie.ui.weight.body.BodyViewModel
 import com.mh.calorie.ui.widget.WeightChartView
@@ -38,7 +39,7 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     // 必须和 WeightInputSheet 是同一个作用域，否则面板写的是另一个实例
     private val viewModel: WeightRecordViewModel by activityViewModels()
 
-    private val bodyViewModel: BodyViewModel by viewModels()
+    private val bodyViewModel: BodyViewModel by activityViewModels()
     private lateinit var bodyAdapter: BodyPartAdapter
 
     private val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.CHINA)
@@ -49,7 +50,10 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
         // 围度网格
         bodyAdapter = BodyPartAdapter { part ->
-            toast(R.string.body_panel_coming)
+            BodyInputSheet.newInstance(part).show(childFragmentManager, BodyInputSheet.TAG)
+        }
+        binding.groupBody.btnRecordBody.setOnClickListener {
+            BodyInputSheet.newInstance().show(childFragmentManager, BodyInputSheet.TAG)
         }
         binding.groupBody.rvBodyParts.layoutManager = GridLayoutManager(requireContext(), 3)
         binding.groupBody.rvBodyParts.adapter = bodyAdapter

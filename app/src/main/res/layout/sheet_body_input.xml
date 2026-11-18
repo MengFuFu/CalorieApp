@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/space_16"
+    android:paddingTop="@dimen/space_12"
+    android:paddingBottom="@dimen/space_16">
+
+    <!-- 顶部：时间胶囊 + 关闭 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_chip_time"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawableEnd="@drawable/ic_caret_down"
+            android:drawablePadding="@dimen/space_4"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:minWidth="150dp"
+            android:paddingHorizontal="@dimen/space_16"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            app:drawableTint="@color/text_primary" />
+
+        <ImageView
+            android:id="@+id/btnClose"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_close"
+            android:padding="@dimen/space_6"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_tertiary" />
+    </FrameLayout>
+
+    <include
+        android:id="@+id/rowWaist"
+        layout="@layout/view_body_input_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8" />
+
+    <include
+        android:id="@+id/rowChest"
+        layout="@layout/view_body_input_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8" />
+
+    <include
+        android:id="@+id/rowHip"
+        layout="@layout/view_body_input_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8" />
+
+    <include
+        android:id="@+id/rowThigh"
+        layout="@layout/view_body_input_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8" />
+
+    <include
+        android:id="@+id/rowCalf"
+        layout="@layout/view_body_input_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8" />
+
+    <include
+        android:id="@+id/rowArm"
+        layout="@layout/view_body_input_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_8" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSave"
+        style="@style/Widget.Momo.Button.Pill.Filled"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/space_16"
+        android:text="@string/action_save" />
+</LinearLayout>

@@ -40,8 +40,8 @@ class BodyPartAdapter(
 
         fun bind(row: BodyPartRow) {
             val context = binding.root.context
-            binding.ivPartIcon.setImageResource(iconOf(row.part))
-            binding.tvPartName.setText(labelOf(row.part))
+            binding.ivPartIcon.setImageResource(row.part.iconRes())
+            binding.tvPartName.setText(row.part.labelRes())
             binding.tvPartValue.text = if(row.valueCm == null) {
                 context.getString(R.string.body_value_empty)
             } else {
@@ -54,23 +54,6 @@ class BodyPartAdapter(
             else String.format(Locale.US, "%.1f", value)
     }
 
-    private fun iconOf(part: BodyPart): Int = when(part) {
-        BodyPart.WAIST -> R.drawable.ic_body_waist
-        BodyPart.CHEST -> R.drawable.ic_body_chest
-        BodyPart.HIP -> R.drawable.ic_body_hip
-        BodyPart.THIGH -> R.drawable.ic_body_thigh
-        BodyPart.CALF -> R.drawable.ic_body_calf
-        BodyPart.ARM -> R.drawable.ic_body_arm
-    }
-
-    private fun labelOf(part: BodyPart): Int = when (part) {
-        BodyPart.WAIST -> R.string.body_waist
-        BodyPart.CHEST -> R.string.body_chest
-        BodyPart.HIP -> R.string.body_hip
-        BodyPart.THIGH -> R.string.body_thigh
-        BodyPart.CALF -> R.string.body_calf
-        BodyPart.ARM -> R.string.body_arm
-    }
 
 
 

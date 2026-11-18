@@ -132,4 +132,9 @@
 
     <string name="body_tab_measure">围度</string>
     <string name="body_panel_coming">围度记录面板将在下一步接入</string>
+
+    <string name="body_input_hint">输入数值</string>
+    <string name="body_unit_cm">cm</string>
+    <string name="body_range_hint">围度请在 1~300cm 之间</string>
+    <string name="body_input_empty">至少填写一项围度</string>
 </resources>
