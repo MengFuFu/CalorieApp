@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.weight
+package com.mh.calorie.ui.weight.record
 
 import com.mh.calorie.core.domain.bmi.BmiCategory
 import java.time.LocalDate

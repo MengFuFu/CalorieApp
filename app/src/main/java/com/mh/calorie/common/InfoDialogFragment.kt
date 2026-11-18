@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.widget
+package com.mh.calorie.common
 
 import android.os.Bundle
 import android.view.LayoutInflater

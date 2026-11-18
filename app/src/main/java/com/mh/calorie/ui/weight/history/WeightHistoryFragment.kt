@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.weight
+package com.mh.calorie.ui.weight.history
 
 import android.os.Bundle
 import android.view.View

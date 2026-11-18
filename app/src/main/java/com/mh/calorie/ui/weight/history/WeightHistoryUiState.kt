@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.weight
+package com.mh.calorie.ui.weight.history
 
 /** 卡片里的一行：时间 + 体重 + 体脂率（可能没记） */
 data class WeightHistoryRow(

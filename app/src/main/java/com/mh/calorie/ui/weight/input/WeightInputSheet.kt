@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.weight
+package com.mh.calorie.ui.weight.input
 
 import android.os.Bundle
 import android.os.SystemClock
@@ -14,7 +14,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mh.calorie.R
 import com.mh.calorie.databinding.SheetWeightInputBinding
-import dagger.multibindings.LongKey
+import com.mh.calorie.ui.weight.record.WeightRecordViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale

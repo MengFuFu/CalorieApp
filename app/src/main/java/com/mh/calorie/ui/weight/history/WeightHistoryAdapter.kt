@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.weight
+package com.mh.calorie.ui.weight.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

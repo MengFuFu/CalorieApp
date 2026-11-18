@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.weight
+package com.mh.calorie.ui.weight.record
 
 import android.os.Bundle
 import android.text.SpannableString
@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,7 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.mh.calorie.R
 import com.mh.calorie.core.domain.bmi.BmiCategory
 import com.mh.calorie.databinding.FragmentWeightRecordBinding
-import com.mh.calorie.ui.widget.InfoDialogFragment
+import com.mh.calorie.ui.weight.input.WeightInputSheet
+import com.mh.calorie.common.InfoDialogFragment
 import com.mh.calorie.ui.widget.WeightChartView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -51,14 +51,14 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
             findNavController().navigate(R.id.action_weightRecordFragment_to_weightHistoryFragment)
         }
         binding.ivEditStart.setOnClickListener {
-            WeightInputSheet.newProfileInstance(
+            WeightInputSheet.Companion.newProfileInstance(
                 WeightInputSheet.Field.START, viewModel.uiState.value.startWeightKg
-            ).show(parentFragmentManager, WeightInputSheet.TAG)
+            ).show(parentFragmentManager, WeightInputSheet.Companion.TAG)
         }
         binding.ivEditTarget.setOnClickListener {
-            WeightInputSheet.newProfileInstance(
+            WeightInputSheet.Companion.newProfileInstance(
             WeightInputSheet.Field.TARGET, viewModel.uiState.value.targetWeightKg
-        ).show(parentFragmentManager, WeightInputSheet.TAG) }
+        ).show(parentFragmentManager, WeightInputSheet.Companion.TAG) }
     }
 
     private fun setupSegments() {
@@ -81,11 +81,11 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            WeightInputSheet.REQUEST_KEY_PROFILE, viewLifecycleOwner
+            WeightInputSheet.Companion.REQUEST_KEY_PROFILE, viewLifecycleOwner
         ) { _, bundle ->
-            val value = bundle.getFloat(WeightInputSheet.RESULT_VALUE)
+            val value = bundle.getFloat(WeightInputSheet.Companion.RESULT_VALUE)
             // 日期缺失（老版本面板/异常情况）就退回今天，保证不会崩
-            when (bundle.getString(WeightInputSheet.RESULT_FIELD)) {
+            when (bundle.getString(WeightInputSheet.Companion.RESULT_FIELD)) {
                 WeightInputSheet.Field.START.name -> viewModel.setStartWeight(value)
                 WeightInputSheet.Field.TARGET.name -> viewModel.setTargetWeight(value)
             }
@@ -202,11 +202,11 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     private fun showInputDialog() {
         val state = viewModel.uiState.value
         // 默认今天；历史日期由面板里的日期滚轮改
-        WeightInputSheet.newInstance(
+        WeightInputSheet.Companion.newInstance(
             state.currentWeightKg,
             LocalDateTime.now(),
             weightByDate = state.weightByDate)
-            .show(parentFragmentManager, WeightInputSheet.TAG)
+            .show(parentFragmentManager, WeightInputSheet.Companion.TAG)
     }
 
     private fun tagChipColor(category: BmiCategory): Int = when (category) {

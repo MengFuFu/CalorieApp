@@ -1,4 +1,4 @@
-package com.mh.calorie.ui.weight
+package com.mh.calorie.ui.weight.history
 
 import androidx.lifecycle.ViewModel
 import com.mh.calorie.data.temp.TempWeightRepository
