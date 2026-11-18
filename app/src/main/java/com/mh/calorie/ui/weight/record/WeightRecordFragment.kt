@@ -29,6 +29,7 @@ import com.mh.calorie.databinding.ViewWeightBodyBinding
 import com.mh.calorie.databinding.ViewWeightRecordWeightBinding
 import com.mh.calorie.ui.weight.body.BodyInputSheet
 import com.mh.calorie.ui.weight.body.BodyPartAdapter
+import com.mh.calorie.ui.weight.body.BodyPartPickerPopup
 import com.mh.calorie.ui.weight.body.BodyUiState
 import com.mh.calorie.ui.weight.body.BodyViewModel
 import com.mh.calorie.ui.weight.body.iconRes
@@ -299,15 +300,10 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
 
     /** 部位筛选：六个部位单选，选完立刻重算折线 */
     private fun showPartPicker() {
-        val parts = BodyPart.entries
-        val labels = parts.map { getString(it.labelRes()) }.toTypedArray()
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.body_part_picker_title)
-            .setSingleChoiceItems(labels, bodyViewModel.uiState.value.selectedPart.ordinal) { dialog, which ->
-                bodyViewModel.selectPart(parts[which])
-                dialog.dismiss()
-            }
-            .show()
+        BodyPartPickerPopup.show(
+            anchor = bodyPage.tvBodyPartFilter,
+            selected = bodyViewModel.uiState.value.selectedPart
+        ) { part -> bodyViewModel.selectPart(part) }
     }
 
     private fun tagChipColor(category: BmiCategory): Int = when (category) {
