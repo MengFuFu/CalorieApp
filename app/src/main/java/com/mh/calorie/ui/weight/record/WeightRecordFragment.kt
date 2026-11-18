@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -17,16 +18,21 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mh.calorie.R
 import com.mh.calorie.core.domain.bmi.BmiCategory
 import com.mh.calorie.databinding.FragmentWeightRecordBinding
 import com.mh.calorie.ui.weight.input.WeightInputSheet
 import com.mh.calorie.common.InfoDialogFragment
+import com.mh.calorie.core.domain.model.BodyPart
 import com.mh.calorie.databinding.ViewWeightBodyBinding
 import com.mh.calorie.databinding.ViewWeightRecordWeightBinding
 import com.mh.calorie.ui.weight.body.BodyInputSheet
 import com.mh.calorie.ui.weight.body.BodyPartAdapter
+import com.mh.calorie.ui.weight.body.BodyUiState
 import com.mh.calorie.ui.weight.body.BodyViewModel
+import com.mh.calorie.ui.weight.body.iconRes
+import com.mh.calorie.ui.weight.body.labelRes
 import com.mh.calorie.ui.widget.WeightChartView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -83,9 +89,22 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         bodyPage.rvBodyParts.layoutManager = GridLayoutManager(requireContext(), 3)
         bodyPage.rvBodyParts.adapter = bodyAdapter
 
+        // 历史围度：区间切换 + 部位筛选
+        bodyPage.bodyChart.minSpan = 2f
+        bodyPage.segBodyRange.setItems(
+            listOf(getString(R.string.weight_range_month), getString(R.string.weight_range_week)), 0
+        )
+        bodyPage.segBodyRange.onSelected = { index ->
+            bodyViewModel.setRange(if(index == 0) 30 else 7)
+        }
+        bodyPage.tvBodyPartFilter.setOnClickListener { showPartPicker() }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                bodyViewModel.uiState.collect { bodyAdapter.submit(it.rows) }
+                bodyViewModel.uiState.collect { state ->
+                    bodyAdapter.submit(state.rows)
+                    renderBodyChart(state)
+                }
             }
         }
 
@@ -254,6 +273,41 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
             LocalDateTime.now(),
             weightByDate = state.weightByDate)
             .show(parentFragmentManager, WeightInputSheet.Companion.TAG)
+    }
+
+    /** 把状态铺到「历史围度」卡：部位胶囊 + 折线 + 空态 */
+    private fun renderBodyChart(state: BodyUiState) {
+        // 部位胶囊：文字 + 图标跟着当前选择走
+        bodyPage.tvBodyPartFilter.setText(state.selectedPart.labelRes())
+        bodyPage.tvBodyPartFilter.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            state.selectedPart.iconRes(), 0, R.drawable.ic_caret_down, 0
+        )
+        // 换过 drawable 后要把着色重新挂上，否则图标会变成原色
+        TextViewCompat.setCompoundDrawableTintList(
+            bodyPage.tvBodyPartFilter,
+            ContextCompat.getColorStateList(requireContext(), R.color.text_secondary)
+        )
+
+        val points = state.chartPoints.map { WeightChartView.Point(it.date, it.label, it.valueCm) }
+        bodyPage.bodyChart.valuePrefix = getString(state.selectedPart.labelRes())
+        bodyPage.bodyChart.submit(points)
+
+        val empty = points.isEmpty()
+        bodyPage.bodyChart.isVisible = !empty
+        bodyPage.tvBodyChartEmpty.isVisible = empty
+    }
+
+    /** 部位筛选：六个部位单选，选完立刻重算折线 */
+    private fun showPartPicker() {
+        val parts = BodyPart.entries
+        val labels = parts.map { getString(it.labelRes()) }.toTypedArray()
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.body_part_picker_title)
+            .setSingleChoiceItems(labels, bodyViewModel.uiState.value.selectedPart.ordinal) { dialog, which ->
+                bodyViewModel.selectPart(parts[which])
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun tagChipColor(category: BmiCategory): Int = when (category) {

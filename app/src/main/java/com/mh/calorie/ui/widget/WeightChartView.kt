@@ -29,6 +29,12 @@ class WeightChartView @JvmOverloads constructor(
 
     data class Point(val date: LocalDate, val label: String, val value: Float)
 
+    /** 气泡里数值前的文字：体重页「体重」，围度页传「腰围」「胸围」… */
+    var valuePrefix: String = "体重"
+
+    /** y 轴最小跨度：体重用 1（kg），围度用 2（cm），避免一条直线贴底 */
+    var minSpan: Float = 1f
+
     private val density = resources.displayMetrics.density
     private fun dp(v: Float) = v * density
     private fun sp(v: Float) = v * resources.displayMetrics.scaledDensity
@@ -108,10 +114,10 @@ class WeightChartView @JvmOverloads constructor(
         // y 轴范围：数据上下各留 12%，最小跨度 1kg，避免一条水平线贴在底部
         var min = points.minOf { it.value }
         var max = points.maxOf { it.value }
-        if (max - min < 1f) {
+        if (max - min < minSpan) {
             val c = (min + max) / 2f
-            min = c - 0.5f
-            max = c + 0.5f
+            min = c - minSpan / 2f
+            max = c + minSpan / 2f
         }
         val extra = (max - min) * 0.12f
         curMin = min - extra
@@ -129,13 +135,20 @@ class WeightChartView @JvmOverloads constructor(
         }
         canvas.drawPath(linePath, linePaint)
 
-        // 圆点 + 日期
+        // 圆点 + 日期（按可用宽度抽稀，30 天也不会叠字）
+        var lastLabelRight = -Float.MAX_VALUE
         points.forEachIndexed { i, p ->
             val x = xOf(i)
             val y = yOf(p.value)
             canvas.drawCircle(x, y, dp(4f), dotFillPaint)
             canvas.drawCircle(x, y, dp(4f), dotRingPaint)
-            canvas.drawText(p.label, x, height - dp(3f), axisPaint)
+
+            val labelW = axisPaint.measureText(p.label)
+            val fits = x - labelW / 2f > lastLabelRight + dp(8f)
+            if (fits || i == points.lastIndex) {
+                canvas.drawText(p.label, x, height - dp(3f), axisPaint)
+                lastLabelRight = x + labelW / 2f
+            }
         }
 
         if (selectedIndex in points.indices) drawTooltip(canvas)
@@ -149,7 +162,7 @@ class WeightChartView @JvmOverloads constructor(
         val padH = dp(10f)
         val padV = dp(6f)
         val title = p.label
-        val value = "体重 " + formatValue(p.value)
+        val value = "$valuePrefix " + formatValue(p.value)
 
         val w = maxOf(tipTitlePaint.measureText(title), tipValuePaint.measureText(value)) + padH * 2
         val h = dp(34f) + padV * 2

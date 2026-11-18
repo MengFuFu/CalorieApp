@@ -123,6 +123,12 @@
                     android:layout_height="180dp"
                     android:layout_marginTop="@dimen/space_8">
 
+                    <!-- 折线：复用体重页那张图，单位前缀在代码里按部位设置 -->
+                    <com.mh.calorie.ui.widget.WeightChartView
+                        android:id="@+id/bodyChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
                     <TextView
                         android:id="@+id/tvBodyChartEmpty"
                         android:layout_width="wrap_content"

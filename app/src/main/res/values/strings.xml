@@ -137,4 +137,6 @@
     <string name="body_unit_cm">cm</string>
     <string name="body_range_hint">围度请在 1~300cm 之间</string>
     <string name="body_input_empty">至少填写一项围度</string>
+
+    <string name="body_part_picker_title">选择部位</string>
 </resources>

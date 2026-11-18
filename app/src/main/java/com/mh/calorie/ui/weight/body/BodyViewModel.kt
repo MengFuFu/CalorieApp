@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlin.enums.EnumEntries
 
@@ -26,10 +27,12 @@ class BodyViewModel @Inject constructor(
 
     fun selectPart(part: BodyPart) {
         _uiState.update { it.copy(selectedPart = part) }
+        refreshChart()
     }
 
     fun setRange(days: Int) {
         _uiState.update { it.copy(rangeDays = days) }
+        refreshChart()
     }
 
     /** 面板一次提交多项；没填的部位不会出现在 Map 里 */
@@ -45,6 +48,19 @@ class BodyViewModel @Inject constructor(
         _uiState.update { state ->
             state.copy(rows = BodyPart.entries.map { part -> BodyPartRow(part, latest[part]) })
         }
+        refreshChart()
+    }
+
+    /** 按当前「部位 + 区间」重算折线点，x 轴标签用 M/d */
+    private fun refreshChart() {
+        val state = _uiState.value
+        val points = repo.seriesOf(state.selectedPart, state.rangeDays)
+            .map { BodyChartPoint(it.date, it.date.format(CHART_LABEL), it.valueCm) }
+        _uiState.update { it.copy(chartPoints = points) }
+    }
+
+    private companion object {
+        val CHART_LABEL: DateTimeFormatter = DateTimeFormatter.ofPattern("M/d")
     }
 
 }

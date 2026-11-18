@@ -39,15 +39,20 @@ class TempBodyMeasurementRepository @Inject constructor() {
             .sortedBy { it.recordedAt }
     }
 
-    /** 第一次打开就能看到东西，数值沿用设计稿 */
+    /** 每个部位造 5 个点（-28/-21/-14/-7/0 天），最新值仍是设计稿那组数字 */
     private fun seed(): List<BodyMeasurement> {
-        val base = LocalDateTime.now().withHour(8).withMinute(0).withSecond(0).withNano(0)
-        return BodyPart.entries.mapIndexed { index, part ->
-            BodyMeasurement(base.plusDays(-index.toLong()), part, SEED_VALUES[index])
+        val today = LocalDateTime.now().withHour(8).withMinute(0).withSecond(0).withNano(0)
+        return BodyPart.entries.flatMapIndexed { index, part ->
+            SEED_DAYS.mapIndexed { i, dayOffset ->
+                BodyMeasurement(today.plusDays(dayOffset.toLong()), part, SEED_VALUES[index] + SEED_DELTAS[i])
+            }
         }
     }
 
     private companion object {
         val SEED_VALUES = floatArrayOf(20f, 30f, 20f, 40f, 10f, 15f)
+        /** 越早的店略大一点，折线才有「在变细」的走势 */
+        val SEED_DELTAS = floatArrayOf(1.5f, 1.0f, 0.5f, 0.2f, 0f)
+        val SEED_DAYS = intArrayOf(-28, -21, -14, -7, 0)
     }
 }
