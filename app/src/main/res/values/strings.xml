@@ -192,4 +192,8 @@
     <string name="sport_unit_round_with_time">局(%1$dmin)</string>
     <string name="sport_unit_session_with_time">场(%1$dmin)</string>
     <string name="sport_unit_rep_with_rate">个(%1$d/分钟)</string>
+
+    <string name="sport_month_total">本月合计 %1$s kcal</string>
+    <string name="sport_record_go">去记录</string>
+    <string name="sport_sync_coming">数据同步将在后续接入</string>
 </resources>

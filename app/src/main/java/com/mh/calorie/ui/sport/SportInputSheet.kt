@@ -12,11 +12,14 @@ import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mh.calorie.R
+import com.mh.calorie.data.temp.TempSportRecordRepository
 import com.mh.calorie.databinding.SheetSportInputBinding
 import com.mh.calorie.ui.weight.input.DateWheelSheet
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
 /**
@@ -24,7 +27,11 @@ import kotlin.math.roundToInt
  * 日期胶囊 + 所选运动 + 大数字 + 单位（min / km / 局(x min) / 场(x min) / 个(x/分钟)）+ 自绘键盘。
  * 保存后通过 Fragment Result 把「千卡 + 数量」回传给运动库页。
  */
+@AndroidEntryPoint
 class SportInputSheet : BottomSheetDialogFragment() {
+
+    @Inject
+    lateinit var sportRepo: TempSportRecordRepository
 
     private var _binding: SheetSportInputBinding? = null
     private val binding get() = _binding!!
@@ -200,6 +207,13 @@ class SportInputSheet : BottomSheetDialogFragment() {
                 RESULT_QUANTITY to "${formatNumber(value)} ${labelOf(unit)}",
                 RESULT_DATETIME to selectedAt.format(TIME_FORMATTER)
             )
+        )
+        sportRepo.add(
+            recordedAt = selectedAt,
+            name = itemName,
+            quantity = value,
+            unitLabel = labelOf(unit),
+            kcal = kcal
         )
         dismiss()
     }

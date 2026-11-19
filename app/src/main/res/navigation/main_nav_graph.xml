@@ -69,7 +69,12 @@
     <fragment
         android:id="@+id/sportRecordFragment"
         android:name="com.mh.calorie.ui.sport.SportRecordFragment"
-        android:label="@string/sport_record_title" />
+        android:label="@string/sport_record_title">
+
+        <action
+            android:id="@+id/action_sportRecordFragment_to_sportLibraryFragment"
+            app:destination="@id/sportLibraryFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/sportLibraryFragment"
