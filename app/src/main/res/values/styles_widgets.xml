@@ -104,4 +104,17 @@
         <item name="android:backgroundDimAmount">0.4</item>
     </style>
 
+    <!-- 运动面板数字键 -->
+    <style name="Widget.Momo.SportKey" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_sport_key</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
 </resources>

@@ -3,6 +3,15 @@ package com.mh.calorie.ui.sport
 import androidx.annotation.StringRes
 import com.mh.calorie.R
 
+/** 计量单位：min 永远有；其余四个按运动类型分配 */
+enum class SportUnit(@StringRes val labelRes: Int) {
+    MIN(R.string.sport_unit_min),
+    KM(R.string.sport_unit_km),
+    ROUND(R.string.sport_unit_round),
+    SESSION(R.string.sport_unit_session),
+    REP(R.string.sport_unit_rep)
+}
+
 /** 运动库左侧分类，声明顺序即显示顺序 */
 enum class SportCategory(@StringRes val labelRes: Int) {
     FAVORITE(R.string.sport_cat_favorite),
@@ -17,12 +26,27 @@ enum class SportCategory(@StringRes val labelRes: Int) {
     STRENGTH(R.string.sport_cat_strength)
 }
 
-/** 一条运动；kcal 是「每 10 分钟」的消耗，和截图上标的单位一致 */
+/**
+ * 一条运动。
+ * [secondUnit] 是除 min 之外的第二计量单位；
+ * [secondUnitsPer10Min] 是「10 分钟里有几个该单位」，
+ * 例如 跑步 12km/h → 2.0（10 分钟跑 2 公里）、篮球 20 分钟一局 → 0.5、俯卧撑 20 个/分钟 → 200。
+ * 有了它，kcal 换算只需要一个公式：kcalPer10Min × 数量 ÷ secondUnitsPer10Min。
+ */
 data class SportItem(
     val category: SportCategory,
     val name: String,
-    val kcalPer10Min: Float
-)
+    val kcalPer10Min: Float,
+    val secondUnit: SportUnit = SportUnit.SESSION,
+    val secondUnitsPer10Min: Float = 0f
+) {
+    /** 把「数量 + 单位」换算成千卡 */
+    fun kcalFor(value: Float, unit: SportUnit): Float = when {
+        unit == SportUnit.MIN -> kcalPer10Min * value / 10f
+        secondUnitsPer10Min <= 0f -> 0f
+        else -> kcalPer10Min * value / secondUnitsPer10Min
+    }
+}
 
 /**
  * 静态运动库（UI 阶段数据，来源：设计稿运动库清单）。
@@ -30,7 +54,8 @@ data class SportItem(
  */
 object SportCatalog {
 
-    val items: List<SportItem> = buildList {
+    /** 原始清单：只有时间维度，距离维度在下面统一补 */
+    private val rawItems: List<SportItem> = buildList {
         // ── 跑步健走 ──
         add(SportItem(SportCategory.RUN, "跑步（快速）", 90f))
         add(SportItem(SportCategory.RUN, "跑步（中速）", 78f))
@@ -205,7 +230,80 @@ object SportCatalog {
         add(SportItem(SportCategory.STRENGTH, "臀桥", 60f))
     }
 
+    // ── 第二单位决策表 ────────────────────────────────────────────────
+
+    /** km：位移型运动 → 10 分钟跑/骑多少公里 */
+    private val KM_PER_10MIN = mapOf(
+        // 跑步健走
+        "跑步（快速）" to 2.0f, "跑步（中速）" to 1.67f, "跑步（慢速）" to 1.33f,
+        "马拉松" to 1.67f, "走路" to 0.83f, "散步" to 0.67f, "步行" to 0.83f,
+        "徒步快走" to 1.08f, "爬坡" to 1.0f,
+        // 户外骑行
+        "骑行" to 3.0f, "骑共享单车" to 2.5f, "骑山地车" to 2.33f, "户外骑行" to 2.67f
+    )
+
+    /** 局：一局多少分钟，没列出来的默认 20 分钟 */
+    private val ROUND_MINUTES = mapOf(
+        "乒乓球" to 10f, "台球" to 10f, "保龄球" to 10f, "拳击" to 10f,
+        "羽毛球" to 15f, "壁球" to 15f, "短柄墙球" to 15f, "篮球（投篮）" to 15f,
+        "足球" to 25f, "橄榄球" to 25f, "美式足球" to 25f, "板球" to 25f,
+        "棒球" to 25f, "垒球" to 25f, "长曲棍球" to 25f, "冰上曲棍球" to 25f,
+        "高尔夫" to 25f
+    )
+
+    /** 场：一场多少分钟，没列出来的默认 40 分钟 */
+    private val SESSION_MINUTES = mapOf(
+        "冥想" to 30f, "伸展运动" to 30f, "慢速舞蹈" to 30f, "健美操" to 30f,
+        "瑜伽" to 45f, "力量瑜伽" to 45f, "空中瑜伽" to 45f, "高温瑜伽" to 45f,
+        "普拉提" to 45f, "太极" to 45f, "广场舞" to 45f,
+        "游泳" to 45f, "自由泳" to 45f, "蛙泳" to 45f, "仰泳" to 45f, "蝶泳" to 45f,
+        "登山" to 50f, "爬山" to 50f, "耐力运动" to 50f, "赛艇" to 50f,
+        "越野滑雪" to 50f, "滑旱冰" to 50f, "山地自行车" to 50f,
+        "帆船" to 50f, "骑马" to 50f
+    )
+
+    /** 个：一分钟做多少个，没列出来的默认 20 个/分钟 */
+    private val REPS_PER_MINUTE = mapOf(
+        "引体向上" to 6f, "硬拉" to 8f,
+        "卧推" to 10f, "杠铃卧推" to 10f, "平板卧推" to 10f,
+        "站姿杠铃推举" to 10f, "哑铃肩推" to 10f, "壶铃甩" to 10f,
+        "哑铃划船" to 12f, "哑铃深蹲" to 12f, "哑铃平底飞鸟" to 12f,
+        "哑铃" to 15f, "弹力带臀桥" to 15f, "靠墙俯卧撑" to 15f,
+        "卷腹" to 25f, "仰卧起坐" to 25f
+    )
+
+    /** 肌力训练里不走「个」的：拉伸、静力、循环、器械综合 → 按「场」算 */
+    private val STRENGTH_SESSION = setOf(
+        "肩颈拉伸", "腹部拉伸", "全身拉伸", "腿部拉伸", "背部拉伸",
+        "腿部泡沫轴", "腿部泡沫轴放松", "平板支撑", "靠墙静蹲",
+        "全身循环", "爬楼", "壶铃", "举重", "举重锻炼", "健美", "臂力棒", "呼啦圈"
+    )
+
+    /** 每个运动分到哪个第二单位 */
+    private fun unitOf(item: SportItem): SportUnit = when {
+        item.category == SportCategory.RUN || item.category == SportCategory.CYCLING -> SportUnit.KM
+        item.category == SportCategory.BALL -> SportUnit.ROUND
+        item.category == SportCategory.STRENGTH && item.name !in STRENGTH_SESSION -> SportUnit.REP
+        else -> SportUnit.SESSION
+    }
+
+    /** 10 分钟里有几个第二单位 */
+    private fun per10Of(item: SportItem, unit: SportUnit): Float = when (unit) {
+        SportUnit.KM -> KM_PER_10MIN[item.name] ?: 1f
+        SportUnit.ROUND -> 10f / (ROUND_MINUTES[item.name] ?: 20f)
+        SportUnit.SESSION -> 10f / (SESSION_MINUTES[item.name] ?: 40f)
+        SportUnit.REP -> (REPS_PER_MINUTE[item.name] ?: 20f) * 10f
+        SportUnit.MIN -> 0f
+    }
+
+    /** 对外用的最终清单：单位与换算系数已经算好 */
+    val items: List<SportItem> = rawItems.map { raw ->
+        val unit = unitOf(raw)
+        raw.copy(secondUnit = unit, secondUnitsPer10Min = per10Of(raw, unit))
+    }
+
     /** 某个分类下的运动；「我的常用」「自定义」没有数据，用于展示空态 */
     fun byCategory(category: SportCategory): List<SportItem> =
         items.filter { it.category == category }
 }
+

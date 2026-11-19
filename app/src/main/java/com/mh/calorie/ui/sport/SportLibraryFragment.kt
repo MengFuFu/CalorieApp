@@ -48,6 +48,21 @@ class SportLibraryFragment : Fragment(R.layout.fragment_sport_library) {
             renderList()
         }
 
+        childFragmentManager.setFragmentResultListener(
+            SportInputSheet.REQUEST_KEY, viewLifecycleOwner
+        ) { _, bundle ->
+            val kcal = bundle.getFloat(SportInputSheet.RESULT_KCAL)
+            val name = bundle.getString(SportInputSheet.RESULT_NAME).orEmpty()
+            val quantity = bundle.getString(SportInputSheet.RESULT_QUANTITY).orEmpty()
+            totalKcal += kcal
+            renderTotal()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.sport_added_hint, name, quantity),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         renderList()
         renderTotal()
     }
@@ -59,17 +74,12 @@ class SportLibraryFragment : Fragment(R.layout.fragment_sport_library) {
     }
 
     private fun onAdd(item: SportItem) {
-        totalKcal += item.kcalPer10Min
-        renderTotal()
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.sport_added_hint, item.name),
-            Toast.LENGTH_SHORT
-        ).show()
+        SportInputSheet.newInstance(item)
+            .show(childFragmentManager, SportInputSheet.TAG)
     }
 
     private fun renderList() {
-        val all = SportCatalo.byCategory(current)
+        val all = SportCatalog.byCategory(current)
         val list = if(keyword.isEmpty()) all else all.filter { it.name.contains(keyword) }
         listAdapter.submitList(list)
 

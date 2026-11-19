@@ -179,4 +179,17 @@
     <string name="sport_module_name">运动模块</string>
     <string name="sport_empty_search">没有找到「%1$s」相关的运动</string>
     <string name="sport_done_coming">运动记录的保存将在下一步接入</string>
+
+    <string name="sport_unit_min">min</string>
+    <string name="sport_unit_km">km</string>
+    <string name="sport_unit_round">局</string>
+    <string name="sport_unit_session">场</string>
+    <string name="sport_unit_rep">个</string>
+    <string name="sport_save">保存</string>
+    <string name="sport_value_empty">请输入大于 0 的数值</string>
+    <string name="sport_value_too_long">最多输入四位数</string>
+    <!-- 第二单位带时间/频率提示 -->
+    <string name="sport_unit_round_with_time">局(%1$dmin)</string>
+    <string name="sport_unit_session_with_time">场(%1$dmin)</string>
+    <string name="sport_unit_rep_with_rate">个(%1$d/分钟)</string>
 </resources>
