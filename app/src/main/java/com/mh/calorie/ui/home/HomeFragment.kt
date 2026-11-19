@@ -40,8 +40,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         binding.cardWeight.setOnClickListener { toWeight() }
         binding.btnRecordWeight.setOnClickListener { toWeight() }
-        binding.cardSport.setOnClickListener { comingSoon("运动详情", "M8") }
-        binding.btnRecordSport.setOnClickListener { comingSoon("记运动", "M8") }
+        // 运动卡 → 运动记录页；记运动 → 直接进运动库
+        binding.cardSport.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_sportRecordFragment)
+        }
+        binding.btnRecordSport.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_sportLibraryFragment)
+        }
         binding.cardFasting.setOnClickListener { comingSoon("断食计划", "M9") }
         binding.btnRecordFasting.setOnClickListener { comingSoon("记断食", "M10") }
         binding.cardWater.setOnClickListener { comingSoon("喝水详情", "M6") }

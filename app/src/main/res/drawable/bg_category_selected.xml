@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选中分类的白色胶囊：只圆左侧（等价于原来的 topRight/bottomRight 版本旋转 180°） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/surface_card" />
+    <corners
+        android:topLeftRadius="22dp"
+        android:bottomLeftRadius="22dp" />
+</shape>

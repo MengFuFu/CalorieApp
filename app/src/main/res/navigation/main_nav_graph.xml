@@ -17,6 +17,14 @@
         <action
             android:id="@+id/action_homeFragment_to_weightRecordFragment"
             app:destination="@id/weightRecordFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_sportRecordFragment"
+            app:destination="@id/sportRecordFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_sportLibraryFragment"
+            app:destination="@id/sportLibraryFragment" />
     </fragment>
 
     <fragment
@@ -57,5 +65,15 @@
         android:id="@+id/profileFragment"
         android:name="com.mh.calorie.ui.profile.ProfileFragment"
         android:label="@string/page_title_profile" />
+
+    <fragment
+        android:id="@+id/sportRecordFragment"
+        android:name="com.mh.calorie.ui.sport.SportRecordFragment"
+        android:label="@string/sport_record_title" />
+
+    <fragment
+        android:id="@+id/sportLibraryFragment"
+        android:name="com.mh.calorie.ui.sport.SportLibraryFragment"
+        android:label="@string/sport_library_title" />
 
 </navigation>

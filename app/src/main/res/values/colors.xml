@@ -81,4 +81,8 @@
 
     <color name="wheel_highlight">#F2F5F2</color>
     <color name="wheel_text_normal">#C2C2C2</color>
+
+    <!-- 运动页专用 -->
+    <color name="page_gray">#F7F8FA</color>
+    <color name="sport_sidebar">#F2F4F2</color>
 </resources>

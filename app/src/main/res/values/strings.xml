@@ -143,4 +143,40 @@
     <string name="body_history_empty">还没有记录过围度哦</string>
     <string name="body_history_go_record">去记录</string>
     <string name="body_cm_value">%1$s cm</string>
+
+    <!-- 运动 -->
+    <string name="sport_record_title">运动记录</string>
+    <string name="sport_sync">数据同步</string>
+    <string name="sport_record_empty">暂无记录...要不起来动动呢~</string>
+    <string name="sport_library_title">运动库</string>
+    <string name="sport_custom_add">自定义添加</string>
+    <string name="sport_disclaimer">图标均由 AI 生成，请勿从事违法活动</string>
+    <string name="sport_search_hint">请输入运动名称</string>
+    <string name="sport_ai_title">AI·运动速计</string>
+    <string name="sport_ai_vip">VIP</string>
+    <string name="sport_ai_go">去使用</string>
+    <string name="sport_cat_favorite">我的常用</string>
+    <string name="sport_cat_custom">自定义</string>
+    <string name="sport_cat_run">跑步健走</string>
+    <string name="sport_cat_outdoor">户外探索</string>
+    <string name="sport_cat_cycling">户外骑行</string>
+    <string name="sport_cat_water">水上运动</string>
+    <string name="sport_cat_ball">球类竞技</string>
+    <string name="sport_cat_dance">有氧舞蹈</string>
+    <string name="sport_cat_mind">身心修养</string>
+    <string name="sport_cat_strength">肌力训练</string>
+    <string name="sport_energy_label">运动消耗</string>
+    <string name="sport_kcal_value">%1$s</string>
+    <string name="sport_kcal_unit">kcal</string>
+    <string name="sport_kcal_per10_unit">kcal/10分钟</string>
+    <string name="sport_empty_favorite">上周没有运动记录哦</string>
+    <string name="sport_empty_custom">还没有添加过运动哦</string>
+    <string name="sport_go_add">去添加</string>
+    <string name="sport_done">完成</string>
+    <string name="sport_added_hint">已添加 %1$s · 10 分钟</string>
+    <string name="sport_zero">0</string>
+
+    <string name="sport_module_name">运动模块</string>
+    <string name="sport_empty_search">没有找到「%1$s」相关的运动</string>
+    <string name="sport_done_coming">运动记录的保存将在下一步接入</string>
 </resources>
