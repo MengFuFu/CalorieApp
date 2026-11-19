@@ -109,13 +109,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- 数值 + 实时 kcal -->
-    <LinearLayout
+    <!-- 数值居中 + 右边缘的 🔥 kcal，同一基线 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginTop="28dp">
 
         <TextView
             android:id="@+id/tvValue"
@@ -124,23 +122,30 @@
             android:includeFontPadding="false"
             android:textColor="@color/brand_green"
             android:textSize="44sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvFlame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
+            android:layout_marginEnd="4dp"
             android:text="🔥"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvValue"
+            app:layout_constraintEnd_toStartOf="@id/tvKcal" />
 
         <TextView
             android:id="@+id/tvKcal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:textColor="@color/text_secondary"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvValue"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:layout_width="130dp"
