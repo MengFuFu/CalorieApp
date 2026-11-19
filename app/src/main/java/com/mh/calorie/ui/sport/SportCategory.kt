@@ -38,7 +38,9 @@ data class SportItem(
     val name: String,
     val kcalPer10Min: Float,
     val secondUnit: SportUnit = SportUnit.SESSION,
-    val secondUnitsPer10Min: Float = 0f
+    val secondUnitsPer10Min: Float = 0f,
+    /** 列表里按多少分钟展示（普通运动 10；自定义运动用用户填的时长） */
+    val sampleMinutes: Int = 10
 ) {
     /** 把「数量 + 单位」换算成千卡 */
     fun kcalFor(value: Float, unit: SportUnit): Float = when {

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mh.calorie.R
 import com.mh.calorie.databinding.ItemSportLibraryRowBinding
 import java.util.Locale
 
@@ -31,7 +32,11 @@ class SportLibraryAdapter(
 
         fun bind(item: SportItem) {
             binding.tvName.text = item.name
-            binding.tvKcal.text = formatKcal(item.kcalPer10Min)
+            // 普通运动 sampleMinutes=10，自定义运动是用户填的分钟数
+            val basis = item.sampleMinutes
+            binding.tvKcal.text = formatKcal(item.kcalFor(basis.toFloat(), SportUnit.MIN))
+            binding.tvBasis.text = binding.root.context
+                .getString(R.string.sport_kcal_per_minutes, basis)
             binding.btnAdd.setOnClickListener { onAdd(item) }
         }
 

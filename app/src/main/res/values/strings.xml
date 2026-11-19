@@ -196,4 +196,21 @@
     <string name="sport_month_total">本月合计 %1$s kcal</string>
     <string name="sport_record_go">去记录</string>
     <string name="sport_sync_coming">数据同步将在后续接入</string>
+
+    <string name="custom_sport_title">添加自定义运动</string>
+    <string name="custom_sport_section">基础信息</string>
+    <string name="custom_sport_name">运动名称</string>
+    <string name="custom_sport_name_hint">如：跑步、健身操</string>
+    <string name="custom_sport_duration">运动时长</string>
+    <string name="custom_sport_duration_hint">如：60</string>
+    <string name="custom_sport_minutes_unit">分钟</string>
+    <string name="custom_sport_kcal">热量</string>
+    <string name="custom_sport_kcal_hint">请输入数值</string>
+    <string name="custom_sport_kcal_unit">kcal</string>
+    <string name="custom_sport_photo">照片</string>
+    <string name="custom_sport_save">保存</string>
+    <string name="custom_sport_err_name">请填写运动名称</string>
+    <string name="custom_sport_err_range">时长 1~600 分钟，热量 1~5000 kcal</string>
+    <string name="custom_sport_added">已添加到「自定义」</string>
+    <string name="sport_kcal_per_minutes">/%1$d分钟</string>
 </resources>

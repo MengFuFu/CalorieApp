@@ -79,6 +79,22 @@
     <fragment
         android:id="@+id/sportLibraryFragment"
         android:name="com.mh.calorie.ui.sport.SportLibraryFragment"
-        android:label="@string/sport_library_title" />
+        android:label="@string/sport_library_title">
+
+        <action
+            android:id="@+id/action_sportLibraryFragment_to_customSportFragment"
+            app:destination="@id/customSportFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/customSportFragment"
+        android:name="com.mh.calorie.ui.sport.CustomSportFragment"
+        android:label="@string/custom_sport_title">
+        <argument
+            android:name="dummy"
+            app:argType="string"
+            android:defaultValue=""
+            app:nullable="true" />
+    </fragment>
 
 </navigation>
