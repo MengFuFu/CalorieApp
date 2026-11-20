@@ -117,4 +117,29 @@
         <item name="android:textSize">26sp</item>
     </style>
 
+    <!-- 日历星期表头：7 个等宽 TextView 共用 -->
+    <!-- parent="" 不能省：style 名带点会被当隐式父样式去找 Widget.Momo，找不到就报错 -->
+    <style name="Widget.Momo.WeekDay" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- 顶部下拉面板：透明底 + 从上方滑入 -->
+    <style name="Theme.Momo.TopSheet" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Momo.TopSheet</item>
+    </style>
+
+    <style name="Animation.Momo.TopSheet" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/slide_in_top</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_top</item>
+    </style>
+
 </resources>

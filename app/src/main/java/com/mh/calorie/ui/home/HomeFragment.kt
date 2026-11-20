@@ -49,9 +49,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         binding.cardFasting.setOnClickListener { comingSoon("断食计划", "M9") }
         binding.btnRecordFasting.setOnClickListener { comingSoon("记断食", "M10") }
-        binding.cardWater.setOnClickListener { comingSoon("喝水详情", "M6") }
-        binding.btnRecordWater.setOnClickListener { comingSoon("记喝水", "M6") }
-        binding.tvWaterOther.setOnClickListener { comingSoon("喝其他", "M6") }
+        binding.cardWater.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_waterFragment)
+        }
+        binding.btnRecordWater.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_waterFragment)
+        }
+        binding.tvWaterOther.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_waterFragment)
+        }
     }
 
     private fun comingSoon(label: String, module: String) {

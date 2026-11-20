@@ -213,4 +213,37 @@
     <string name="custom_sport_err_range">时长 1~600 分钟，热量 1~5000 kcal</string>
     <string name="custom_sport_added">已添加到「自定义」</string>
     <string name="sport_kcal_per_minutes">/%1$d分钟</string>
+
+    <string name="water_title">今天</string>
+    <string name="water_calendar">选择日期</string>
+    <string name="water_settings">设置</string>
+    <string name="water_percent_label">今日已完成：</string>
+    <string name="water_percent_zero">0%</string>
+    <string name="water_percent_value">%1$d%%</string>
+    <string name="water_goal_label">喝水目标：</string>
+    <string name="water_goal_edit">修改喝水目标</string>
+    <string name="water_goal_ml">%1$dml</string>
+    <string name="water_today_ml">%1$d ml</string>
+    <string name="water_amount_ml">%1$d ml</string>
+    <string name="water_records_title">喝水记录</string>
+    <string name="water_empty">还没有喝水记录，来一杯吧~</string>
+    <string name="water_drink_cup">水(200ml)</string>
+    <string name="water_custom">自定义记录</string>
+    <string name="water_bottle_word">drink water</string>
+    <string name="water_module_name">喝水模块</string>
+
+    <string name="water_net_label">净水量</string>
+    <string name="water_record_name">水</string>
+    <string name="water_amount_ml_compact">%1$dml</string>
+    <string name="water_detail">含水量%1$d%%，%2$dml</string>
+
+    <string name="water_today_mark">今</string>
+    <string name="water_back_today">回今天</string>
+    <string name="week_mon">周一</string>
+    <string name="week_tue">周二</string>
+    <string name="week_wed">周三</string>
+    <string name="week_thu">周四</string>
+    <string name="week_fri">周五</string>
+    <string name="week_sat">周六</string>
+    <string name="week_sun">周日</string>
 </resources>

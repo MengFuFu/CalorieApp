@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   4 个顶层目的地。这里没有 action，因为 Tab 之间是平级切换，
   直接在代码里 navigate(destinationId, args, options) 即可，不需要预声明连线。
 -->
@@ -11,7 +10,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.mh.calorie.ui.home.HomeFragment"
-        android:label="@string/page_title_home" >
+        android:label="@string/page_title_home">
 
         <!-- 首页「体重」卡 / 「记体重」按钮都走这一条 -->
         <action
@@ -25,6 +24,10 @@
         <action
             android:id="@+id/action_homeFragment_to_sportLibraryFragment"
             app:destination="@id/sportLibraryFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_waterFragment"
+            app:destination="@id/waterFragment" />
     </fragment>
 
     <fragment
@@ -92,9 +95,14 @@
         android:label="@string/custom_sport_title">
         <argument
             android:name="dummy"
-            app:argType="string"
             android:defaultValue=""
+            app:argType="string"
             app:nullable="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/waterFragment"
+        android:name="com.mh.calorie.ui.water.WaterFragment"
+        android:label="@string/water_title" />
 
 </navigation>

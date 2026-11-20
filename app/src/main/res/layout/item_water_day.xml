@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="4dp">
+
+    <TextView
+        android:id="@+id/tvDay"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:gravity="center"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp" />
+
+    <com.mh.calorie.ui.water.WaterCupView
+        android:id="@+id/ivCup"
+        android:layout_width="14dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="3dp" />
+</LinearLayout>

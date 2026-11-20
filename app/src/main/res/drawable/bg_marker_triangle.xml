@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="12dp"
+    android:height="8dp"
+    android:viewportWidth="12"
+    android:viewportHeight="8">
+    <!--
+        朝上的小三角。
+        圆角做法：填充 + 同色描边（strokeWidth 2.2 + round join），
+        描边会把三个尖角包成圆角，比手写弧线路径省事且可缩放。
+    -->
+    <path
+        android:fillColor="@color/text_primary"
+        android:pathData="M2.6,6.6 L6,2.4 L9.4,6.6 Z"
+        android:strokeColor="@color/text_primary"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2.2" />
+</vector>

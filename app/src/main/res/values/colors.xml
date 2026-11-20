@@ -85,4 +85,7 @@
     <!-- 运动页专用 -->
     <color name="page_gray">#F7F8FA</color>
     <color name="sport_sidebar">#F2F4F2</color>
+
+    <color name="water_blue">#46A6E8</color>
+    <color name="water_blue_surface">#E8F4FD</color>
 </resources>
