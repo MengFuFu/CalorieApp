@@ -259,9 +259,6 @@
     <string name="stats_start">初始体重</string>
     <string name="stats_diet_title">饮食热量统计</string>
     <string name="stats_daily_intake">日热量摄入</string>
-    <string name="stats_carb_percent">碳水：%1$s</string>
-    <string name="stats_protein_percent">蛋白质：%1$s</string>
-    <string name="stats_fat_percent">脂肪：%1$s</string>
     <string name="stats_meal_breakfast">早餐</string>
     <string name="stats_meal_lunch">午餐</string>
     <string name="stats_meal_dinner">晚餐</string>
@@ -294,4 +291,17 @@
     <string name="food_meal_snack">加餐</string>
     <string name="food_action_done">完成</string>
     <string name="food_added_hint">已添加 %1$s</string>
+
+    <!-- 食物份量面板 -->
+    <string name="food_portion_title">份量</string>
+    <string name="food_portion_save">保存</string>
+    <string name="food_portion_kcal">%1$d kcal</string>
+    <string name="food_portion_approx">≈%1$s%2$s</string>
+    <string name="food_portion_empty">请输入份量</string>
+    <string name="food_added_kcal_hint">已添加 %1$s · %2$d kcal</string>
+    <string name="food_portion_too_large">份量超范围了，请检查一下</string>
+
+    <string name="stats_carb_percent">碳水：%1$d%%</string>
+    <string name="stats_protein_percent">蛋白质：%1$d%%</string>
+    <string name="stats_fat_percent">脂肪：%1$d%%</string>
 </resources>

@@ -3,6 +3,7 @@ package com.mh.calorie.ui.food
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isEmpty
@@ -13,13 +14,32 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mh.calorie.R
+import com.mh.calorie.core.domain.model.FoodLog
+import com.mh.calorie.core.domain.model.MealType
+import com.mh.calorie.data.temp.TempFoodLogRepository
 import com.mh.calorie.databinding.FragmentFoodLibraryBinding
+import com.mh.calorie.ui.common.labelRes
+import com.mh.calorie.ui.common.next
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import javax.inject.Inject
+import kotlin.math.roundToInt
 
 /** 食物库：左侧分类 + 右侧列表 + 搜索。数据来自 FoodCatalog，M4 后换成 Room */
+@AndroidEntryPoint
 class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
+
+    @Inject
+    lateinit var foodRepo: TempFoodLogRepository
+
+    /** 底部条当前选中的餐次，点一下往后切 */
+    private var meal: MealType = MealType.BREAKFAST
+
+    /** 打开面板时记住分类，算宏量要用 */
+    private var pendingCategory: FoodCategory? = null
 
     private var _binding: FragmentFoodLibraryBinding? = null
     private val binding get() = _binding!!
@@ -27,13 +47,13 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
     private var category: FoodCategory = FoodCategory.STAPLE
     private var query: String = ""
 
-    private val foodAdapter = FoodItemAdapter(unit = {category.unit}) {
-        item ->
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.food_added_hint, item.name),
-            Toast.LENGTH_SHORT
-        ).show()
+    private val foodAdapter = FoodItemAdapter(unit = { category.unit }) { item ->
+        pendingCategory = category
+        FoodPortionSheet.newInstance(
+            item = item,
+            mode = category.portionMode,
+            date = LocalDate.now().toString()
+        ).show(childFragmentManager, FoodPortionSheet.TAG)
     }
 
     private val categoryAdapter = FoodCategoryAdapter { picked ->
@@ -69,6 +89,43 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
             renderList()
         }
 
+        binding.tvMeal.text = getString(meal.labelRes)
+        binding.tvMeal.setOnClickListener {
+            meal = meal.next()
+            binding.tvMeal.text = getString(meal.labelRes)
+        }
+
+        childFragmentManager.setFragmentResultListener(
+            FoodPortionSheet.REQUEST_KEY, viewLifecycleOwner
+        ) { _, bundle ->
+            val name = bundle.getString(FoodPortionSheet.RESULT_NAME)
+                ?: return@setFragmentResultListener
+            val kcal = bundle.getInt(FoodPortionSheet.RESULT_KCAL).toFloat()
+            val qty = bundle.getString(FoodPortionSheet.RESULT_QTY).orEmpty()
+            val unit = bundle.getString(FoodPortionSheet.RESULT_UNIT).orEmpty()
+
+            val (c, p, f) = MacroEstimator.split(pendingCategory ?: category, kcal)
+            foodRepo.add(
+                FoodLog(
+                    recordedAt = LocalDateTime.now(),
+                    meal = meal,
+                    name = name,
+                    quantity = qty,
+                    unit = unit,
+                    kcal = kcal,
+                    carbGram = c,
+                    proteinGram = p,
+                    fatGram = f
+                )
+            )
+
+            makeText(
+                requireContext(),
+                getString(R.string.food_added_kcal_hint, name, kcal.roundToInt()),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         renderList()
     }
 
@@ -81,7 +138,7 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
     }
 
     private fun toast(resId: Int) {
-        Toast.makeText(
+        makeText(
             requireContext(),
             getString(R.string.toast_coming_soon, getString(resId), getString(R.string.food_title)),
             Toast.LENGTH_SHORT

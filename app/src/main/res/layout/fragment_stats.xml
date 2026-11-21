@@ -524,7 +524,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- 餐次分段：默认「加餐」选中 -->
+                <!-- 餐次分段：可点切换 -->
                 <LinearLayout
                     android:id="@+id/groupMeal"
                     android:layout_width="match_parent"
@@ -536,15 +536,19 @@
                     android:padding="3dp">
 
                     <TextView
+                        android:id="@+id/tvMealBreakfast"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_stat_tab_selected"
                         android:gravity="center"
                         android:text="@string/stats_meal_breakfast"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="14sp" />
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvMealLunch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -554,6 +558,7 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/tvMealDinner"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -563,47 +568,62 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/tvMealSnack"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_stat_tab_selected"
                         android:gravity="center"
                         android:text="@string/stats_meal_snack"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- 空态 -->
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_mascot_placeholder"
-                    android:contentDescription="@string/stats_food_empty" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- 该餐次下的食物列表（页面本身可滚动） -->
+                <LinearLayout
+                    android:id="@+id/containerFoods"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/stats_food_empty"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical"
+                    android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/btnAddFood"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_go_record"
-                    android:gravity="center"
-                    android:paddingHorizontal="20dp"
-                    android:text="@string/stats_add"
-                    android:textColor="@color/brand_green_dark"
-                    android:textSize="14sp" />
+                <!-- 空态 -->
+                <LinearLayout
+                    android:id="@+id/groupFoodEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_mascot_placeholder"
+                        android:contentDescription="@string/stats_food_empty" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/stats_food_empty"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/btnAddFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_go_record"
+                        android:gravity="center"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/stats_add"
+                        android:textColor="@color/brand_green_dark"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
