@@ -246,4 +246,39 @@
     <string name="week_fri">周五</string>
     <string name="week_sat">周六</string>
     <string name="week_sun">周日</string>
+
+    <!-- 统计页 -->
+    <string name="stats_title">统计</string>
+    <string name="stats_report_title">记录分析日报</string>
+    <string name="stats_report_sub">每日健康分析与建议，快来看看吧~</string>
+    <string name="stats_weight_title">体重数据统计</string>
+    <string name="stats_goal_done">目标完成</string>
+    <string name="stats_change">累计变化</string>
+    <string name="stats_current">当前体重</string>
+    <string name="stats_target">目标体重</string>
+    <string name="stats_start">初始体重</string>
+    <string name="stats_diet_title">饮食热量统计</string>
+    <string name="stats_daily_intake">日热量摄入</string>
+    <string name="stats_carb_percent">碳水：%1$s</string>
+    <string name="stats_protein_percent">蛋白质：%1$s</string>
+    <string name="stats_fat_percent">脂肪：%1$s</string>
+    <string name="stats_meal_breakfast">早餐</string>
+    <string name="stats_meal_lunch">午餐</string>
+    <string name="stats_meal_dinner">晚餐</string>
+    <string name="stats_meal_snack">加餐</string>
+    <string name="stats_food_empty">还没有添加过食物哦</string>
+    <string name="stats_sport_title">运动消耗统计</string>
+    <string name="stats_sport_kcal">运动消耗热量</string>
+    <string name="stats_sport_kind">运动形式</string>
+    <string name="stats_sport_empty">还没有添加过运动哦</string>
+    <string name="stats_life_title">生活美食统计</string>
+    <string name="stats_life_all">全部</string>
+    <string name="stats_add">去添加</string>
+    <string name="stats_week_mon">周一</string>
+    <string name="stats_week_tue">周二</string>
+    <string name="stats_week_wed">周三</string>
+    <string name="stats_week_thu">周四</string>
+    <string name="stats_week_fri">周五</string>
+    <string name="stats_week_sat">周六</string>
+    <string name="stats_week_sun">周日</string>
 </resources>
