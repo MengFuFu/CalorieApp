@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.mh.calorie.R
 import com.mh.calorie.databinding.FragmentPlaceholderBinding
 import com.mh.calorie.databinding.FragmentStatsBinding
@@ -36,7 +37,11 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
 
         binding.cardReport.setOnClickListener { comingSoon(R.string.stats_report_title) }
-        binding.btnAddFood.setOnClickListener { comingSoon(R.string.stats_diet_title) }
+
+        binding.btnAddFood.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_foodLibraryFragment)
+        }
+
         binding.btnAddSport.setOnClickListener { comingSoon(R.string.stats_sport_title) }
         binding.chipLifeAll.setOnClickListener { comingSoon(R.string.stats_life_title) }
     }
@@ -57,7 +62,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         super.onDestroyView()
         _binding = null
     }
-    
+
     private companion object {
         val DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年M月d日", Locale.CHINA)
     }

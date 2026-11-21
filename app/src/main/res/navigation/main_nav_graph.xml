@@ -62,7 +62,12 @@
     <fragment
         android:id="@+id/statsFragment"
         android:name="com.mh.calorie.ui.stats.StatsFragment"
-        android:label="@string/page_title_stats" />
+        android:label="@string/page_title_stats" >
+
+        <action
+            android:id="@+id/action_statsFragment_to_foodLibraryFragment"
+            app:destination="@id/foodLibraryFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
@@ -104,5 +109,10 @@
         android:id="@+id/waterFragment"
         android:name="com.mh.calorie.ui.water.WaterFragment"
         android:label="@string/water_title" />
+
+    <fragment
+        android:id="@+id/foodLibraryFragment"
+        android:name="com.mh.calorie.ui.food.FoodLibraryFragment"
+        android:label="@string/food_title" />
 
 </navigation>

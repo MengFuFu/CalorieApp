@@ -281,4 +281,17 @@
     <string name="stats_week_fri">周五</string>
     <string name="stats_week_sat">周六</string>
     <string name="stats_week_sun">周日</string>
+
+    <!-- 食物库 -->
+    <string name="food_title">食物库</string>
+    <string name="food_ai_hint">图标均由 AI 生成，请勿从事违法活动</string>
+    <string name="food_search_hint">请输入食物名称</string>
+    <string name="food_custom_add">自定义添加</string>
+    <string name="food_empty">这个分类还没有数据哦</string>
+    <string name="food_meal_breakfast">早餐</string>
+    <string name="food_meal_lunch">午餐</string>
+    <string name="food_meal_dinner">晚餐</string>
+    <string name="food_meal_snack">加餐</string>
+    <string name="food_action_done">完成</string>
+    <string name="food_added_hint">已添加 %1$s</string>
 </resources>
