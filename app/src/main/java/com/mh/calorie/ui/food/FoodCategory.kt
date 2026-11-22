@@ -10,7 +10,10 @@ data class FoodItem(
     /** 第二计量单位：个 / 根 / 颗 / 杯 / 碗…；null 表示只能按重量或份数记 */
     val portionUnit: String? = null,
     /** 一个该单位大约多少克（毫升），用于换算和「≈100g」提示 */
-    val gramPerUnit: Float = 0f
+    val gramPerUnit: Float = 0f,
+    /** 自定义食物自带单位文案，如 "1g"、"1份"；为空时用分类单位 */
+    val unitText: String? = null,
+    val favorite: Boolean = false
 )
 
 /** 左侧分类。unit 是列表里跟热量后面那个单位文案 */

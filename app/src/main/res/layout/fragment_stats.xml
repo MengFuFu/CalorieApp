@@ -209,6 +209,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/tvGoalPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
@@ -238,6 +239,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/tvChanged"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
@@ -267,6 +269,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/tvCurrentWeight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
@@ -296,6 +299,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/tvTargetWeight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
@@ -325,6 +329,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/tvStartWeight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
@@ -737,22 +742,37 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_mascot_placeholder"
-                    android:contentDescription="@string/stats_sport_empty" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- 今天的运动记录 -->
+                <LinearLayout
+                    android:id="@+id/containerSports"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/stats_sport_empty"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical" />
+
+                <!-- 没有记录时的空态 -->
+                <LinearLayout
+                    android:id="@+id/groupSportEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_mascot_placeholder"
+                        android:contentDescription="@string/stats_sport_empty" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/stats_sport_empty"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/btnAddSport"

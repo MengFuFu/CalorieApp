@@ -307,4 +307,27 @@
     <string name="food_meal_records_total">共 %1$d 条记录，总计 %2$d kcal</string>
     <string name="food_meal_record_kcal">%1$d kcal · %2$s/份</string>
     <string name="food_meal_empty">还没有记录哦～</string>
+
+    <string name="custom_food_title">添加自定义食物</string>
+    <string name="custom_food_section_basic">基础信息</string>
+    <string name="custom_food_section_nutrition">营养素信息（选填）</string>
+    <string name="custom_food_name">食物名称</string>
+    <string name="custom_food_name_hint">如：水果沙拉、健身餐</string>
+    <string name="custom_food_qty">数量</string>
+    <string name="custom_food_qty_hint">如：100</string>
+    <string name="custom_food_unit">单位</string>
+    <string name="custom_food_unit_hint">如：克、个、份</string>
+    <string name="custom_food_kcal">热量</string>
+    <string name="custom_food_kcal_hint">请输入数值 kcal</string>
+    <string name="custom_food_photo">照片</string>
+    <string name="custom_food_protein">蛋白质</string>
+    <string name="custom_food_fat">脂肪</string>
+    <string name="custom_food_carb">碳水化合物</string>
+    <string name="custom_food_gram_hint">请输入数值</string>
+    <string name="custom_food_gram_unit">g</string>
+    <string name="custom_food_favorite">添加至【我的收藏】</string>
+    <string name="custom_food_save">保存</string>
+    <string name="custom_food_required">带 * 的项都要填写</string>
+    <string name="custom_food_saved">已添加到自定义</string>
+    <string name="stats_sport_kind_value">%1$d类</string>
 </resources>

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_page"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_margin"
+        android:paddingBottom="24dp">
+
+        <!-- 顶栏 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/page_top_bar_height">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/action_back"
+                android:padding="10dp"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/custom_food_title"
+                android:textAppearance="@style/TextAppearance.Momo.TitleBar" />
+        </FrameLayout>
+
+        <!-- 基础信息 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/custom_food_section_basic"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_form_card"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp">
+
+            <!-- 食物名称 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/custom_food_name"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@color/state_error" />
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="@string/custom_food_name_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="16"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <com.mh.calorie.ui.widget.DashedDividerView
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <!-- 数量 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/custom_food_qty"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@color/state_error" />
+
+                <EditText
+                    android:id="@+id/etQty"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="@string/custom_food_qty_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <com.mh.calorie.ui.widget.DashedDividerView
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <!-- 单位 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/custom_food_unit"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@color/state_error" />
+
+                <EditText
+                    android:id="@+id/etUnit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="@string/custom_food_unit_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLength="4"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <com.mh.calorie.ui.widget.DashedDividerView
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <!-- 热量 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/custom_food_kcal"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@color/state_error" />
+
+                <EditText
+                    android:id="@+id/etKcal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="@string/custom_food_kcal_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <com.mh.calorie.ui.widget.DashedDividerView
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <!-- 照片 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/custom_food_photo"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <FrameLayout
+                    android:id="@+id/btnPhoto"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_photo_box"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:id="@+id/ivPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/custom_food_photo"
+                        android:padding="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_camera_photo" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 营养素 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/custom_food_section_nutrition"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_form_card"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/custom_food_protein"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/etProtein"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="@string/custom_food_gram_hint"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/custom_food_gram_unit"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <com.mh.calorie.ui.widget.DashedDividerView
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/custom_food_fat"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/etFat"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="@string/custom_food_gram_hint"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/custom_food_gram_unit"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <com.mh.calorie.ui.widget.DashedDividerView
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/custom_food_carb"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/etCarb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:hint="@string/custom_food_gram_hint"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/custom_food_gram_unit"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 收藏开关 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_form_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/custom_food_favorite"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switchFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+        </LinearLayout>
+
+        <!-- 保存 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSave"
+            style="@style/Widget.Momo.Button.Pill.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/custom_food_save"
+            android:textSize="16sp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

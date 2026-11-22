@@ -113,6 +113,16 @@
     <fragment
         android:id="@+id/foodLibraryFragment"
         android:name="com.mh.calorie.ui.food.FoodLibraryFragment"
-        android:label="@string/food_title" />
+        android:label="@string/food_title" >
+
+        <action
+            android:id="@+id/action_foodLibraryFragment_to_customFoodFragment"
+            app:destination="@id/customFoodFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/customFoodFragment"
+        android:name="com.mh.calorie.ui.food.CustomFoodFragment"
+        android:label="@string/custom_food_title" />
 
 </navigation>

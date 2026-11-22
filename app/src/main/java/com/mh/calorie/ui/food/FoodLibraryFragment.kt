@@ -19,7 +19,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mh.calorie.R
+import com.mh.calorie.core.domain.model.CustomFood
 import com.mh.calorie.core.domain.model.MealType
+import com.mh.calorie.data.temp.TempCustomFoodRepository
 import com.mh.calorie.data.temp.TempFoodLogRepository
 import com.mh.calorie.databinding.FragmentFoodLibraryBinding
 import com.mh.calorie.databinding.ItemMealRecordRowBinding
@@ -42,6 +44,8 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
     @Inject
     lateinit var foodRepo: TempFoodLogRepository
 
+    @Inject lateinit var customRepo: TempCustomFoodRepository
+
     private var _binding: FragmentFoodLibraryBinding? = null
     private val binding get() = _binding!!
 
@@ -54,7 +58,7 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
     private val date: LocalDate get() = LocalDate.now()
 
     private val foodAdapter = FoodItemAdapter(
-        unit = { category.unit },
+        unitOf = { item -> item.unitText?.let { "/$it" } ?: category.unit },
         countOf = { item -> foodRepo.countOf(date, meal, item.name) },
         onAdd = { item -> openPortion(item) },
         onPlus = { item -> foodRepo.idOf(date, meal, item.name)?.let { foodRepo.increase(it) } },
@@ -85,7 +89,6 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
         binding.rvFood.adapter = foodAdapter
 
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
-        binding.btnCustomAdd.setOnClickListener { toast(R.string.food_custom_add) }
         binding.groupDate.setOnClickListener { toast(R.string.food_title) }
         binding.btnDone.setOnClickListener { findNavController().navigateUp() }
 
@@ -119,6 +122,17 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
         binding.tvPanelLunch.setOnClickListener { selectMeal(MealType.LUNCH) }
         binding.tvPanelDinner.setOnClickListener { selectMeal(MealType.DINNER) }
         binding.tvPanelSnack.setOnClickListener { selectMeal(MealType.SNACK) }
+
+        // 自定义食物增删/改收藏后重画当前列表
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                customRepo.items.collect { renderList() }
+            }
+        }
+
+        binding.btnCustomAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_foodLibraryFragment_to_customFoodFragment)
+        }
 
         // 份量面板回传 → 落到当前餐次
         childFragmentManager.setFragmentResultListener(
@@ -242,7 +256,7 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
     }
 
     private fun renderList() {
-        val source = FoodCatalog.itemsOf(category)
+        val source = sourceOf(category)
         val list = if (query.isEmpty()) source
         else source.filter { it.name.contains(query, ignoreCase = true) }
         foodAdapter.submitList(list)
@@ -257,6 +271,19 @@ class FoodLibraryFragment : Fragment(R.layout.fragment_food_library) {
             Toast.LENGTH_SHORT
         ).show()
     }
+
+    private fun sourceOf(target: FoodCategory): List<FoodItem> = when (target) {
+        FoodCategory.CUSTOM -> customRepo.items.value.map { it.toFoodItem() }
+        FoodCategory.FAVORITE -> customRepo.items.value.filter { it.favorite }.map { it.toFoodItem() }
+        else -> FoodCatalog.itemsOf(target)
+    }
+
+    private fun CustomFood.toFoodItem() = FoodItem(
+        name = name,
+        kcal = kcal.roundToInt(),
+        unitText = "${com.mh.calorie.core.domain.model.FoodLog.format(qty)}$unit",
+        favorite = favorite
+    )
 
     override fun onDestroyView() {
         super.onDestroyView()

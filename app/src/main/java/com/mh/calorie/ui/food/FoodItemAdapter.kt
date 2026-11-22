@@ -2,17 +2,19 @@ package com.mh.calorie.ui.food
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mh.calorie.R
 import com.mh.calorie.databinding.ItemFoodRowBinding
 import java.util.Locale
 
 /** 食物列表。份数由外部查仓库给出，数据一变外部要 notifyDataSetChanged */
 class FoodItemAdapter(
-    private val unit: () -> String,
+    private val unitOf: (FoodItem) -> String,
     private val countOf: (FoodItem) -> Int,
     private val onAdd: (FoodItem) -> Unit,
     private val onPlus: (FoodItem) -> Unit,
@@ -34,9 +36,16 @@ class FoodItemAdapter(
                 Locale.US,
                 "<font color=#F5A83C><b>%d</b></font> <font color=#8C8C8C>kcal%s</font>",
                 item.kcal,
-                unit()
+                unitOf(item)
             ),
             HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+        // 收藏：金色实心；未收藏：灰色空心
+        b.ivStar.setColorFilter(
+            ContextCompat.getColor(
+                b.root.context,
+                if (item.favorite) R.color.accent_yellow else R.color.text_tertiary
+            )
         )
 
         val count = countOf(item)
