@@ -99,35 +99,47 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         }
     }
 
-    /** 按三餐 + 加餐渲染：总量、三大宏量占比、食物卡片 */
+    /** 上面的总量与三大宏量按「全天」统计；只有下面的食物卡片跟随餐次 tab */
     private fun renderFood() {
-        val logs = foodRepo.ofMeal(date, meal)
+        // 全天合计：切换早/午/晚/加餐都不应该动
+        val dayLogs = foodRepo.ofDate(date)
+        val kcal = dayLogs.sumOf { it.kcal.toDouble() }.toFloat()
+        val carb = dayLogs.sumOf { it.carbGram.toDouble() }.toFloat()
+        val protein = dayLogs.sumOf { it.proteinGram.toDouble() }.toFloat()
+        val fat = dayLogs.sumOf { it.fatGram.toDouble() }.toFloat()
 
-        val kcal = logs.sumOf { it.kcal.toDouble() }.toFloat()
-        val carb = logs.sumOf { it.carbGram.toDouble() }.toFloat()
-        val protein = logs.sumOf { it.proteinGram.toDouble() }.toFloat()
-        val fat = logs.sumOf { it.fatGram.toDouble() }.toFloat()
+        // 百分比用「三大宏量供能之和」做分母，三项加起来正好 100%
+        val macroEnergy = carb * 4f + protein * 4f + fat * 9f
+        fun share(part: Float): Int =
+            if (macroEnergy <= 0f) 0
+            else (part / macroEnergy * 100f).roundToInt().coerceIn(0, 100)
+
+        val carbPercent = share(carb * 4f)
+        val proteinPercent = share(protein * 4f)
+        val fatPercent = share(fat * 9f)
 
         binding.tvIntakeKcal.text = String.format(Locale.US, "%dkcal", kcal.roundToInt())
 
-        binding.tvCarbPercent.text = getString(R.string.stats_carb_percent, percentOf(carb * 4f, kcal))
-        binding.tvProteinPercent.text = getString(R.string.stats_protein_percent, percentOf(protein * 4f, kcal))
-        binding.tvFatPercent.text = getString(R.string.stats_fat_percent, percentOf(fat * 9f, kcal))
+        binding.tvCarbPercent.text = getString(R.string.stats_carb_percent, carbPercent)
+        binding.tvProteinPercent.text = getString(R.string.stats_protein_percent, proteinPercent)
+        binding.tvFatPercent.text = getString(R.string.stats_fat_percent, fatPercent)
 
-        binding.pbCarb.progress = percentOf(carb * 4f, kcal)
-        binding.pbProtein.progress = percentOf(protein * 4f, kcal)
-        binding.pbFat.progress = percentOf(fat * 9f, kcal)
+        binding.pbCarb.progress = carbPercent
+        binding.pbProtein.progress = proteinPercent
+        binding.pbFat.progress = fatPercent
 
         binding.tvCarbGram.text = formatGram(carb)
         binding.tvProteinGram.text = formatGram(protein)
         binding.tvFatGram.text = formatGram(fat)
 
+        // 食物卡片仍然只属于当前餐次
+        val logs = foodRepo.ofMeal(date, meal)
         binding.containerFoods.removeAllViews()
         logs.forEach { log ->
             val row = ItemStatsFoodRowBinding.inflate(layoutInflater, binding.containerFoods, false)
             row.tvName.text = log.name
             row.tvKcal.text = log.kcal.roundToInt().toString()
-            row.tvQty.text = log.quantity + log.unit
+            row.tvQty.text = log.quantityText
             row.tvCarb.text = formatGram(log.carbGram)
             row.tvProtein.text = formatGram(log.proteinGram)
             row.tvFat.text = formatGram(log.fatGram)
@@ -137,7 +149,6 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         binding.containerFoods.isVisible = logs.isNotEmpty()
         binding.groupFoodEmpty.isVisible = logs.isEmpty()
     }
-
     /** 某宏量提供的热量占总热量的百分比，夹在 0..100 */
     private fun percentOf(partKcal: Float, totalKcal: Float): Int =
         if (totalKcal <= 0f) 0 else (partKcal / totalKcal * 100f).roundToInt().coerceIn(0, 100)

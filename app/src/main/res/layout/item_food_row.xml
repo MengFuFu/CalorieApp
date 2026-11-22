@@ -54,6 +54,7 @@
             android:textSize="13sp" />
     </LinearLayout>
 
+    <!-- 未添加：圆形加号 -->
     <ImageView
         android:id="@+id/btnAdd"
         android:layout_width="28dp"
@@ -63,4 +64,44 @@
         android:padding="6dp"
         android:src="@drawable/ic_add"
         app:tint="@color/text_secondary" />
+
+    <!-- 已添加：− 份数 + -->
+    <LinearLayout
+        android:id="@+id/groupStepper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/btnMinus"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/bg_add_circle"
+            android:contentDescription="@null"
+            android:padding="6dp"
+            android:src="@drawable/ic_minus"
+            app:tint="@color/text_secondary" />
+
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnPlus"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/bg_add_circle"
+            android:backgroundTint="@color/brand_green"
+            android:contentDescription="@null"
+            android:padding="6dp"
+            android:src="@drawable/ic_add"
+            app:tint="@color/white" />
+    </LinearLayout>
 </LinearLayout>

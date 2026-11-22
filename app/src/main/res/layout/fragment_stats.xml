@@ -441,7 +441,7 @@
                             android:layout_marginTop="6dp"
                             android:max="100"
                             android:progress="0"
-                            android:progressDrawable="@drawable/progress_macro" />
+                            android:progressDrawable="@drawable/progress_macro_carb" />
 
                         <TextView
                             android:id="@+id/tvCarbGram"
@@ -476,7 +476,7 @@
                             android:layout_marginTop="6dp"
                             android:max="100"
                             android:progress="0"
-                            android:progressDrawable="@drawable/progress_macro" />
+                            android:progressDrawable="@drawable/progress_macro_protein" />
 
                         <TextView
                             android:id="@+id/tvProteinGram"
@@ -511,7 +511,7 @@
                             android:layout_marginTop="6dp"
                             android:max="100"
                             android:progress="0"
-                            android:progressDrawable="@drawable/progress_macro" />
+                            android:progressDrawable="@drawable/progress_macro_fat" />
 
                         <TextView
                             android:id="@+id/tvFatGram"

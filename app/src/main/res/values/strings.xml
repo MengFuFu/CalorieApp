@@ -304,4 +304,7 @@
     <string name="stats_carb_percent">碳水：%1$d%%</string>
     <string name="stats_protein_percent">蛋白质：%1$d%%</string>
     <string name="stats_fat_percent">脂肪：%1$d%%</string>
+    <string name="food_meal_records_total">共 %1$d 条记录，总计 %2$d kcal</string>
+    <string name="food_meal_record_kcal">%1$d kcal · %2$s/份</string>
+    <string name="food_meal_empty">还没有记录哦～</string>
 </resources>
