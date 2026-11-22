@@ -330,4 +330,11 @@
     <string name="custom_food_required">带 * 的项都要填写</string>
     <string name="custom_food_saved">已添加到自定义</string>
     <string name="stats_sport_kind_value">%1$d类</string>
+
+    <string name="sport_draft_title">已添加</string>
+    <string name="sport_draft_empty">还没有添加运动</string>
+    <string name="sport_draft_detail">%1$s%2$s %3$skcal</string>
+    <string name="sport_draft_delete">删除</string>
+    <string name="sport_drafted_tip">已加入，点「完成」保存</string>
+    <string name="sport_recorded_hint">已记录 %1$d 条运动</string>
 </resources>

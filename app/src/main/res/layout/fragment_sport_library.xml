@@ -138,73 +138,126 @@
     </LinearLayout>
 
     <!-- 侧栏 + 列表 -->
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_weight="1">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategories"
-            android:layout_width="96dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/sport_sidebar"
-            android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvExercises"
-                android:layout_width="match_parent"
+                android:id="@+id/rvCategories"
+                android:layout_width="96dp"
                 android:layout_height="match_parent"
+                android:background="@color/sport_sidebar"
                 android:clipToPadding="false"
-                android:paddingBottom="12dp" />
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp" />
 
-            <!-- 空态 -->
-            <LinearLayout
-                android:id="@+id/groupEmpty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:visibility="gone">
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-                <FrameLayout
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:background="@drawable/bg_mascot_placeholder" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvExercises"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="12dp" />
 
-                <TextView
-                    android:id="@+id/tvEmpty"
+                <!-- 空态 -->
+                <LinearLayout
+                    android:id="@+id/groupEmpty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/btnGoAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_go_record"
-                    android:gravity="center"
-                    android:minWidth="88dp"
-                    android:paddingHorizontal="18dp"
-                    android:text="@string/sport_go_add"
-                    android:textColor="@color/brand_green_dark"
-                    android:textSize="13sp"
+                    <FrameLayout
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:background="@drawable/bg_mascot_placeholder" />
+
+                    <TextView
+                        android:id="@+id/tvEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/btnGoAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_go_record"
+                        android:gravity="center"
+                        android:minWidth="88dp"
+                        android:paddingHorizontal="18dp"
+                        android:text="@string/sport_go_add"
+                        android:textColor="@color/brand_green_dark"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <!-- 面板打开时铺在上面，点一下收起 -->
+                <View
+                    android:id="@+id/scrimDraftPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#1A000000"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:visibility="gone" />
-            </LinearLayout>
-        </FrameLayout>
-    </LinearLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+        <!-- 已添加的运动：贴底栏上沿向上浮出 -->
+        <LinearLayout
+            android:id="@+id/groupDraftPanel"
+            android:layout_width="match_parent"
+            android:layout_height="340dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_sheet_white"
+            android:elevation="12dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            android:visibility="gone">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/containerDrafts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/tvDraftEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="40dp"
+                android:text="@string/sport_draft_empty"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </FrameLayout>
 
     <!-- 底栏 -->
     <LinearLayout
@@ -227,8 +280,12 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/groupTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -240,13 +297,13 @@
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginStart="4dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="6dp"
                     android:contentDescription="@null"
                     android:rotation="180"
                     android:src="@drawable/ic_caret_down"
-                    app:tint="@color/text_secondary" />
+                    app:tint="@color/text_primary" />
             </LinearLayout>
 
             <LinearLayout

@@ -30,9 +30,6 @@ import kotlin.math.roundToInt
 @AndroidEntryPoint
 class SportInputSheet : BottomSheetDialogFragment() {
 
-    @Inject
-    lateinit var sportRepo: TempSportRecordRepository
-
     private var _binding: SheetSportInputBinding? = null
     private val binding get() = _binding!!
 
@@ -199,21 +196,18 @@ class SportInputSheet : BottomSheetDialogFragment() {
             return
         }
         val kcal = kcalOf(value, unit)
+        val unitLabel = labelOf(unit)
+        // 只回传给运动库页，由它在「完成」时统一落库
         parentFragmentManager.setFragmentResult(
             REQUEST_KEY,
             bundleOf(
                 RESULT_NAME to itemName,
                 RESULT_KCAL to kcal,
-                RESULT_QUANTITY to "${formatNumber(value)} ${labelOf(unit)}",
+                RESULT_QUANTITY to "${formatNumber(value)} $unitLabel",
+                RESULT_VALUE to value,
+                RESULT_UNIT to unitLabel,
                 RESULT_DATETIME to selectedAt.format(TIME_FORMATTER)
             )
-        )
-        sportRepo.add(
-            recordedAt = selectedAt,
-            name = itemName,
-            quantity = value,
-            unitLabel = labelOf(unit),
-            kcal = kcal
         )
         dismiss()
     }
@@ -233,6 +227,8 @@ class SportInputSheet : BottomSheetDialogFragment() {
         const val RESULT_KCAL = "sport_input_kcal"
         const val RESULT_QUANTITY = "sport_input_quantity"
         const val RESULT_DATETIME = "sport_input_time"
+        const val RESULT_VALUE = "sport_input_value"
+        const val RESULT_UNIT = "sport_input_unit"
 
         private const val ARG_NAME = "arg_name"
         private const val ARG_KCAL = "arg_kcal"
