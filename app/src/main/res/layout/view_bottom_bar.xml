@@ -36,11 +36,10 @@
 
                 <ImageView
                     android:id="@+id/iconRecord"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
+                    android:layout_width="40dp"
+                    android:layout_height="37.5dp"
                     android:contentDescription="@string/tab_record"
-                    android:src="@drawable/ic_tab_record"
-                    app:tint="@color/tab_tint" />
+                    android:src="@drawable/ic_tab_record" />
 
                 <TextView
                     android:id="@+id/labelRecord"
@@ -65,10 +64,9 @@
                 <ImageView
                     android:id="@+id/iconPlan"
                     android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_height="30dp"
                     android:contentDescription="@string/tab_plan"
-                    android:src="@drawable/ic_tab_plan"
-                    app:tint="@color/tab_tint" />
+                    android:src="@drawable/ic_tab_plan" />
 
                 <TextView
                     android:id="@+id/labelPlan"
@@ -107,10 +105,9 @@
                 <ImageView
                     android:id="@+id/iconStats"
                     android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_height="27.4dp"
                     android:contentDescription="@string/tab_stats"
-                    android:src="@drawable/ic_tab_stats"
-                    app:tint="@color/tab_tint" />
+                    android:src="@drawable/ic_tab_stats" />
 
                 <TextView
                     android:id="@+id/labelStats"
@@ -138,8 +135,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:contentDescription="@string/tab_profile"
-                    android:src="@drawable/ic_tab_profile"
-                    app:tint="@color/tab_tint" />
+                    android:src="@drawable/ic_tab_profile" />
 
                 <TextView
                     android:id="@+id/labelProfile"

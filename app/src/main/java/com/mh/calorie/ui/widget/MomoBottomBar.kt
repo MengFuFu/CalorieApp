@@ -13,7 +13,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.mh.calorie.R
 import com.mh.calorie.databinding.ViewBottomBarBinding
-import kotlinx.coroutines.selects.select
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 
 /**
  * 自绘底部导航栏：4 个 Tab + 中间上浮 FAB。
@@ -43,6 +44,24 @@ class MomoBottomBar @JvmOverloads constructor(
         TabEntry(Tab.PLAN, binding.tabPlan, binding.iconPlan, binding.labelPlan),
         TabEntry(Tab.STATS, binding.tabStats, binding.iconStats, binding.labelStats),
         TabEntry(Tab.PROFILE, binding.tabProfile, binding.iconProfile, binding.labelProfile)
+    )
+
+    /** 未选中：抽掉饱和度 → 中性灰，但保留各图层的明暗层次 */
+    private val grayFilter = ColorMatrixColorFilter(
+        ColorMatrix().apply { setSaturation(0f) }
+    )
+
+    /** 选中：把饱和度拉高 25% → 原图的绿更鲜艳 */
+    private val vividFilter = ColorMatrixColorFilter(
+        ColorMatrix().apply { setSaturation(1.25f) }
+    )
+
+    /** 选中：压到接近黑色（亮度下调，保留一点点层次） */
+    private val blackFilter = ColorMatrixColorFilter(
+        ColorMatrix().apply {
+            setSaturation(0f)
+            setScale(0.35f, 0.35f, 0.35f, 1f)
+        }
     )
 
     /** 点了某个 Tab（同一 Tab 重复点击也会回调，是否需要忽略由调用方决定） */
@@ -85,10 +104,11 @@ class MomoBottomBar @JvmOverloads constructor(
     fun select(tab: Tab) {
         entries.forEach { entry ->
             val selected = entry.tab == tab
-            // container 负责无障碍的 selected 语义，icon/label 各自持有状态色 selector
             entry.container.isSelected = selected
             entry.icon.isSelected = selected
             entry.label.isSelected = selected
+            // 彩色插画不能用 tint（会被压成单色团块），改用颜色矩阵：灰 / 提饱和
+            entry.icon.colorFilter = if (selected) vividFilter else grayFilter
         }
     }
 

@@ -337,4 +337,6 @@
     <string name="sport_draft_delete">删除</string>
     <string name="sport_drafted_tip">已加入，点「完成」保存</string>
     <string name="sport_recorded_hint">已记录 %1$d 条运动</string>
+
+    <string name="stats_life_empty">还没有记录哦</string>
 </resources>

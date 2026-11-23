@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 食物照片的底：圆角灰块；以后接真实照片时用 Coil 盖在上面 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/track" />
+    <corners android:radius="12dp" />
+</shape>

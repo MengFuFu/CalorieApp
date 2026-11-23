@@ -88,4 +88,13 @@
 
     <color name="water_blue">#46A6E8</color>
     <color name="water_blue_surface">#E8F4FD</color>
+
+    <color name="meal_tag_breakfast">#8C8C8C</color>
+    <color name="meal_tag_lunch">#57C93A</color>
+    <color name="meal_tag_dinner">#8E7BE8</color>
+    <color name="meal_tag_snack">#F58FA5</color>
+
+    <!-- 底栏图标：未选中为中性灰，选中为更鲜艳的绿 -->
+    <color name="tab_gray">#9A9A9A</color>
+    <color name="tab_green">#2FD96B</color>
 </resources>

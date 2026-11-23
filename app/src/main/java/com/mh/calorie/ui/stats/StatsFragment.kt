@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mh.calorie.R
 import com.mh.calorie.core.domain.model.MealType
 import com.mh.calorie.data.temp.TempFoodLogRepository
@@ -33,7 +34,6 @@ import kotlin.math.roundToInt
 /** 统计页：上半天固定，饮食卡按餐次实时渲染 */
 @AndroidEntryPoint
 class StatsFragment : Fragment(R.layout.fragment_stats) {
-
     private var _binding: FragmentStatsBinding? = null
     private val binding get() = _binding!!
 
@@ -47,6 +47,8 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     private var date: LocalDate = LocalDate.now()
     private var meal: MealType = MealType.BREAKFAST
 
+    private val lifeAdapter = LifeFoodAdapter()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentStatsBinding.bind(view)
         renderDate()
@@ -56,12 +58,14 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
             date = date.minusDays(1)
             renderDate()
             renderFood()
+            renderLife()
         }
         binding.btnNextDay.setOnClickListener {
             if (date.isBefore(LocalDate.now())) {
                 date = date.plusDays(1)
                 renderDate()
                 renderFood()
+                renderLife()
             }
         }
 
@@ -70,6 +74,10 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         binding.btnAddFood.setOnClickListener {
             findNavController().navigate(R.id.action_statsFragment_to_foodLibraryFragment)
         }
+
+        binding.rvLifeFoods.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvLifeFoods.adapter = lifeAdapter
 
         binding.btnAddSport.setOnClickListener { comingSoon(R.string.stats_sport_title) }
         binding.chipLifeAll.setOnClickListener { comingSoon(R.string.stats_life_title) }
@@ -204,6 +212,14 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         binding.groupSportEmpty.isVisible = logs.isEmpty()
     }
 
+    /** 生活美食统计：当天全部记录，按时间升序铺成横滑条 */
+    private fun renderLife() {
+        val logs = foodRepo.ofDate(date).sortedBy { it.recordedAt }
+        lifeAdapter.submitList(logs)
+        binding.rvLifeFoods.isVisible = logs.isNotEmpty()
+        binding.groupLifeEmpty.isVisible = logs.isEmpty()
+    }
+
     private fun progressPercent(current: Float, start: Float, target: Float): Int {
         val total = target - start
         if (total == 0f) return if (current >= target) 100 else 0
@@ -252,6 +268,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         // （TempWeightRepository 是普通 List，没有 Flow，只能这样拉）
         renderWeight()
         renderSport()
+        renderLife()
     }
 
     override fun onDestroyView() {
