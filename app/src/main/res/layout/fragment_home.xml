@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   首页。结构：底层是滚动内容，上层是固定标题。
   滚动内容用 paddingTop 让开标题高度，滚动时从标题下面穿过、被标题的不透明底色挡住 ——
   这就是截图里「卡片被标题裁掉一半」的效果，不是整页滚动。
@@ -218,7 +217,7 @@
                                     android:maxHeight="@dimen/progress_height"
                                     android:minHeight="@dimen/progress_height"
                                     android:progress="0"
-                                    android:progressDrawable="@drawable/progress_macro" />
+                                    android:progressDrawable="@drawable/progress_macro_carb" />
 
                                 <TextView
                                     android:id="@+id/tvCarbValue"
@@ -253,7 +252,7 @@
                                     android:maxHeight="@dimen/progress_height"
                                     android:minHeight="@dimen/progress_height"
                                     android:progress="0"
-                                    android:progressDrawable="@drawable/progress_macro" />
+                                    android:progressDrawable="@drawable/progress_macro_protein" />
 
                                 <TextView
                                     android:id="@+id/tvProteinValue"
@@ -288,7 +287,7 @@
                                     android:maxHeight="@dimen/progress_height"
                                     android:minHeight="@dimen/progress_height"
                                     android:progress="0"
-                                    android:progressDrawable="@drawable/progress_macro" />
+                                    android:progressDrawable="@drawable/progress_macro_fat" />
 
                                 <TextView
                                     android:id="@+id/tvFatValue"
@@ -469,7 +468,7 @@
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/ic_vs"/>
+                                    android:src="@drawable/ic_vs" />
 
                             </LinearLayout>
 
