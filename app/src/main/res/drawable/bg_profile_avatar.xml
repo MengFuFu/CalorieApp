@@ -1,0 +1,4 @@
+<!-- res/drawable/bg_profile_avatar.xml：头像白圈 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <solid android:color="@color/white" />
+</shape>

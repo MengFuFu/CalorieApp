@@ -17,6 +17,8 @@ import com.mh.calorie.ui.widget.MomoBottomBar
 import dagger.hilt.android.AndroidEntryPoint
 import android.widget.Toast
 import androidx.core.view.isVisible
+import com.mh.calorie.data.temp.TempAuthRepository
+import jakarta.inject.Inject
 
 /**
  * 全局唯一的 Activity：只做三件事
@@ -31,6 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    // 临时账号仓库：M15 换后端后仍然注入，只是实现换掉
+    @Inject
+    lateinit var authRepo: TempAuthRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,11 @@ class MainActivity : AppCompatActivity() {
 
         applyStatusBarInset()
         setupNavigation()
+
+        // 未登录先弹登录页；savedInstanceState != null 说明是旋转重建，别重复压栈
+        if (savedInstanceState == null && !authRepo.isLoggedIn) {
+            navController.navigate(R.id.action_homeFragment_to_loginFragment)
+        }
     }
 
     /**

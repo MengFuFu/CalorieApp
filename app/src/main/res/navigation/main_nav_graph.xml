@@ -4,6 +4,7 @@
 -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/homeFragment">
 
@@ -28,6 +29,10 @@
         <action
             android:id="@+id/action_homeFragment_to_waterFragment"
             app:destination="@id/waterFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
@@ -62,7 +67,7 @@
     <fragment
         android:id="@+id/statsFragment"
         android:name="com.mh.calorie.ui.stats.StatsFragment"
-        android:label="@string/page_title_stats" >
+        android:label="@string/page_title_stats">
 
         <action
             android:id="@+id/action_statsFragment_to_foodLibraryFragment"
@@ -72,7 +77,12 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.mh.calorie.ui.profile.ProfileFragment"
-        android:label="@string/page_title_profile" />
+        android:label="@string/page_title_profile">
+
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/sportRecordFragment"
@@ -113,7 +123,7 @@
     <fragment
         android:id="@+id/foodLibraryFragment"
         android:name="com.mh.calorie.ui.food.FoodLibraryFragment"
-        android:label="@string/food_title" >
+        android:label="@string/food_title">
 
         <action
             android:id="@+id/action_foodLibraryFragment_to_customFoodFragment"
@@ -124,5 +134,21 @@
         android:id="@+id/customFoodFragment"
         android:name="com.mh.calorie.ui.food.CustomFoodFragment"
         android:label="@string/custom_food_title" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.mh.calorie.ui.auth.LoginFragment"
+        android:label="@string/auth_action_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.mh.calorie.ui.auth.RegisterFragment"
+        android:label="@string/auth_action_register"
+        tools:layout="@layout/fragment_register" />
 
 </navigation>
