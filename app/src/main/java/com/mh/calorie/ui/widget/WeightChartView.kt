@@ -64,9 +64,14 @@ class WeightChartView @JvmOverloads constructor(
         color = ContextCompat.getColor(context, R.color.chart_guide)
         pathEffect = DashPathEffect(floatArrayOf(dp(3f), dp(3f)), 0f)
     }
+    private val axisLinePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = dp(1f)
+        color = ContextCompat.getColor(context, R.color.divider)
+    }
     private val axisPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        textSize = sp(10f)
-        textAlign = Paint.Align.CENTER
+        textSize = sp(11f)
+        textAlign = Paint.Align.CENTER   // 下面按「中心点」定位，必须是 CENTER
         color = ContextCompat.getColor(context, R.color.text_tertiary)
     }
     private val tipTitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -134,6 +139,8 @@ class WeightChartView @JvmOverloads constructor(
             if (i == 0) linePath.moveTo(x, y) else linePath.lineTo(x, y)
         }
         canvas.drawPath(linePath, linePaint)
+        // 底部 X 轴基准线：日期标签挂在它下面
+        canvas.drawLine(plot.left, plot.bottom, plot.right, plot.bottom, axisLinePaint)
 
         // 圆点 + 日期（按可用宽度抽稀，30 天也不会叠字）
         var lastLabelRight = -Float.MAX_VALUE

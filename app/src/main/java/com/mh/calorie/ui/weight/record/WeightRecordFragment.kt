@@ -8,23 +8,20 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mh.calorie.R
-import com.mh.calorie.core.domain.bmi.BmiCategory
-import com.mh.calorie.databinding.FragmentWeightRecordBinding
-import com.mh.calorie.ui.weight.input.WeightInputSheet
 import com.mh.calorie.common.InfoDialogFragment
+import com.mh.calorie.core.domain.bmi.BmiCalculator.category
+import com.mh.calorie.core.domain.bmi.BmiCategory
 import com.mh.calorie.core.domain.model.BodyPart
+import com.mh.calorie.databinding.FragmentWeightRecordBinding
 import com.mh.calorie.databinding.ViewWeightBodyBinding
 import com.mh.calorie.databinding.ViewWeightRecordWeightBinding
 import com.mh.calorie.ui.weight.body.BodyInputSheet
@@ -34,6 +31,7 @@ import com.mh.calorie.ui.weight.body.BodyUiState
 import com.mh.calorie.ui.weight.body.BodyViewModel
 import com.mh.calorie.ui.weight.body.iconRes
 import com.mh.calorie.ui.weight.body.labelRes
+import com.mh.calorie.ui.weight.input.WeightInputSheet
 import com.mh.calorie.ui.widget.WeightChartView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -126,14 +124,14 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
             findNavController().navigate(R.id.action_weightRecordFragment_to_weightHistoryFragment)
         }
         binding.ivEditStart.setOnClickListener {
-            WeightInputSheet.Companion.newProfileInstance(
+            WeightInputSheet.newProfileInstance(
                 WeightInputSheet.Field.START, viewModel.uiState.value.startWeightKg
-            ).show(parentFragmentManager, WeightInputSheet.Companion.TAG)
+            ).show(parentFragmentManager, WeightInputSheet.TAG)
         }
         binding.ivEditTarget.setOnClickListener {
-            WeightInputSheet.Companion.newProfileInstance(
+            WeightInputSheet.newProfileInstance(
             WeightInputSheet.Field.TARGET, viewModel.uiState.value.targetWeightKg
-        ).show(parentFragmentManager, WeightInputSheet.Companion.TAG) }
+        ).show(parentFragmentManager, WeightInputSheet.TAG) }
     }
 
     private fun setupSegments() {
@@ -153,11 +151,11 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            WeightInputSheet.Companion.REQUEST_KEY_PROFILE, viewLifecycleOwner
+            WeightInputSheet.REQUEST_KEY_PROFILE, viewLifecycleOwner
         ) { _, bundle ->
-            val value = bundle.getFloat(WeightInputSheet.Companion.RESULT_VALUE)
+            val value = bundle.getFloat(WeightInputSheet.RESULT_VALUE)
             // 日期缺失（老版本面板/异常情况）就退回今天，保证不会崩
-            when (bundle.getString(WeightInputSheet.Companion.RESULT_FIELD)) {
+            when (bundle.getString(WeightInputSheet.RESULT_FIELD)) {
                 WeightInputSheet.Field.START.name -> viewModel.setStartWeight(value)
                 WeightInputSheet.Field.TARGET.name -> viewModel.setTargetWeight(value)
             }
@@ -204,11 +202,14 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         binding.tvTargetValue.text = formatKg(state.targetWeightKg)
 
         binding.tvBmi.text = String.format(Locale.US, "%.2f", state.bmi)
-        binding.tvBmiTag.text = state.bmiCategory.label
-        binding.tvBmiTag.backgroundTintList = ContextCompat.getColorStateList(
-            requireContext(), tagChipColor(state.bmiCategory)
-        )
-        binding.tvBmiTag.setTextColor(ContextCompat.getColor(requireContext(), tagTextColor(state.bmiCategory)))
+
+        // 先算出类别，标签文字与底色都由它决定
+        val category = category(state.bmi)
+        binding.tvBmiTag.text = category.label
+        binding.tvBmiTag.backgroundTintList =
+            ContextCompat.getColorStateList(requireContext(), bmiSolidColor(category))
+        binding.tvBmiTag.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+
         binding.bmiScale.bmi = state.bmi
 
         binding.tvBodyFat.text = state.bodyFatPercent
@@ -231,18 +232,18 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         val track = binding.pbProgress
         val chip = binding.tvPercent
 
-        // 等这一帧的测量完成再算，width 才是真实像素值
         track.post {
             val trackWidth = track.width
-            if (trackWidth <= 0 || chip.width <= 0) return@post   // 还没测量好，跳过
+            if (trackWidth <= 0 || chip.width <= 0) return@post
 
-            // 可移动范围 = 轨道宽度 - 胶囊宽度，保证 100% 时胶囊右边缘正好压住轨道末端
-            val maxOffset = (trackWidth - chip.width).coerceAtLeast(0).toFloat()
+            // 左右各留 4dp：阴影画在 View 外面，贴边一定会被裁
+            val pad = 4f * resources.displayMetrics.density
+            val minX = pad
+            val maxX = (trackWidth - chip.width - pad).coerceAtLeast(minX)
 
-            // 进度头部位置（像素），再夹到合法区间
+            // 胶囊中心对准进度头，再夹进可视范围
             val headOffset = trackWidth * (percent.coerceIn(0, 100) / 100f)
-
-            chip.translationX = headOffset.coerceIn(0f, maxOffset)
+            chip.translationX = (headOffset - chip.width / 2f).coerceIn(minX, maxX)
         }
     }
 
@@ -274,11 +275,11 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
     private fun showInputDialog() {
         val state = viewModel.uiState.value
         // 默认今天；历史日期由面板里的日期滚轮改
-        WeightInputSheet.Companion.newInstance(
+        WeightInputSheet.newInstance(
             state.currentWeightKg,
             LocalDateTime.now(),
             weightByDate = state.weightByDate)
-            .show(parentFragmentManager, WeightInputSheet.Companion.TAG)
+            .show(parentFragmentManager, WeightInputSheet.TAG)
     }
 
     /** 把状态铺到「历史围度」卡：部位胶囊 + 折线 + 空态 */
@@ -314,11 +315,12 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         ) { part -> bodyViewModel.selectPart(part) }
     }
 
-    private fun tagChipColor(category: BmiCategory): Int = when (category) {
-        BmiCategory.LOW -> R.color.chip_blue
-        BmiCategory.NORMAL -> R.color.chip_green
-        BmiCategory.OVERWEIGHT -> R.color.chip_yellow
-        BmiCategory.OBESE -> R.color.chip_red
+    /** 标签底色：四段色卡的同款实色，配白字 */
+    private fun bmiSolidColor(category: BmiCategory): Int = when (category) {
+        BmiCategory.LOW -> R.color.bmi_low
+        BmiCategory.NORMAL -> R.color.bmi_normal
+        BmiCategory.OVERWEIGHT -> R.color.bmi_over
+        BmiCategory.OBESE -> R.color.bmi_obese
     }
 
     private fun tagTextColor(category: BmiCategory): Int = when (category) {
@@ -345,10 +347,6 @@ class WeightRecordFragment : Fragment(R.layout.fragment_weight_record) {
         v > 0f -> R.color.state_error        // #FF5A5A
         v < 0f -> R.color.brand_green_dark   // #4FA82F
         else -> R.color.text_secondary
-    }
-
-    private fun toast(resId: Int) {
-        Toast.makeText(requireContext(), resId, Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {

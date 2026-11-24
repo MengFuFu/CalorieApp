@@ -63,7 +63,7 @@
         android:contentDescription="@string/food_title"
         android:padding="6dp"
         android:src="@drawable/ic_add"
-        app:tint="@color/text_secondary" />
+        app:tint="@color/add_plus" />
 
     <!-- 已添加：− 份数 + -->
     <LinearLayout
@@ -82,7 +82,7 @@
             android:contentDescription="@null"
             android:padding="6dp"
             android:src="@drawable/ic_minus"
-            app:tint="@color/text_secondary" />
+            app:tint="@color/add_plus" />
 
         <TextView
             android:id="@+id/tvCount"

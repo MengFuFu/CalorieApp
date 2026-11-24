@@ -106,6 +106,10 @@
             android:textSize="15sp" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -115,13 +119,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:clipChildren="false"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategory"
                 android:layout_width="92dp"
                 android:layout_height="match_parent"
-                android:background="@color/sport_sidebar"
+                android:background="@drawable/bg_sport_sidebar"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
                 android:paddingVertical="4dp"
@@ -280,7 +285,7 @@
         android:id="@+id/groupBottom"
         android:layout_width="match_parent"
         android:layout_height="68dp"
-        android:background="@color/surface_card"
+        android:background="@drawable/bg_bottom_bar"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp">

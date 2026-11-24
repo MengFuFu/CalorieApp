@@ -2,6 +2,7 @@ package com.mh.calorie.ui.widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
@@ -30,11 +31,12 @@ class BmiScaleView @JvmOverloads constructor(
     private val markerPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         color = ContextCompat.getColor(context, R.color.text_primary)
+        pathEffect = CornerPathEffect(dp(2f))   // 三个角各倒圆 2dp
     }
     private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 10f * resources.displayMetrics.scaledDensity
         textAlign = Paint.Align.CENTER
-        color = ContextCompat.getColor(context, R.color.text_tertiary)
+        color = ContextCompat.getColor(context, R.color.text_secondary)   // 原来 text_tertiary(#BFBFBF)
     }
 
     private val rect = RectF()
@@ -50,9 +52,9 @@ class BmiScaleView @JvmOverloads constructor(
         super.onDraw(canvas)
         if (width == 0) return
 
-        val barTop = dp(12f)
-        val barH = dp(8f)
-        val gap = dp(2f)
+        val barTop = dp(14f)
+        val barH = dp(10f)
+        val gap = dp(3f)
         val radius = barH / 2f
 
         val segments: List<Triple<Float, Float, Int>> = listOf(
@@ -68,30 +70,45 @@ class BmiScaleView @JvmOverloads constructor(
             canvas.drawRoundRect(rect, radius, radius, barPaint)
         }
 
-        // 当前 BMI 的三角标（从上往下指）
+        // 当前位置：上下两个黑色三角在色带处"咬合"成一个蝴蝶结
         if (bmi > 0f) {
-            val cx = xOf(bmi).coerceIn(dp(5f), width - dp(5f))
+            val cx = xOf(bmi).coerceIn(dp(8f), width - dp(8f))
+            val halfW = dp(7f)
+            val pinH = dp(9f)
+            markerPaint.color = ContextCompat.getColor(context, R.color.text_primary)
+
             marker.reset()
-            marker.moveTo(cx - dp(5f), barTop - dp(7f))
-            marker.lineTo(cx + dp(5f), barTop - dp(7f))
-            marker.lineTo(cx, barTop - dp(1f))
+            // 上三角：尖朝下，插进色带上沿
+            marker.moveTo(cx - halfW, barTop - pinH)
+            marker.lineTo(cx + halfW, barTop - pinH)
+            marker.lineTo(cx, barTop + dp(1f))
             marker.close()
             canvas.drawPath(marker, markerPaint)
+
+            marker.reset()
+            // 下三角：尖朝上，插进色带下沿
+            marker.moveTo(cx - halfW, barTop + barH + pinH)
+            marker.lineTo(cx + halfW, barTop + barH + pinH)
+            marker.lineTo(cx, barTop + barH - dp(1f))
+            marker.close()
+            canvas.drawPath(marker, markerPaint)
+
+            // 分界数值
+            listOf(
+                BmiCalculator.LOW_MAX,
+                BmiCalculator.NORMAL_MAX,
+                BmiCalculator.OVERWEIGHT_MAX
+            ).forEach {
+                canvas.drawText(
+                    String.format(Locale.US, "%.1f", it),
+                    xOf(it),
+                    barTop + barH + pinH + dp(12f),   // ← 原来是 barTop + barH + dp(13f)
+                    labelPaint
+                )
+            }
         }
 
-        // 分界数值
-        listOf(
-            BmiCalculator.LOW_MAX,
-            BmiCalculator.NORMAL_MAX,
-            BmiCalculator.OVERWEIGHT_MAX
-        ).forEach {
-            canvas.drawText(
-                String.format(Locale.US, "%.1f", it),
-                xOf(it),
-                barTop + barH + dp(13f),
-                labelPaint
-            )
-        }
+
     }
 
     private fun xOf(value: Float): Float {

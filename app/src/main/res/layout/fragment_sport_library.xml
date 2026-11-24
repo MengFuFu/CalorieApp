@@ -86,56 +86,9 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-    <!-- AI 速计横幅 -->
-    <LinearLayout
-        android:id="@+id/cardAi"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/bg_vip_banner"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sport_ai_title"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:background="@drawable/bg_vip_badge"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="1dp"
-            android:text="@string/sport_ai_vip"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            android:textStyle="bold" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sport_ai_go"
-            android:textColor="@color/brand_green_dark"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_chevron_right"
-            app:tint="@color/brand_green_dark" />
-    </LinearLayout>
+        android:layout_height="8dp"/>
 
     <!-- 侧栏 + 列表 -->
     <FrameLayout
@@ -146,13 +99,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategories"
                 android:layout_width="96dp"
                 android:layout_height="match_parent"
-                android:background="@color/sport_sidebar"
+                android:background="@drawable/bg_sport_sidebar"
                 android:clipToPadding="false"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp" />
@@ -263,7 +217,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="76dp"
-        android:background="@color/surface_card"
+        android:background="@drawable/bg_bottom_bar"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp">

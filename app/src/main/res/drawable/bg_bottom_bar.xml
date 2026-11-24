@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 白底 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/surface_card" />
+        </shape>
+    </item>
+    <!-- 顶部 1dp 灰线 -->
+    <item
+        android:height="1dp"
+        android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/divider" />
+        </shape>
+    </item>
+</layer-list>

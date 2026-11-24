@@ -56,7 +56,6 @@ class SportLibraryFragment : Fragment(R.layout.fragment_sport_library) {
         _binding = FragmentSportLibraryBinding.bind(view)
 
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
-        binding.cardAi.setOnClickListener { comingSoon(getString(R.string.sport_ai_title)) }
         binding.btnDone.setOnClickListener { finish() }
         binding.tvCustomAdd.setOnClickListener { openCustomAdd() }
         binding.btnGoAdd.setOnClickListener { openCustomAdd() }

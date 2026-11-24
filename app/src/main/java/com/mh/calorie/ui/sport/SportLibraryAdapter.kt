@@ -57,7 +57,7 @@ class SportLibraryAdapter(
             )
             binding.btnAdd.setImageResource(if (isDrafted) R.drawable.ic_check else R.drawable.ic_add)
             binding.btnAdd.imageTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(ctx, if (isDrafted) R.color.white else R.color.text_secondary)
+                ContextCompat.getColor(ctx, if (isDrafted) R.color.white else R.color.add_plus)
             )
             binding.btnAdd.setOnClickListener {
                 // 已经在草稿里就再记一条？不——提示一下，避免误以为是切换

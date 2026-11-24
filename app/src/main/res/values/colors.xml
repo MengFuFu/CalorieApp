@@ -97,4 +97,6 @@
     <!-- 底栏图标：未选中为中性灰，选中为更鲜艳的绿 -->
     <color name="tab_gray">#9A9A9A</color>
     <color name="tab_green">#2FD96B</color>
+
+    <color name="add_plus">#5F5F5F</color>
 </resources>

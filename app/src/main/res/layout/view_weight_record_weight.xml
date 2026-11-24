@@ -134,8 +134,10 @@
                 <!-- 进度条 + 左侧百分比胶囊（胶囊压在轨道上，和设计稿一致） -->
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="@dimen/space_10">
+                    android:layout_height="30dp"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
 
                     <ProgressBar
                         android:id="@+id/pbProgress"
@@ -153,10 +155,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center_vertical"
                         android:background="@drawable/bg_chip_percent"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="1dp"
+                        android:elevation="3dp"
+                        android:outlineProvider="background"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="3dp"
                         android:textColor="@color/brand_green_dark"
-                        android:textSize="11sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         tools:text="0%" />
                 </FrameLayout>
@@ -333,20 +337,20 @@
                             android:id="@+id/tvBmiTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
+                            android:layout_marginStart="8dp"
                             android:background="@drawable/bg_icon_chip"
-                            android:backgroundTint="@color/chip_blue"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="2dp"
-                            android:textColor="@color/accent_blue"
-                            android:textSize="11sp"
-                            tools:text="偏低" />
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="3dp"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:text="肥胖" />
                     </LinearLayout>
 
                     <com.mh.calorie.ui.widget.BmiScaleView
                         android:id="@+id/bmiScale"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="60dp"
                         android:layout_marginTop="@dimen/space_8" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

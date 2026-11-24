@@ -37,11 +37,10 @@
             tools:text="10min" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="🔥"
-        android:textSize="15sp" />
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_flame" />
 
     <TextView
         android:id="@+id/tvKcal"
@@ -57,7 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:layout_gravity="bottom"
         android:text="@string/sport_kcal_unit"
         android:textColor="@color/text_tertiary"
         android:textSize="12sp" />

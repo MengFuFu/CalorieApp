@@ -65,5 +65,5 @@
         android:contentDescription="@string/sport_go_add"
         android:padding="7dp"
         android:src="@drawable/ic_add"
-        app:tint="@color/text_tertiary" />
+        app:tint="@color/add_plus" />
 </LinearLayout>
