@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="6dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="@color/surface_card"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 照片吃掉剩余高度 -->
+            <ImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/track"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_primary"
+                        android:textSize="22sp"
+                        tools:text="牛奶" />
+
+                    <TextView
+                        android:id="@+id/tvAmountKcal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="15sp"
+                        tools:text="100.0ml/54kcal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout style="@style/Widget.Momo.MacroCell">
+                        <TextView
+                            android:id="@+id/tvCarbLabel"
+                            style="@style/Widget.Momo.MacroLabel"
+                            android:text="@string/stats_macro_carb"
+                            android:textColor="@color/accent_blue" />
+                        <TextView
+                            android:id="@+id/tvCarb"
+                            style="@style/Widget.Momo.MacroValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/Widget.Momo.MacroCell">
+                        <TextView
+                            android:id="@+id/tvProteinLabel"
+                            style="@style/Widget.Momo.MacroLabel"
+                            android:text="@string/stats_macro_protein"
+                            android:textColor="@color/accent_purple" />
+                        <TextView
+                            android:id="@+id/tvProtein"
+                            style="@style/Widget.Momo.MacroValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/Widget.Momo.MacroCell">
+                        <TextView
+                            android:id="@+id/tvFatLabel"
+                            style="@style/Widget.Momo.MacroLabel"
+                            android:text="@string/stats_macro_fat"
+                            android:textColor="@color/accent_orange" />
+                        <TextView
+                            android:id="@+id/tvFat"
+                            style="@style/Widget.Momo.MacroValue" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

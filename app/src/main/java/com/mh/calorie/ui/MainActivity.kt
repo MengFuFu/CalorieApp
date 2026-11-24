@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+
+    /** 启动闸门开关：false = 启动直接进首页；等后端鉴权接好再改 true */
+    private val authGateEnabled = false
+
     // 临时账号仓库：M15 换后端后仍然注入，只是实现换掉
     @Inject
     lateinit var authRepo: TempAuthRepository
@@ -49,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
 
         // 未登录先弹登录页；savedInstanceState != null 说明是旋转重建，别重复压栈
-        if (savedInstanceState == null && !authRepo.isLoggedIn) {
+        if (authGateEnabled && savedInstanceState == null && !authRepo.isLoggedIn) {
             navController.navigate(R.id.action_homeFragment_to_loginFragment)
         }
     }

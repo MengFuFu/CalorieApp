@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,6 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.mh.calorie.R
 import com.mh.calorie.core.domain.model.MealType
 import com.mh.calorie.data.temp.TempFoodLogRepository
@@ -24,7 +27,9 @@ import com.mh.calorie.databinding.ItemStatsFoodRowBinding
 import com.mh.calorie.databinding.ItemStatsSportRowBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
@@ -47,12 +52,15 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
     private var date: LocalDate = LocalDate.now()
     private var meal: MealType = MealType.BREAKFAST
 
-    private val lifeAdapter = LifeFoodAdapter()
+    private var lifeDate: LocalDate = LocalDate.now()
+
+    private val lifeAdapter = LifeFoodAdapter { position -> openLifeDetail(lifeDate, position) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentStatsBinding.bind(view)
         renderDate()
         renderMealTabs()
+        renderLifeWeek() //生成周期日条
 
         binding.btnPrevDay.setOnClickListener {
             date = date.minusDays(1)
@@ -80,7 +88,9 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         binding.rvLifeFoods.adapter = lifeAdapter
 
         binding.btnAddSport.setOnClickListener { comingSoon(R.string.stats_sport_title) }
-        binding.chipLifeAll.setOnClickListener { comingSoon(R.string.stats_life_title) }
+
+        // 「全部」→ 选一个日期 → 进照片详情页
+        binding.chipLifeAll.setOnClickListener { pickLifeDate() }
 
         // 仓库一变就重绘（食物库保存后回到这页能立刻看到）
         viewLifecycleOwner.lifecycleScope.launch {
@@ -212,13 +222,69 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
         binding.groupSportEmpty.isVisible = logs.isEmpty()
     }
 
-    /** 生活美食统计：当天全部记录，按时间升序铺成横滑条 */
+    /** 周日期条：本周一到周日，点哪天就切到哪天 */
+    private fun renderLifeWeek() {
+        val container = binding.containerLifeWeek
+        container.removeAllViews()
+
+        val monday = lifeDate.minusDays((lifeDate.dayOfWeek.value - 1).toLong())
+        repeat(7) { i ->
+            val day = monday.plusDays(i.toLong())
+            val isFuture = day.isAfter(LocalDate.now())
+            val cell = layoutInflater.inflate(R.layout.item_life_week_day, container, false)
+            cell.isEnabled = !isFuture
+            cell.alpha = if (isFuture) 0.35f else 1f
+            cell.findViewById<TextView>(R.id.tvWeekLabel).text = WEEK_LABELS[i]
+            cell.findViewById<TextView>(R.id.tvDayNumber).text = day.dayOfMonth.toString()
+            cell.isSelected = day == lifeDate
+            cell.setOnClickListener {
+                lifeDate = day
+                renderLifeWeek()
+                renderLife()
+            }
+            container.addView(cell)
+        }
+    }
+
+    /** 生活美食横滑条：按 lifeDate 取当天的记录 */
     private fun renderLife() {
-        val logs = foodRepo.ofDate(date).sortedBy { it.recordedAt }
+        val logs = foodRepo.ofDate(lifeDate).sortedBy { it.recordedAt }
         lifeAdapter.submitList(logs)
         binding.rvLifeFoods.isVisible = logs.isNotEmpty()
         binding.groupLifeEmpty.isVisible = logs.isEmpty()
     }
+
+    /** 「全部」→ MaterialDatePicker 选日期 → 跳详情页 */
+    private fun pickLifeDate() {
+        // 只允许选「今天及以前」：结束日期卡在今天零点的 UTC 毫秒
+        val constraints = CalendarConstraints.Builder()
+            .setEnd(MaterialDatePicker.todayInUtcMilliseconds())
+            .build()
+
+        val picker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText(getString(R.string.stats_life_pick_date))
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .setCalendarConstraints(constraints)
+            .build()
+
+        picker.addOnPositiveButtonClickListener { millis ->
+            // MaterialDatePicker 给的是 UTC 零点毫秒，必须按 UTC 转，否则会差一天
+            val picked = Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
+            openLifeDetail(picked, 0)
+        }
+        picker.show(childFragmentManager, "life_date_picker")
+    }
+
+    private fun openLifeDetail(date: LocalDate, index: Int) {
+        findNavController().navigate(
+            R.id.action_statsFragment_to_lifeFoodDetailFragment,
+            bundleOf(
+                LifeFoodDetailFragment.ARG_DATE to date.toString(),
+                LifeFoodDetailFragment.ARG_INDEX to index
+            )
+        )
+    }
+
 
     private fun progressPercent(current: Float, start: Float, target: Float): Int {
         val total = target - start
@@ -278,5 +344,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
 
     private companion object {
         val DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年M月d日", Locale.CHINA)
+
+        private val WEEK_LABELS = listOf("周一", "周二", "周三", "周四", "周五", "周六", "周日")
     }
 }

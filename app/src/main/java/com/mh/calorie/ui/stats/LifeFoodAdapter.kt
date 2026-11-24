@@ -14,20 +14,32 @@ import com.mh.calorie.databinding.ItemLifeFoodPhotoBinding
 import com.mh.calorie.ui.common.labelRes
 
 /** 生活美食统计：一天的食物照片横滑条 */
-class LifeFoodAdapter : ListAdapter<FoodLog, LifeFoodAdapter.Holder>(DIFF) {
+class LifeFoodAdapter(
+    private val onItemClick: ((position: Int) -> Unit)? = null
+) : ListAdapter<FoodLog, LifeFoodAdapter.Holder>(DIFF) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder =
         Holder(
             ItemLifeFoodPhotoBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
+            ),
+            onItemClick
         )
 
     override fun onBindViewHolder(holder: Holder, position: Int) =
         holder.bind(getItem(position))
 
-    class Holder(private val binding: ItemLifeFoodPhotoBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class Holder(
+        private val binding: ItemLifeFoodPhotoBinding,
+        private val onItemClick: ((position: Int) -> Unit)?
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val pos = bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION) onItemClick?.invoke(pos)
+            }
+        }
 
         fun bind(log: FoodLog) {
             binding.tvMealTag.setText(log.meal.labelRes)

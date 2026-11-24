@@ -72,6 +72,10 @@
         <action
             android:id="@+id/action_statsFragment_to_foodLibraryFragment"
             app:destination="@id/foodLibraryFragment" />
+
+        <action
+            android:id="@+id/action_statsFragment_to_lifeFoodDetailFragment"
+            app:destination="@id/lifeFoodDetailFragment" />
     </fragment>
 
     <fragment
@@ -151,4 +155,9 @@
         android:label="@string/auth_action_register"
         tools:layout="@layout/fragment_register" />
 
+    <fragment
+        android:id="@+id/lifeFoodDetailFragment"
+        android:name="com.mh.calorie.ui.stats.LifeFoodDetailFragment"
+        android:label="@string/stats_life_title"
+        tools:layout="@layout/fragment_life_food_detail" />
 </navigation>
