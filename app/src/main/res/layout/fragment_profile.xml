@@ -1,41 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_page"
-    android:fillViewport="true">
+    android:background="@drawable/bg_page">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:paddingTop="@dimen/profile_header_height">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="28dp">
-
-        <!-- 标题 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/profile_title"
-                android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                android:textSize="26sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_sparkle" />
-        </LinearLayout>
-
+        
         <!-- 用户卡 -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -781,4 +763,34 @@
             android:textColor="@color/text_tertiary"
             android:textSize="12sp" />
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- 固定标题：不透明底遮住滚动内容，位置不随滚动移动 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_header_height"
+        android:background="@color/bg_gradient_top"
+        android:paddingHorizontal="@dimen/screen_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_title"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_sparkle" />
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

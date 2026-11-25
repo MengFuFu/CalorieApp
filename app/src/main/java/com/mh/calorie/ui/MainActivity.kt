@@ -37,6 +37,9 @@ class MainActivity : AppCompatActivity() {
     /** 启动闸门开关：false = 启动直接进首页；等后端鉴权接好再改 true */
     private val authGateEnabled = false
 
+    /** 状态栏高度：insets 回调里更新，切页时复用 */
+    private var statusBarTop = 0
+
     // 临时账号仓库：M15 换后端后仍然注入，只是实现换掉
     @Inject
     lateinit var authRepo: TempAuthRepository
@@ -70,11 +73,26 @@ class MainActivity : AppCompatActivity() {
      * 那里已经处理过一次，如果这里再加就会多出一截空白。
      */
     private fun applyStatusBarInset() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) {
-            view, insets ->
-            val top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
-            view.updatePadding(top = top)
-            insets // 不消费，让底栏也能收到同一份 inset
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            statusBarTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
+            applyTopInsetToPage()
+            insets
+        }
+    }
+
+    /**
+     * 把状态栏高度加到「当前页面的根 View」上，而不是整棵 Activity 根布局。
+     * 页面自己的 background 会一直铺到状态栏下面，只有内容靠 padding 让开，
+     * 状态栏那块就不会露出 windowBackground 形成色差断层。
+     */
+    private fun applyTopInsetToPage() {
+        val host = supportFragmentManager
+            .findFragmentById(R.id.navHostFragment) as? NavHostFragment ?: return
+        val page = host.childFragmentManager.fragments
+            .firstOrNull { it.view != null }?.view ?: return
+
+        page.post {
+            if (page.paddingTop != statusBarTop) page.updatePadding(top = statusBarTop)
         }
     }
 
@@ -95,14 +113,14 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-        // 导航 → 底栏。以「当前目的地」为唯一真值来源，
-        // 这样系统返回键、进程恢复、深链接改动页面时，底栏永远是对的。
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            // 体重详情这类二级页不显示底栏；Tab 页才显示。
-            // 必须在这里同步隐藏，否则进二级页后底栏还亮着「记录」，用户会以为能点
             val isTab = destination.id.isTopLevelTab()
             binding.bottomBar.isVisible = isTab
             if (isTab) binding.bottomBar.select(destination.id.toTab())
+
+            // 新页面可能还没 attach 完，等一帧再补 padding
+            binding.root.post { applyTopInsetToPage() }
         }
     }
 

@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
-    <path android:pathData="M4,9h16l-1.4,-4.6h-13.2z"
-        android:strokeColor="@color/text_primary" android:strokeWidth="1.6"
-        android:fillColor="#00000000" android:strokeLineJoin="round" />
-    <path android:pathData="M5.5,9v10h13v-10"
-        android:strokeColor="@color/text_primary" android:strokeWidth="1.6"
-        android:fillColor="#00000000" />
-    <path android:pathData="M10,19v-5h4v5"
-        android:strokeColor="@color/text_primary" android:strokeWidth="1.6"
-        android:fillColor="#00000000" />
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="800"
+    android:viewportHeight="800">
+
+    <!-- 处理原 SVG 中的 transform 属性（包含平移和Y轴翻转） -->
+    <group
+        android:translateX="-13.124522"
+        android:translateY="891.702159"
+        android:scaleX="0.109177"
+        android:scaleY="-0.109177">
+
+        <!-- 路径 1 -->
+        <path
+            android:fillColor="#000000"
+            android:pathData="M3606 6415 c-191 -40 -335 -115 -475 -249 -307 -295 -382 -732 -191 -1121 94 -192 238 -335 433 -430 129 -62 227 -86 377 -92 516 -22 933 338 990 854 51 467 -245 898 -705 1023 -103 29 -327 36 -429 15z m311 -321 c348 -72 562 -405 488 -759 -29 -137 -119 -280 -227 -362 -123 -93 -226 -127 -383 -127 -188 -1 -329 59 -456 191 -76 79 -118 150 -149 248 -141 459 260 906 727 809z" />
+
+        <!-- 路径 2 -->
+        <path
+            android:fillColor="#000000"
+            android:pathData="M5074 4475 c-73 -16 -130 -44 -180 -87 -30 -26 -186 -198 -615 -673 -29 -33 -119 -132 -200 -220 -181 -199 -203 -230 -233 -324 -30 -93 -60 -319 -50 -375 11 -69 48 -130 100 -165 64 -42 91 -46 299 -46 289 0 332 20 620 291 189 177 526 504 706 684 124 124 165 194 181 314 19 129 -20 242 -123 365 -101 120 -231 210 -339 235 -77 18 -86 18 -166 1z m119 -324 c35 -14 127 -96 160 -144 20 -29 27 -52 27 -86 l0 -46 -193 -190 c-466 -460 -769 -742 -821 -766 -57 -26 -246 -28 -246 -2 0 52 25 147 48 182 33 49 913 1023 944 1045 26 18 46 20 81 7z" />
+
+        <!-- 路径 3 -->
+        <path
+            android:fillColor="#000000"
+            android:pathData="M3415 4294 c-423 -61 -751 -190 -1135 -447 -218 -146 -316 -240 -376 -363 -31 -62 -38 -88 -42 -153 -9 -152 51 -276 199 -415 169 -159 379 -269 609 -316 33 -7 214 -14 447 -17 389 -5 393 -5 437 17 58 28 88 69 94 130 5 58 -18 111 -62 143 -30 22 -38 22 -431 28 -435 7 -469 11 -608 73 -149 65 -336 218 -356 290 -23 86 26 149 227 284 380 256 677 377 1026 418 198 23 440 9 631 -36 56 -13 111 4 156 49 44 43 57 94 40 151 -36 119 -181 160 -586 165 -132 2 -253 1 -270 -1z" />
+
+    </group>
 </vector>
